@@ -13,8 +13,7 @@
 
 <body class="flex flex-col min-h-screen">
   <!-- component -->
-  <nav
-    class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b bg-opacity-[0.97]">
+  <nav class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b">
     <div class="flex items-start justify-between gap">
 
       <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -204,7 +203,7 @@
             </a>
 
             <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-              href="./contact.html">
+              href="#">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -222,97 +221,38 @@
 
     <!-- CONTENT -->
     <div class="flex md:pl-64 py-4">
-      <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post" action="./Register.php">
-        <div class=" text-3xl font-medium mb-5">
-          Sign up for a free account
-        </div>
-        <div class="grid gap-6 mb-4 md:grid-cols-2">
-          <div>
-            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First name</label>
-            <input type="text" id="first_name"
+      <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post" action="./Ulogin.php">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <div class=" text-3xl font-medium mb-5">
+            Login into your Trader account
+          </div>
+          <div class="mb-6">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
+            <input type="email" name="email" id="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="John" required>
+              placeholder="john.doe@company.com" required>
           </div>
           <div>
-            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Last name</label>
-            <input type="text" id="last_name"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="Doe" required>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              required="">
           </div>
-        </div>
-        <div class="mb-4">
-          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
-          <input type="email" id="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="john.doe@company.com" required>
-        </div>
-        <div class="mb-4">
-          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-          <input type="password" id="password"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="•••••••••" required>
-        </div>
-        <div class="mb-4">
-          <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
-          <input type="password" id="confirm_password"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="•••••••••" required>
-        </div>
-        <div class="mb-4">
-          <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
-          <input type="text" id="contact"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="+977-9876543210" required>
-        </div>
-        <div class="mb-4">
-          <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
-          <input type="text" id="address"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="Kathmadu" required>
-        </div>
-        <div class="mb-4">
-          <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 ">Gender</label>
+          <div class="flex items-center justify-between">
 
-          <div class="flex">
-            <div class="flex items-center mr-4">
-              <input id="inline-radio" type="radio" value="Male" name="inline-radio-group"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 ">Male</label>
-            </div>
-            <div class="flex items-center mr-4">
-              <input id="inline-2-radio" type="radio" value="Female" name="inline-radio-group"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 ">Female</label>
-            </div>
-            <div class="flex items-center mr-4">
-              <input checked id="inline-checked-radio" type="radio" value="Others" name="inline-radio-group"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-checked-radio" class="ml-2 text-sm font-medium text-gray-900 ">Others</label>
-            </div>
-
+            <a href="./password.html" class="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
           </div>
-
-        </div>
-        <div class="flex items-start mb-4">
-          <div class="flex items-center h-5">
-            <input id="remember" type="checkbox" value=""
-              class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required>
-          </div>
-          <label for="remember" class="ml-2 text-sm font-medium text-gray-900 ">I agree with the <a href="#"
-              class="text-blue-600 hover:underline ">terms and conditions</a>.</label>
-        </div>
-        <button type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Register</button>
-
-        <a href="./trader_register.html" class="text-sm font-medium text-blue-600 hover:underline ">
-          <p class="mt-2"> Register as a
-            trader</p>
-        </a>
-        <p class="text-sm font-light text-gray-500  mt-2">
-          Already have an account? <a href="/Login.html" class="font-medium text-blue-600 hover:underline ">Login</a>
-        </p>
+          <button type="submit" name="submit"
+            class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign
+            in</button>
+          <p class="text-sm font-light text-gray-500 ">
+            Register as a trader? <a href="./trader_register.html" class="font-medium text-blue-600 hover:underline ">Sign
+              up</a>
+          </p>
       </form>
     </div>
+  </div>
+  </form>
   </div>
 </body>
 
