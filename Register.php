@@ -58,33 +58,7 @@ use PHPMailer\PHPMailer\Exception;
                 echo $_POST['contact'];
             }
             ?>" placeholder="Contact"><br><br>
-            <label for="DOB">Date of Birth: </label>
-            <select name='dd' size='1' id="DOB" >
-                <?php
-                for($i=1;$i<=31; $i++){
-                    $selected = ($_POST['dd'] == $i) ? 'selected' : '';
-                    echo "<option value='$i' $selected>$i</option>";
-            
-            }?>
-            </select>
-            <select name='mm' size='1' id="DOB">
-                
-                <?php
-                $months=array("January","February","March","April","May","June","July","August","September","October","November","December");
-                    foreach($months as $M){
-                        $selected = ($_POST['mm'] == $M) ? 'selected' : '';
-                        echo "<option value=\"$M\">$M</option>";
-                    }
-                ?>
-            </select>
-            <select name='yyyy' size='1' id="DOB">
-            <?php
-                for($i=1940;$i<=2022; $i++){
-                    $selected = ($_POST['yyyy'] == $i) ? 'selected' : '';
-                    echo "<option value=\"$i\">$i</option>";
-            
-            }?>
-            </select><br><br>
+           
             <label for="gender">Gender: </label>
             <input type="radio" name="gender" id="gender" value="Male"checked/>Male
             <input type="radio" name="gender" id="gender" value="Female">Female
@@ -115,20 +89,12 @@ if(isset($_POST['submit'])){
     $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
     $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
     $gender=trim($_POST['gender']); 
-    $yy =trim($_POST['yyyy']);
-    $mm =trim($_POST['mm']);
-    $dd =trim($_POST['dd']);
-    $date=$yy.'-'.$mm.'-'.$dd;
-    $dob=new DateTime($date);
-    // Create a DateTime object for today's date
-    $today = new DateTime('now');
     
-    // Calculate the difference between the two dates
-    $age = $today->diff($dob)->y;
     if(!empty($Fpassword) && !empty($Fcpassword)){
         if($Fpassword == $Fcpassword){
             if(isset($Ffirstname)&&isset($Flastname)){
                 $Fusername=$Ffirstname.$Flastname;
+                $user=$Ffirstname.' '.$Flastname;
                 if(ctype_alpha($Fusername)){
                     if(strlen($Fusername)>=6){
                         if(!empty($Vemail)){
@@ -139,73 +105,86 @@ if(isset($_POST['submit'])){
                                         "The password must have length between 6 and 16 or more and must contain a number, capital letter and a special character.";
                                     }else{
                                         if (validatePhoneNumber($contact)) {
-                                            $pass=md5($Fcpassword);
-                                            $type='user';
-                                            $sql="INSERT INTO USER_ONE(FIRSTNAME,LASTNAME,ADDRESS,CONTACT,TYPE,EMAIL,GENDER,PASSWORD,YYYY,MM,DD,AGE)
-                                            VALUES(:Firstname,:Lastname,:address,:contact,:type,:email,:gender,:password,:yyyy,:mm,:dd,:age)";
+                                            $existsEmail="SELECT * FROM USER_ONE WHERE EMAIL = :email";
+                                            $resultEmail=oci_parse($conn,$existsEmail) or die(oci_error($conn,$existsEmail));
+                                            oci_bind_by_name($resultEmail,":email",$Vemail);
+                                            oci_execute($resultEmail);
+                                            $Emailexists=oci_fetch_array($resultEmail, OCI_ASSOC);
 
-                                            $query=oci_parse($conn,$sql) or die(oci_error($conn));
-                                            oci_bind_by_name($query,":Firstname",$Ffirstname);
-                                            oci_bind_by_name($query,":Lastname",$Flastname);
-                                            oci_bind_by_name($query,":address",$Faddress);
-                                            oci_bind_by_name($query,":contact",$contact);
-                                            oci_bind_by_name($query,":type",$type);
-                                            oci_bind_by_name($query,":email",$Vemail);
-                                            oci_bind_by_name($query,":gender",$gender);
-                                            oci_bind_by_name($query,":password",$pass);
-                                            oci_bind_by_name($query,":yyyy",$yy);
-                                            oci_bind_by_name($query,":mm",$mm);
-                                            oci_bind_by_name($query,":dd",$dd);
-                                            oci_bind_by_name($query,":age",$age);
-                                            oci_execute($query);
-                                            if($query){
+                                            $existsPhone="SELECT * FROM USER_ONE WHERE CONTACT = :contact";
+                                            $resultPhone=oci_parse($conn,$existsPhone) or die(oci_error($conn,$existsPhone));
+                                            oci_bind_by_name($resultPhone,":contact",$contact);
+                                            oci_execute($resultPhone);
+                                            $PhoneExists=oci_fetch_array($resultPhone,OCI_ASSOC);
+                                            if($PhoneExists){
+                                                echo "The user with the same contact already exists."."<br>". "Please verify it and provide different contact number.";
+                                            }else{
+                                                if($Emailexists){
+                                                    echo "The user with same email already exists. Please verify it and provide different contact email.";
+                                                }else{
+                                                    $pass=md5($Fcpassword);
+                                                    $type='user';
+                                                    $sql="INSERT INTO USER_ONE(FIRSTNAME,LASTNAME,ADDRESS,CONTACT,TYPE,EMAIL,GENDER,PASSWORD)
+                                                    VALUES(:Firstname,:Lastname,:address,:contact,:type,:email,:gender,:password)";
 
-                                                require_once('../PHPMailer/src/PHPMailer.php');
-                                                require_once('../PHPMailer/src/SMTP.php');
+                                                    $query=oci_parse($conn,$sql) or die(oci_error($conn));
+                                                    oci_bind_by_name($query,":Firstname",$Ffirstname);
+                                                    oci_bind_by_name($query,":Lastname",$Flastname);
+                                                    oci_bind_by_name($query,":address",$Faddress);
+                                                    oci_bind_by_name($query,":contact",$contact);
+                                                    oci_bind_by_name($query,":type",$type);
+                                                    oci_bind_by_name($query,":email",$Vemail);
+                                                    oci_bind_by_name($query,":gender",$gender);
+                                                    oci_bind_by_name($query,":password",$pass);
+                                                    oci_execute($query);
+                                                    if($query){
 
-                                                require '../PHPMailer/src/Exception.php';
+                                                        require_once('../PHPMailer/src/PHPMailer.php');
+                                                        require_once('../PHPMailer/src/SMTP.php');
 
-                                                // Create a new PHPMailer instance
-                                                $mail = new PHPMailer();
+                                                        require '../PHPMailer/src/Exception.php';
 
-                                                // Set the SMTP credentials
-                                                //$mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Shows all the debugged message. Enable verbose debug output
-                                                $mail->isSMTP();
-                                                $mail->Host = 'smtp.gmail.com'; // your SMTP host
-                                                $mail->SMTPAuth = true;
-                                                $mail->Username = 'akapil21@tbc.edu.np'; // your SMTP username
-                                                $mail->Password = 'zmkxnuhhidezpurb'; // your SMTP password
-                                                $mail->SMTPSecure = 'tls';
-                                                $mail->Port = 587;
+                                                        // Create a new PHPMailer instance
+                                                        $mail = new PHPMailer();
 
-                                                $mail->SMTPOptions = [
-                                                    'ssl' => [
-                                                        'verify_peer' => false,
-                                                        'verify_peer_name' => false,
-                                                        'allow_self_signed' => true
-                                                    ]
-                                                ];
-                                                // Set the email details
-                                                $mail->setFrom('akapil21@tbc.edu.np', 'Your Name'); // the from email and name
-                                                $mail->addAddress('aaryalkkapil@gmail.com', 'Recipient Name'); // the recipient email and name
-                                                $mail->Subject = 'Registration Success';
-                                                $mail->Body = 'Thank you for joining with us, we will be pleased to be working with you.'."\n".
-                                                'Proceed to login.'."\n".
-                                                 'Regards,'."\n".
-                                                 'Team Tribus';
+                                                        // Set the SMTP credentials
+                                                        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Shows all the debugged message. Enable verbose debug output
+                                                        $mail->isSMTP();
+                                                        $mail->Host = 'smtp.gmail.com'; // your SMTP host
+                                                        $mail->SMTPAuth = true;
+                                                        $mail->Username = 'akapil21@tbc.edu.np'; // your SMTP username
+                                                        $mail->Password = 'zmkxnuhhidezpurb'; // your SMTP password
+                                                        $mail->SMTPSecure = 'tls';
+                                                        $mail->Port = 587;
 
-                                                // Send the email
-                                                if (!$mail->send()) {
-                                                    echo 'Mailer Error: ' . $mail->ErrorInfo;
-                                                } else {
-                                                    alert('Registration successful. Please check your email.');
-                                                    include('Ulogin.php');
+                                                        $mail->SMTPOptions = [
+                                                            'ssl' => [
+                                                                'verify_peer' => false,
+                                                                'verify_peer_name' => false,
+                                                                'allow_self_signed' => true
+                                                            ]
+                                                        ];
+                                                        // Set the email details
+                                                        $mail->setFrom('akapil21@tbc.edu.np', 'Team Tribus'); // the from email and name
+                                                        $mail->addAddress($Vemail, $user); // the recipient email and name
+                                                        $mail->Subject = 'Registration Success';
+                                                        $mail->Body = 'Thank you for joining with us, we will be pleased to serve you.'."\n".
+                                                        'Proceed to login.'."\n".
+                                                        'Regards,'."\n".
+                                                        'Team Tribus';
+
+                                                        // Send the email
+                                                        if (!$mail->send()) {
+                                                            echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                                        } else {
+                                                            include('Ulogin.php');
+                                                        }
+
+                                                    }  
+                                                    oci_close($conn);
                                                 }
-
                                             }
-
-                                            oci_close($conn);
-
+                                            
                                         } else {
                                             echo "Invalid phone number: " . $contact;
                                         }

@@ -3,10 +3,13 @@ session_start();
 if(isset($_POST['submit'])){
     include("connect.php");
     $password=md5($_POST['password']);
+    $email=trim($_POST['email']);
+    $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+    $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
     $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password";
     $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
 
-    oci_bind_by_name($result,":email",$_POST['email']);
+    oci_bind_by_name($result,":email",$Vemail);
     oci_bind_by_name($result,":password",$password);
 
     oci_execute($result);

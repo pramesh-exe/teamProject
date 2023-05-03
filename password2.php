@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,8 +140,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
               </svg>
-
-
               <span class="mx-2 text-sm font-medium">Home</span>
             </a>
 
@@ -161,8 +162,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>
-
-
               <span class="mx-2 text-sm font-medium">Saved</span>
             </a>
 
@@ -221,24 +220,29 @@
 
     <!-- CONTENT -->
     <div class="flex md:pl-64 py-4">
-      <form class="bg-slate-100 p-5 px-5 rounded-md border w-96" method="post" action="./Ulogin.php">
+      <form class="bg-slate-100 p-5 px-5 rounded-md border w-96" method="post">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <div class=" text-3xl font-medium mb-5">
-                Enter user details
+                Enter new Password
               </div>
-              <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
-                <input type="email" name="email" id="email"
+              <div class="mb-4">
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                <input type="password" id="password" name="Rpassword"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                  placeholder="example@abc.com" required>
+                  placeholder="•••••••••" required>
               </div>
-                    <div>
-                        <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
-                        <input type="contact" name="contact" id="contact" placeholder="+977-987653210" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
-                    </div>
+              <div class="mb-4">
+                <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
+                <input type="password" id="confirm_password" name="cpassword"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                  placeholder="•••••••••" required>
+                </div>
                     
-                    <button type="submit" name="submit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Continue</button>
+                    <button type="submit" name="Psubmit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Continue</button>
                 </form>
+                <?php
+                include('forgot2.php');
+                ?>
             </div>
         </div>
       </form>

@@ -4,7 +4,7 @@ session_start();
 if(!empty($_SESSION['email'])){
     $user=$_SESSION['email'];
     echo "Dear $user, Welcome to Tribus!<br>";
-    header("location:landing.php");
+    header("location:homepage.html");
 }else{
     if(!empty($_SESSION['error'])){
         echo("<br>".$_SESSION['error']);

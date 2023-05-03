@@ -222,7 +222,7 @@
 
     <!-- CONTENT -->
     <div class="flex md:pl-64 py-4">
-      <form class="bg-slate-100 p-5 px-5 rounded-md border">
+      <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post" action="./Register.php">
         <div class=" text-3xl font-medium mb-5">
           Sign up for a free account
         </div>
@@ -260,13 +260,13 @@
         </div>
         <div class="mb-4">
           <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
-          <input type="password" id="contact"
+          <input type="text" id="contact"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             placeholder="+977-9876543210" required>
         </div>
         <div class="mb-4">
           <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
-          <input type="password" id="address"
+          <input type="text" id="address"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             placeholder="Kathmadu" required>
         </div>
@@ -275,17 +275,17 @@
 
           <div class="flex">
             <div class="flex items-center mr-4">
-              <input id="inline-radio" type="radio" value="" name="inline-radio-group"
+              <input id="inline-radio" type="radio" value="Male" name="inline-radio-group"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
               <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 ">Male</label>
             </div>
             <div class="flex items-center mr-4">
-              <input id="inline-2-radio" type="radio" value="" name="inline-radio-group"
+              <input id="inline-2-radio" type="radio" value="Female" name="inline-radio-group"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
               <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 ">Female</label>
             </div>
             <div class="flex items-center mr-4">
-              <input checked id="inline-checked-radio" type="radio" value="" name="inline-radio-group"
+              <input checked id="inline-checked-radio" type="radio" value="Others" name="inline-radio-group"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
               <label for="inline-checked-radio" class="ml-2 text-sm font-medium text-gray-900 ">Others</label>
             </div>
