@@ -221,33 +221,33 @@ session_start();
             <p class="font-semibold text-4xl ">My Account</p>
 
         </div>
-        <div class="flex flex-grow my-4 gap-2 w-11/12">
-            <div class="bg-gray-100 p-3 basis-1/2 border rounded">
+        <div class="flex flex-grow flex-wrap lg:flex-nowrap my-4 gap-2 w-11/12">
+            <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
                 <Span class="font-serif font-semibold text-lg mr-2">Personal Profile</Span>
                 <a href="./update.html" class="text-blue-600 hover:underline">Edit Profile</a>
                 <p class="mt-2">Name: </p>
-                <p class="mt-2">Email: </p>
+                <p class="mt-2">Email: shresthaprameshmgs@gmail.com</p>
                 <p class="mt-2">Contact: </p>
                 <p class="mt-2">Address: </p>
             </div>
-            <div class="bg-gray-100 p-3 basis-1/2 border rounded">
+            <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
                 <Span class="font-serif font-semibold text-lg mr-2">Orders</Span>
                 <div class="flex mt-2 gap-6 px-2">
                     <div class="basis-1/4">
                         <span class="font-medium">Total Orders </span>
-                        <p class="text-7xl font-sans font-semibold">12</p>
+                        <p class="text-2xl lg:text-6xl font-sans font-semibold">12</p>
                     </div>
                     <div class="basis-1/4">
                         <span class="font-medium">To pick-up</span>
-                        <p class="text-7xl font-sans font-semibold">123</p>
+                        <p class="text-2xl lg:text-6xl font-sans font-semibold">123</p>
                     </div>
                     <div class="basis-1/4">
                         <span class="font-medium">Cart</span>
-                        <p class="text-7xl font-sans font-semibold">122</p>
+                        <p class="text-2xl lg:text-6xl font-sans font-semibold">122</p>
                     </div>
                     <div class="basis-1/4">
                         <span class="font-medium">Saved</span>
-                        <p class="text-7xl font-sans font-semibold">1222</p>
+                        <p class="text-2xl lg:text-6xl font-sans font-semibold">122</p>
                     </div>
                 </div>
             </div>
