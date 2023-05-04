@@ -1,14 +1,13 @@
 <?php
-include('connect.php');
-session_start();
-if(!empty($_SESSION['email'])){
+include_once('connect.php');
+if(!empty($_SESSION['email']) &&$_SESSION['password']){
     $user=$_SESSION['email'];
-    echo "Dear $user, Welcome to Tribus!<br>";
-    header("location:homepage.html");
+    $pass=$_SESSION['password'];
+    header("location:./homepage.php");
 }else{
     if(!empty($_SESSION['error'])){
         echo("<br>".$_SESSION['error']);
     }
-    header('location:Login.php');
+    header('location:./Login.php');
 }
 ?>

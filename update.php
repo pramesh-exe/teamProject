@@ -1,3 +1,30 @@
+<?php
+include_once('connect.php');
+if((empty($_SESSION['email'])) || (empty($_SESSION['password']))){
+    header('location:./Login.php'); 
+    
+}
+if(!empty($_SESSION['error'])){
+    header('location:./Login.php');
+}
+$user=$_SESSION['email'];
+$pass=$_SESSION['password'];
+$info="SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
+$userinfo=oci_parse($conn,$existsEmail) or die(oci_error($conn,$existsEmail));
+oci_bind_by_name($userinfo,":email",$user);
+oci_bind_by_name($userinfo,":password",$pass);
+oci_execute($userinfo); if ($row = oci_fetch_assoc($userinfo)) {
+    // populate HTML form fields with data from $row
+    $fname = $row['FIRSTNAME'];
+    $lname = $row['LASTNAME'];
+    $email = $row['EMAIL'];
+    $contact = $row['CONTACT'];
+    $address = $row['ADDRESS'];
+} else {
+    echo "No users data found";
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -186,7 +213,6 @@
                 </div>
             </aside>
 
-
             <!-- CONTENT -->
             <div class="flex md:pl-64 py-4">
                 <form class="bg-slate-100 p-5 px-5 rounded-md border">
@@ -196,37 +222,196 @@
                     <div class="grid gap-6 mb-4 md:grid-cols-2">
                         <div>
                             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First name</label>
-                            <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="John" required>
+                            <input type="text" id="first_name" name="fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                            value="<?php echo $row['FIRSTNAME']; ?>" placeholder="John" required>
                         </div>
                         <div>
                             <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Last name</label>
-                            <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Doe" required>
+                            <input type="text" id="last_name" name="lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                            value="<?php echo $row['LASTNAME']; ?>"placeholder="Doe" required>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
-                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="john.doe@company.com" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="•••••••••" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
-                        <input type="password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="•••••••••" required>
+                        <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                        value="<?php echo $row['EMAIL']; ?>"placeholder="john.doe@company.com" required>
                     </div>
                     <div class="grid gap-6 mb-4 md:grid-cols-2">
                         <div>
                             <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
-                            <input type="password" id="contact" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="9876543210" required>
+                            <input type="contact" id="contact" name="contact" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                            value="<?php echo $row['CONTACT']; ?>"placeholder="9876543210" required>
                         </div>
                         <div>
                             <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
-                            <input type="password" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Kathmadu" required>
+                            <input type="address" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " 
+                            value="<?php echo $row['ADDRESS']; ?>"placeholder="Kathmadu" required>
                         </div>
                     </div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Update</button>
+                    <button type="submit" name="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Update</button>
+                    <button type='reset' value="clear">
                 </form>
+                
+<?php
+if(!empty($_SESSION['email']) && $_SESSION['password']){
+    $user=$_SESSION['email'];
+    $pass=$_SESSION['password'];
+    $info="SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
+    $userinfo=oci_parse($conn,$info) or die(oci_error($conn,$info));
+    oci_bind_by_name($userinfo,":email",$user);
+    oci_bind_by_name($userinfo,":password",$pass);
+    oci_execute($userinfo);
+    
+    if(isset($_POST['submit'])){
+        $firstname=trim($_POST['fname']);
+        $Ffirstname=filter_var($firstname,FILTER_SANITIZE_STRING);
+        $address=trim($_POST['address']);
+        $Faddress=filter_var($address,FILTER_SANITIZE_STRING);
+        $lastname=trim($_POST['lname']);
+        $Flastname=filter_var($lastname,FILTER_SANITIZE_STRING);
+        $password=trim($_POST['pass']);
+        $Fpassword=filter_var($password,FILTER_SANITIZE_STRING);
+        $cpassword=trim($_POST['cpass']);
+        $Fcpassword=filter_var($cpassword,FILTER_SANITIZE_STRING);
+        $email=trim($_POST['email']);
+        $contact=trim($_POST['contact']);
+        $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+        $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
+        if(!empty($Fpassword) && !empty($Fcpassword)){
+            if($Fpassword == $Fcpassword){
+                if(isset($Ffirstname)&&isset($Flastname)){
+                    $Fusername=$Ffirstname.$Flastname;
+                    $user=$Ffirstname.' '.$Flastname;
+                    if(ctype_alpha($Fusername)){
+                        if(strlen($Fusername)>=6){
+                            if(!empty($Vemail)){
+                                        $pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,16}$/";
+                                        if(!preg_match($pattern,$Fpassword)){
+                                            echo "Weak or invalid password!<br>".
+                                            "The password must have length between 6 and 16 or more and must contain a number, capital letter and a special character.";
+                                        }else{
+                                            if (validatePhoneNumber($contact)) {
+                                                $existsEmail="SELECT * FROM USER_ONE WHERE EMAIL = :email";
+                                                $resultEmail=oci_parse($conn,$existsEmail) or die(oci_error($conn,$existsEmail));
+                                                oci_bind_by_name($resultEmail,":email",$Vemail);
+                                                oci_execute($resultEmail);
+                                                $Emailexists=oci_fetch_array($resultEmail, OCI_ASSOC);
+    
+                                                $existsPhone="SELECT * FROM USER_ONE WHERE CONTACT = :contact";
+                                                $resultPhone=oci_parse($conn,$existsPhone) or die(oci_error($conn,$existsPhone));
+                                                oci_bind_by_name($resultPhone,":contact",$contact);
+                                                oci_execute($resultPhone);
+                                                $PhoneExists=oci_fetch_array($resultPhone,OCI_ASSOC);
+                                                if($PhoneExists){
+                                                    echo "The user with the same contact already exists."."<br>". "Please verify it and provide different contact number.";
+                                                }else{
+                                                    if($Emailexists){
+                                                        echo "The user with same email already exists. Please verify it and provide different contact email.";
+                                                    }else{
+                                                        $sql = "SELECT USER_ID FROM USER_ONE WHERE email = :email AND password = :password";
+                                                        $stmt = oci_parse($conn, $sql);
+
+                                                        // bind the parameters
+                                                        oci_bind_by_name($stmt, ":email", $user);
+                                                        oci_bind_by_name($stmt, ":password", $password);
+
+                                                        // execute the statement
+                                                        oci_execute($stmt);
+
+                                                        // fetch the result
+                                                        if ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
+                                                            $id = $row['USER_ID'];
+                                                            $Npass=md5($Fcpassword);
+                                                            $sql="UPDATE USER_ONE SET FIRSTNAME=:fname, LASTNAME=:lname, ADDRESS=:address, CONTACT=:contact,EMAIL=:email WHERE USER_ID=$id";
+        
+                                                            $query=oci_parse($conn,$sql) or die(oci_error($conn));
+                                                            oci_bind_by_name($query,":Firstname",$Ffirstname);
+                                                            oci_bind_by_name($query,":Lastname",$Flastname);
+                                                            oci_bind_by_name($query,":address",$Faddress);
+                                                            oci_bind_by_name($query,":contact",$contact);
+                                                            oci_bind_by_name($query,":email",$Vemail);
+                                                            oci_execute($query);
+                                                            if($query){
+        
+                                                                require_once('../PHPMailer/src/PHPMailer.php');
+                                                                require_once('../PHPMailer/src/SMTP.php');
+        
+                                                                require '../PHPMailer/src/Exception.php';
+        
+                                                                // Create a new PHPMailer instance
+                                                                $mail = new PHPMailer();
+        
+                                                                // Set the SMTP credentials
+                                                                //$mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Shows all the debugged message. Enable verbose debug output
+                                                                $mail->isSMTP();
+                                                                $mail->Host = 'smtp.gmail.com'; // your SMTP host
+                                                                $mail->SMTPAuth = true;
+                                                                $mail->Username = 'akapil21@tbc.edu.np'; // your SMTP username
+                                                                $mail->Password = 'zmkxnuhhidezpurb'; // your SMTP password
+                                                                $mail->SMTPSecure = 'tls';
+                                                                $mail->Port = 587;
+        
+                                                                $mail->SMTPOptions = [
+                                                                    'ssl' => [
+                                                                        'verify_peer' => false,
+                                                                        'verify_peer_name' => false,
+                                                                        'allow_self_signed' => true
+                                                                    ]
+                                                                ];
+                                                                // Set the email details
+                                                                $mail->setFrom('akapil21@tbc.edu.np', 'Team Tribus'); // the from email and name
+                                                                $mail->addAddress($Vemail, $user); // the recipient email and name
+                                                                $mail->Subject = 'Update Success';
+                                                                $mail->Body = 'Your information was successfully updated'."\n".
+                                                                'Proceed to login.'."\n".
+                                                                'Regards,'."\n".
+                                                                'Team Tribus';
+        
+                                                                // Send the email
+                                                                if (!$mail->send()) {
+                                                                    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                                                } else {
+                                                                    session_destroy();
+                                                                    echo("Updated successfully. Check your email<br> for confirmation and proceed to login.");
+                                                                }
+                                                            }
+                                                        }  
+                                                        oci_close($conn);
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                echo "Invalid phone number: " . $contact;
+                                            }
+                                        }
+                                 
+                            }else{
+                                echo "All fields required.";
+                            }
+                        }else{
+                            echo "The length of username must be <br>greater than or equal to 6 alphabets";
+                        }
+                    }else{
+                        echo "User's name must have alphabets only.";
+                    }
+                }else{
+                    echo "All fields required.";   
+                }
+            }else{
+                echo " Confirmation password and password didn't match";
+            }    
+        }else{
+            echo "All fields required.";
+        }
+    }
+    // Function to validate phone numbers with country code
+    function validatePhoneNumber($phoneNumber) {
+        // Phone number format: +<country code><10 digit number>
+        $pattern = "/^\+(?:\d{1,3})?(\d{10})$/";
+        return preg_match($pattern, $phoneNumber, $matches) && strlen($matches[1]) === 10;
+    } 
+}
+?>
             </div>
         </div>
     </body>
