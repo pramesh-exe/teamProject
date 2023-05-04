@@ -361,8 +361,9 @@ if(isset($_POST['submit'])){
     $cpassword=trim($_POST['cpassword']);
     $Fcpassword=filter_var($cpassword,FILTER_SANITIZE_STRING);
     $email=trim($_POST['email']);
+    $lemail=strtolower($email);
     $contact=trim($_POST['contact']);
-    $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
     $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
     $gender=trim($_POST['gender']); 
     

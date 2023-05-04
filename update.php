@@ -1,13 +1,13 @@
 <?php
 include_once('connect.php');
-if((empty($_SESSION['email'])) || (empty($_SESSION['password']))){
+if((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))){
     header('location:./Login.php'); 
     
 }
 if(!empty($_SESSION['error'])){
     header('location:./Login.php');
 }
-$user=$_SESSION['email'];
+$user=strtolower($_SESSION['email']);
 $pass=$_SESSION['password'];
 $info="SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
 $userinfo=oci_parse($conn,$existsEmail) or die(oci_error($conn,$existsEmail));
@@ -17,7 +17,7 @@ oci_execute($userinfo); if ($row = oci_fetch_assoc($userinfo)) {
     // populate HTML form fields with data from $row
     $fname = $row['FIRSTNAME'];
     $lname = $row['LASTNAME'];
-    $email = $row['EMAIL'];
+    $email = strtolower($row['EMAIL']);
     $contact = $row['CONTACT'];
     $address = $row['ADDRESS'];
 } else {
@@ -274,8 +274,9 @@ if(!empty($_SESSION['email']) && $_SESSION['password']){
         $cpassword=trim($_POST['cpass']);
         $Fcpassword=filter_var($cpassword,FILTER_SANITIZE_STRING);
         $email=trim($_POST['email']);
+        $lemail=strtolower($email);
         $contact=trim($_POST['contact']);
-        $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+        $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
         $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
         if(!empty($Fpassword) && !empty($Fcpassword)){
             if($Fpassword == $Fcpassword){

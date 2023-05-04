@@ -2,7 +2,8 @@
 if(isset($_POST['Rsubmit'])){
     $email=trim($_POST['Remail']);
     $contact=trim($_POST['Rcontact']);
-    $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+    $lemail=strtolower($email);
+    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
     $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
     if(validatePhoneNumber($contact)){
         include_once('connect.php');
@@ -18,9 +19,9 @@ if(isset($_POST['Rsubmit'])){
         oci_execute($resultPhone);
         $PhoneExists=oci_fetch_array($resultPhone,OCI_ASSOC);
         if($PhoneExists){
-            $_SESSION['Rcontact']=$contact;
+            $_SESSION['contact']=$contact;
             if($Emailexists){
-                $_SESSION['Remail']=$Vemail;
+                $_SESSION['email']=$Vemail;
                 header("location:password2.php");
             }
         }
@@ -276,8 +277,9 @@ function validatePhoneNumber($phoneNumber) {
                 <?php
                  if(isset($_POST['Rsubmit'])){
                     $email=trim($_POST['Remail']);
+                    $lemail=strtolower($email);
                     $contact=trim($_POST['Rcontact']);
-                    $Femail=filter_var($email,FILTER_SANITIZE_EMAIL);
+                    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
                     $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
                     if(validatePhoneNumber($contact)){
                         include_once('connect.php');

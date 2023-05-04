@@ -1,11 +1,34 @@
 <?php
-include_once('connect.php');
-$email=strtolower($_SESSION['email']);
-$contact=$_SESSION['contact'];
-if($email==FALSE || $contact==FALSE){
-    header('location:./Login.php');
-}
+if(isset($_POST['submit'])){
+    include("connect.php");
+    $password=md5($_POST['password']);
+    $email=trim($_POST['email']);
+    $lemail=strtolower($email);
+    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
+    $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
+    
+    }else{
+        $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password";
+        $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
+
+        oci_bind_by_name($result,":email",$Vemail);
+        oci_bind_by_name($result,":password",$password);
+
+        oci_execute($result);
+        $user=oci_fetch_array($result, OCI_ASSOC);
+        oci_close($conn);
+        if($user){
+            $_SESSION['email']=$lemail;
+            $_SESSION['password']=$_POST['password'];
+            header('location:./homepage.php');
+            exit();
+        }else{
+          $_SESSION['error']='No user found with the given email!';
+              
+        }
+    }       
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -112,12 +135,12 @@ if($email==FALSE || $contact==FALSE){
     <div class="flex-initial">
       <div class="flex justify-end items-center relative">
         <div class="flex mr-4 items-center gap-4">
-          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.php">
+          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.html">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Sign Up
             </div>
           </a>
-          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.php">
+          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.html">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Login
             </div>
@@ -224,63 +247,39 @@ if($email==FALSE || $contact==FALSE){
       </div>
     </aside>
 
-
     <!-- CONTENT -->
     <div class="flex md:pl-64 py-4">
-      <form class="bg-slate-100 p-5 px-5 rounded-md border w-96" method="post">
+      <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <div class=" text-3xl font-medium mb-5">
-                Enter new Password
+                Login into your account
               </div>
-              <div class="mb-4">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                <input type="password" id="password" name="password"
+              <div class="mb-6">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
+                <input type="email" name="email" id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                  placeholder="•••••••••" required>
+                  placeholder="john.doe@company.com" required>
               </div>
-              <div class="mb-4">
-                <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
-                <input type="password" id="confirm_password" name="cpassword"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                  placeholder="•••••••••" required>
-                </div>
-                    
-                <button type="submit" name="Psubmit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Continue</button>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <a href="forgot.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
+                    </div>
+                    <button type="submit" name="submit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                    <p class="text-sm font-light text-gray-500 ">
+                        Don't have an account yet? <a href="./Register.html" class="font-medium text-blue-600 hover:underline ">Sign up</a>
+                    </p>
                 </form>
-                <?php 
-                if(isset($_POST['Psubmit'])){
-                    include_once('connect.php');
-                    $password=trim($_POST['password']);
-                    $Fpassword=filter_var($password,FILTER_SANITIZE_STRING);
-                    $cpassword=trim($_POST['cpassword']);
-                    $Fcpassword=filter_var($cpassword,FILTER_SANITIZE_STRING);
-                    $pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,16}$/";
-                    if($Fpassword==$Fcpassword){
-                        if(!preg_match($pattern,$Fpassword)){
-                            echo "Weak or invalid password!<br>".
-                            "The password must have length between 6 and 16 or more and must contain a number, capital letter and a special character.";
-                        }else{
-                            if(strtolower(($_SESSION['Remail'])) && ($_SESSION['Rcontact'])){
-                                $pass=md5($Fpassword);
-                                $sql="UPDATE USER_ONE SET PASSWORD = :password where email=:email AND contact=:contact";
-                                $update=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
-                                oci_bind_by_name($update,":password",$pass);
-                                oci_bind_by_name($update,":email",$email);
-                                oci_bind_by_name($update,":contact",$contact);
-                                oci_execute($update);
-                                if($update){
-                                    session_destroy();
-                                    echo "Password resetted successfully. Please proceed to login.";
-                                }
-                                }
-                        }
-                    }else{
-                        echo "The two password didn't match. Please provide matching passwords.";
+                <?php
+                    // Output the error message if it exists
+                    if(isset($_SESSION['error'])) {
+                        echo "<br><strong>" . $_SESSION['error'] . "</strong>";
+                        unset($_SESSION['error']); // Clear the error message from the session
                     }
-                }
                 ?>
-                
-            </div>
+          </div>
         </div>
       </form>
   </div>
