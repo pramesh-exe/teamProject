@@ -118,12 +118,12 @@ use PHPMailer\PHPMailer\Exception;
     <div class="flex-initial">
       <div class="flex justify-end items-center relative">
         <div class="flex mr-4 items-center gap-4">
-          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.html">
+          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.php">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Sign Up
             </div>
           </a>
-          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.html">
+          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.php">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Login
             </div>

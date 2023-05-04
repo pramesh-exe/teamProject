@@ -140,12 +140,12 @@ if(isset($_POST['submit'])){
     <div class="flex-initial">
       <div class="flex justify-end items-center relative">
         <div class="flex mr-4 items-center gap-4">
-          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.html">
+          <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600" href="./Register.php">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Sign Up
             </div>
           </a>
-          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.html">
+          <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.php">
             <div class="flex items-center relative cursor-pointer whitespace-nowrap">
               Login
             </div>
@@ -270,11 +270,11 @@ if(isset($_POST['submit'])){
                         <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
                     </div>
                     <div class="flex items-center justify-between">
-                        <a href="forgot.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
+                        <a href="password.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
                     </div>
                     <button type="submit" name="submit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
                     <p class="text-sm font-light text-gray-500 ">
-                        Don't have an account yet? <a href="./Register.html" class="font-medium text-blue-600 hover:underline ">Sign up</a>
+                        Don't have an account yet? <a href="./Register.php" class="font-medium text-blue-600 hover:underline ">Sign up</a>
                     </p>
                 </form>
                 <?php
