@@ -1,4 +1,5 @@
 <?php
+<<<<<<< Updated upstream
 if (isset($_POST['submit'])) {
   include("connect.php");
   $password = md5($_POST['password']);
@@ -25,6 +26,34 @@ if (isset($_POST['submit'])) {
     $_SESSION['error'] = 'No user found with the given email!';
   }
 }
+=======
+     if(isset($_POST['submit'])){
+      include("connect.php");
+      $password=md5($_POST['password']);
+      $pas=$_POST['password'];
+      $admin=strtolower("ADMIN");
+      $email=trim($_POST['email']);
+      $lemail=strtolower($email);
+      $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
+      $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
+          $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type=:type";
+          $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
+  
+          oci_bind_by_name($result,":email",$Vemail);
+          oci_bind_by_name($result,":password",$password);
+          oci_bind_by_name($result,":type","trader");
+  
+          oci_execute($result);
+          $user=oci_fetch_array($result, OCI_ASSOC);
+          oci_close($conn);
+          if($user){
+              $_SESSION['email']=$lemail;
+              $_SESSION['password']=$password;
+              header('location:./trader.php');
+              exit();
+          }
+  }
+>>>>>>> Stashed changes
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -218,9 +247,64 @@ if (isset($_POST['submit'])) {
     <!-- CONTENT -->
     <div class="flex md:pl-64 py-4">
       <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post">
+<<<<<<< Updated upstream
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class=" text-3xl font-medium mb-5">
             Login into your account
+=======
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <div class=" text-3xl font-medium mb-5">
+                Login into your account
+              </div>
+              <div class="mb-6">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
+                <input type="email" name="email" id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                  placeholder="john.doe@company.com" required>
+              </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <a href="forgot.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot password?</a>
+                    </div>
+                    <button type="submit" name="submit" class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                    <p class="text-sm font-light text-gray-500 ">
+                        Don't have an account yet? <a href="./Register.html" class="font-medium text-blue-600 hover:underline ">Sign up</a>
+                    </p>
+                </form>
+                <?php
+                  if(isset($_POST['submit'])){
+                    include("connect.php");
+                    $password=md5($_POST['password']);
+                    $pas=$_POST['password'];
+                    $email=trim($_POST['email']);
+                    $lemail=strtolower($email);
+                    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
+                    $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
+                    
+                        $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type= :type";
+                        $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
+                
+                        oci_bind_by_name($result,":email",$Vemail);
+                        oci_bind_by_name($result,":password",$password);
+                        oci_bind_by_name($result,":type","trader");
+                        oci_execute($result);
+                        $user=oci_fetch_array($result, OCI_ASSOC);
+                        oci_close($conn);
+                        if($user){
+                            $_SESSION['email']=$lemail;
+                            $_SESSION['password']=$password;
+                            header('location:./homepage.php');
+                            exit();
+                        }else{
+                          $_SESSION['error']='Invalid login credentials!<br>Provide your valid email and password.';
+                          echo "<strong>".$_SESSION['error']."</strong>";     
+                        }
+                    }
+                ?>
+>>>>>>> Stashed changes
           </div>
           <div class="mb-6">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
