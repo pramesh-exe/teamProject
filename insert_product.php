@@ -193,31 +193,31 @@
             <div class="py-8 lg:py-16 px-4">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Upload product</h2>
 
-                <form action="#" class="space-y-8">
+                <form method="post" class="space-y-8">
                     <div>
                         <label for="pname" class="block mb-2 text-sm font-medium text-gray-900 ">Product name</label>
-                        <input type="pname" id="pname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  " placeholder="Product Name" required>
+                        <input type="pname" id="Pname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  " placeholder="Product Name" required>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Product Description</label>
-                        <textarea id="description" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " placeholder="Leave a comment..."></textarea>
+                        <textarea id="description" name="description" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 " placeholder="Leave a comment..."></textarea>
                     </div>
                     <div class="grid gap-6 mb-4 md:grid-cols-2">
                         <div>
                             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Avilable Stock</label>
-                            <input type="text" id="first_name" name="Firstname" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="000" required>
+                            <input type="text" id="first_name" name="stock" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="000" required>
                         </div>
                         <div>
                             <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
-                            <input type="text" id="last_name" name="Lastname" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="00.00" required>
+                            <input type="text" id="last_name" name="price" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="00.00" required>
                         </div>
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Upload file</label>
-                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
+                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file" name="upload">
                         <p class="mt-1 text-sm text-gray-500" id="file_input_help">SVG, PNG or JPG.</p>
                     </div>
-                    <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
+                    <button type="submit" name="addproduct" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
                 </form>
             </div>
         </section>
