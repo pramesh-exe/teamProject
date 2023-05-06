@@ -341,10 +341,7 @@ use PHPMailer\PHPMailer\Exception;
         </div>
         <button type="submit" name="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Register</button>
-<<<<<<< Updated upstream:trader_register.html
-
-=======
-        <a href="./trader_register.html" class="text-sm font-medium text-blue-600 hover:underline ">
+        <a href="./trader_register.php" class="text-sm font-medium text-blue-600 hover:underline ">
           <p class="mt-2"> Register as a
             trader</p>
         </a>
@@ -417,7 +414,6 @@ if(isset($_POST['submit'])){
                                                     oci_bind_by_name($query,":password",$pass);
                                                     oci_execute($query);
                                                     if($query){
-
                                                         require_once('../PHPMailer/src/PHPMailer.php');
                                                         require_once('../PHPMailer/src/SMTP.php');
 
@@ -499,7 +495,6 @@ function validatePhoneNumber($phoneNumber) {
     return preg_match($pattern, $phoneNumber, $matches) && strlen($matches[1]) === 10;
 }
 ?>  
->>>>>>> Stashed changes:trader_register.php
       </form>
     </div>
   </div>
