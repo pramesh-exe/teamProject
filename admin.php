@@ -1,7 +1,7 @@
 <?php
 include_once('connect.php');
-$admin=$_SESSION['ADMIN'];
-if($admin==FALSE){
+
+if(!isset($_SESSION['ADMIN'])){
     header('location:./Login.php');
 }
 ?>

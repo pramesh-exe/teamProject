@@ -3,7 +3,6 @@
       include("connect.php");
       $password=md5($_POST['password']);
       $pas=$_POST['password'];
-      $admin=strtolower("ADMIN");
       $email=trim($_POST['email']);
       $lemail=strtolower($email);
       $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
@@ -20,6 +19,7 @@
           $user=oci_fetch_array($result, OCI_ASSOC);
           oci_close($conn);
           if($user){
+              $_SESSION['id']=$user['USER_ID'];
               $_SESSION['email']=$lemail;
               $_SESSION['password']=$password;
               header('location:./trader.php');

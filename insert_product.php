@@ -1,3 +1,8 @@
+<?php
+include_once('connect.php');
+if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['password'])){
+    header('location:./Login.php');
+}?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -196,7 +201,7 @@
                 <form method="post" class="space-y-8">
                     <div>
                         <label for="pname" class="block mb-2 text-sm font-medium text-gray-900 ">Product name</label>
-                        <input type="pname" id="Pname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  " placeholder="Product Name" required>
+                        <input type="pname" id="Pname" name="Pname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  " placeholder="Product Name" required>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Product Description</label>
@@ -218,6 +223,71 @@
                         <p class="mt-1 text-sm text-gray-500" id="file_input_help">SVG, PNG or JPG.</p>
                     </div>
                     <button type="submit" name="addproduct" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
+                    <?php
+                        if(isset($_POST['addproduct'])){
+                            if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"]){
+                            $id=$_SESSION['id'];
+                            $email=$_SESSION['email'];
+                            $password=$_SESSION['password'];
+                            $Pname= trim($_POST['Pname']);
+                            $FPname=filter_var($Pname,FILTER_SANITIZE_STRING);
+                            $description=trim($_POST['description']);
+                            $Fdescription=filter_var($description,FILTER_SANITIZE_STRING);
+                            $stock=trim($_POST['stock']);
+                            $Fstock=filter_var($stock,FILTER_SANITIZE_NUMBER_INT);
+                            $Vstock=filter_var($Fstock,FILTER_SANITIZE_INT);
+                            $price=trim($_POST['price']);
+                            $Fprice=filter_var($price,FILTER_SANITIZE_NUMBER_FLOAT);
+                            $Vprice=filter_var($Fprice,FILTER_SANITIZE_FLOAT);
+                             //capturing the image name
+                            $uimage=$_FILES["upload"]["name"];
+                            $usize=$_FILES['upload']['size'];
+                            $utype=$_FILES['upload']['type'];
+                            $utmpname=$_FILES['upload']['tmp_name'];
+                            $ulocation="productphotos/".$cName."/".$uimage;
+
+                            if($utype=="image/jpeg" || $utype=="image/jpg" || $utype=="image/png" || $utype=="image/svg")
+                            {
+                                if(isset($Pname) )
+                                {   
+                                        
+                                    // SQL statement with placeholders for bind variables
+                                    $sql ="INSERT INTO PRODUCT(NAME, PRODUCT_SIZE, DESCRIPTION, PRICE, PRODUCTIMAGE) 
+                                    VALUES(:Pname, :stock, :description, :image)";
+                                    // Prepare SQL statement for execution
+                                    $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
+                                    // Bind variables to placeholders
+                                    oci_bind_by_name($stmt, ':Pname', $FPname);
+                                    oci_bind_by_name($stmt,':stock',$Vstock);
+                                    oci_bind_by_name($stmt, ':Vprice', $Vprice);
+                                    oci_bind_by_name($stmt, ':Fdescription', $Fdescription);
+                                    oci_bind_by_name($stmt, ':uimage', $uimage);
+                                    // Execute SQL statement
+                                    $result = oci_execute($stmt, OCI_COMMIT_ON_SUCCESS);
+                                    // Giving decision
+                                    if($result)
+                                    {
+                                        if(move_uploaded_file($utmpname, $ulocation)){
+                                            echo "New product added and is currently on review mode!<br>It can take up to 8 hours to review a product.<br><br>";
+                                            echo "<a href='./trader_homepage.php'>HOMEPAGE</a>";
+                                        }else{
+                                            echo "Unable to upload the file";
+                                        }
+                                    }else{
+                                        echo "Unable to upload product please try again later.";
+                                    }
+                                }else{
+                                    echo "Please fill Category Name";
+                                }
+                            
+                        }else{
+                        echo "Image format should be Jpeg, png, jpg or svg only.";
+                        }
+                    }else{
+                        echo "All details of the product is required";
+                    }
+                }                            
+            ?>
                 </form>
             </div>
         </section>

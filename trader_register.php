@@ -264,14 +264,22 @@ use PHPMailer\PHPMailer\Exception;
                 </div>
                 <div class="mb-4">
                     <label for="sname" class="block mb-2 text-sm font-medium text-gray-900 ">Shop name</label>
-                    <input type="text" id="sname" name="sname"
+                    <input type="text" id="sname" name="sname" value="<?php
+                                                                      if (isset($_POST['sname'])) {
+                                                                        echo $_POST['sname'];
+                                                                      }
+                                                                      ?>"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Shop Name" required>
                 </div>
                 <div class="mb-4">
                     <label for="Shop Category" class="block mb-2 text-sm font-medium text-gray-900 ">Shop
                         Category</label>
-                    <input type="text" id="scat" name="sname"
+                    <input type="text" id="scat" name="scategory" value="<?php
+                                                                      if (isset($_POST['scategory'])) {
+                                                                        echo $_POST['scategory'];
+                                                                      }
+                                                                      ?>"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Shop Category" required>
                 </div>
@@ -326,6 +334,26 @@ use PHPMailer\PHPMailer\Exception;
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Kathmadu" required>
                 </div>
+        <div class="mb-4">
+          <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 ">Gender</label>
+
+          <div class="flex">
+            <div class="flex items-center mr-4">
+              <input id="inline-radio" type="radio" name="gender" value="Male" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+              <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 ">Male</label>
+            </div>
+            <div class="flex items-center mr-4">
+              <input id="inline-2-radio" type="radio" name="gender" value="Female" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+              <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 ">Female</label>
+            </div>
+            <div class="flex items-center mr-4">
+              <input checked id="inline-checked-radio" type="radio" name="gender" value="Others" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+              <label for="inline-checked-radio" class="ml-2 text-sm font-medium text-gray-900 ">Others</label>
+            </div>
+
+          </div>
+
+        </div>
                 <div class="flex items-start mb-4">
                     <div class="flex items-center h-5">
                         <input id="remember" type="checkbox" value="" name="confirm"
@@ -336,11 +364,15 @@ use PHPMailer\PHPMailer\Exception;
                             class="text-blue-600 hover:underline ">terms and conditions</a>.</label>
                 </div>
                 <button type="submit" name="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Register</button>
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Register</button><br>
                 <?php
         if (isset($_POST['submit'])) {
           $firstname = trim($_POST['Firstname']);
           $Ffirstname = filter_var($firstname, FILTER_SANITIZE_STRING);
+          $sname = trim($_POST['sname']);
+          $Fsname = filter_var($sname, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+          $scategory = trim($_POST['scategory']);
+          $Fscategory = filter_var($scategory, FILTER_SANITIZE_STRING);
           $address = trim($_POST['address']);
           $Faddress = filter_var($address, FILTER_SANITIZE_STRING);
           $lastname = trim($_POST['Lastname']);
@@ -362,104 +394,125 @@ use PHPMailer\PHPMailer\Exception;
                 $user = $Ffirstname . ' ' . $Flastname;
                 if (ctype_alpha($Fusername)) {
                   if (strlen($Fusername) >= 6) {
-                    if (!empty($Vemail)) {
-                      if (isset($_POST['confirm'])) {
-                        $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,16}$/";
-                        if (!preg_match($pattern, $Fpassword)) {
-                          echo "Weak or invalid password!<br>" .
-                            "The password must have length between 6 <br>and 16 or more and must contain a number,<br> capital letter and a special character.";
-                        } else {
-                          if (validatePhoneNumber($contact)) {
-                            $existsEmail = "SELECT * FROM USER_ONE WHERE EMAIL = :email";
-                            $resultEmail = oci_parse($conn, $existsEmail) or die(oci_error($conn, $existsEmail));
-                            oci_bind_by_name($resultEmail, ":email", $Vemail);
-                            oci_execute($resultEmail);
-                            $Emailexists = oci_fetch_array($resultEmail, OCI_ASSOC);
+                    if(isset($sname)){
+                        if(isset($scategory)){
+                            $checkcategory="SELECT * FROM CATEGORY WHERE TYPE=:scategory";
+                            $check=oci_parse($conn,$checkcategory) or die(oci_error($conn,$checkcategory));
+                            oci_bind_by_name($check,":scategory",$scategory);
+                            oci_execute($check);
+                            if(!$check){
+                                echo"The quota for the shop category is already reached.<br> Please provide have different shop category.";
+                                 
+                            }else{
+                                
+                                if (!empty($Vemail)) {
+                                if (isset($_POST['confirm'])) {
+                                    $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,16}$/";
+                                    if (!preg_match($pattern, $Fpassword)) {
+                                    echo "Weak or invalid password!<br>" .
+                                        "The password must have length between 6 <br>and 16 or more and must contain a number,<br> capital letter and a special character.";
+                                    } else {
+                                    if (validatePhoneNumber($contact)) {
+                                        $existsEmail = "SELECT * FROM USER_ONE WHERE EMAIL = :email";
+                                        $resultEmail = oci_parse($conn, $existsEmail) or die(oci_error($conn, $existsEmail));
+                                        oci_bind_by_name($resultEmail, ":email", $Vemail);
+                                        oci_execute($resultEmail);
+                                        $Emailexists = oci_fetch_array($resultEmail, OCI_ASSOC);
 
-                            $existsPhone = "SELECT * FROM USER_ONE WHERE CONTACT = :contact";
-                            $resultPhone = oci_parse($conn, $existsPhone) or die(oci_error($conn, $existsPhone));
-                            oci_bind_by_name($resultPhone, ":contact", $contact);
-                            oci_execute($resultPhone);
-                            $PhoneExists = oci_fetch_array($resultPhone, OCI_ASSOC);
-                            if ($PhoneExists) {
-                              echo "The user with the same contact already exists.<br> Please verify it and provide different <br>contact number.";
-                            } else {
-                              if ($Emailexists) {
-                                echo "The user with same email already exists.<br> Please verify it and provide different<br> contact email.";
-                              } else {
-                                $pass = md5($Fcpassword);
-                                $type = 'trader';
-                                $sql = "INSERT INTO USER_ONE(FIRSTNAME,LASTNAME,ADDRESS,CONTACT,TYPE,EMAIL,GENDER,PASSWORD)
-                                                    VALUES(:Firstname,:Lastname,:address,:contact,:type,:email,:gender,:password)";
+                                        $existsPhone = "SELECT * FROM USER_ONE WHERE CONTACT = :contact";
+                                        $resultPhone = oci_parse($conn, $existsPhone) or die(oci_error($conn, $existsPhone));
+                                        oci_bind_by_name($resultPhone, ":contact", $contact);
+                                        oci_execute($resultPhone);
+                                        $PhoneExists = oci_fetch_array($resultPhone, OCI_ASSOC);
+                                        if ($PhoneExists) {
+                                        echo "The user with the same contact already exists.<br> Please verify it and provide different <br>contact number.";
+                                        } else {
+                                        if ($Emailexists) {
+                                            echo "The user with same email already exists.<br> Please verify it and provide different<br> contact email.";
+                                        } else {
+                                            
+                                            $pass = md5($Fcpassword);
+                                            $type = 'trader';
+                                            $sql = "INSERT INTO TRADER_APPROVAL(FIRSTNAME,LASTNAME,SHOPNAME,SHOPCATEGORY,ADDRESS,CONTACT,TYPE,EMAIL,GENDER,PASSWORD)
+                                                                VALUES(:Firstname,:Lastname,:sname,:scategory,:address,:contact,:type,:email,:gender,:password)";
 
-                                $query = oci_parse($conn, $sql) or die(oci_error($conn));
-                                oci_bind_by_name($query, ":Firstname", $Ffirstname);
-                                oci_bind_by_name($query, ":Lastname", $Flastname);
-                                oci_bind_by_name($query, ":address", $Faddress);
-                                oci_bind_by_name($query, ":contact", $contact);
-                                oci_bind_by_name($query, ":type", $type);
-                                oci_bind_by_name($query, ":email", $Vemail);
-                                oci_bind_by_name($query, ":gender", $gender);
-                                oci_bind_by_name($query, ":password", $pass);
-                                oci_execute($query);
-                                if ($query) {
-                                  require_once('../PHPMailer/src/PHPMailer.php');
-                                  require_once('../PHPMailer/src/SMTP.php');
+                                            $query = oci_parse($conn, $sql) or die(oci_error($conn,$sql));
+                                            oci_bind_by_name($query, ":Firstname", $Ffirstname);
+                                            oci_bind_by_name($query, ":Lastname", $Flastname);
+                                            oci_bind_by_name($query,":sname",$Fsname);
+                                            oci_bind_by_name($query,":scategory",$Fscategory);
+                                            oci_bind_by_name($query, ":address", $Faddress);
+                                            oci_bind_by_name($query, ":contact", $contact);
+                                            oci_bind_by_name($query, ":type", $type);
+                                            oci_bind_by_name($query, ":email", $Vemail);
+                                            oci_bind_by_name($query, ":gender", $gender);
+                                            oci_bind_by_name($query, ":password", $pass);
+                                            oci_execute($query);
+                                            if ($query) {
+                                            require_once('./PHPMailer/src/PHPMailer.php');
+                                            require_once('./PHPMailer/src/SMTP.php');
 
-                                  require '../PHPMailer/src/Exception.php';
+                                            require './PHPMailer/src/Exception.php';
 
-                                  // Create a new PHPMailer instance
-                                  $mail = new PHPMailer();
+                                            // Create a new PHPMailer instance
+                                            $mail = new PHPMailer();
 
-                                  // Set the SMTP credentials
-                                  //$mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Shows all the debugged message. Enable verbose debug output
-                                  $mail->isSMTP();
-                                  $mail->Host = 'smtp.gmail.com'; // your SMTP host
-                                  $mail->SMTPAuth = true;
-                                  $mail->Username = 'akapil21@tbc.edu.np'; // your SMTP username
-                                  $mail->Password = 'zmkxnuhhidezpurb'; // your SMTP password
-                                  $mail->SMTPSecure = 'tls';
-                                  $mail->Port = 587;
+                                            // Set the SMTP credentials
+                                            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Shows all the debugged message. Enable verbose debug output
+                                            $mail->isSMTP();
+                                            $mail->Host = 'smtp.gmail.com'; // your SMTP host
+                                            $mail->SMTPAuth = true;
+                                            $mail->Username = 'akapil21@tbc.edu.np'; // your SMTP username
+                                            $mail->Password = 'zmkxnuhhidezpurb'; // your SMTP password
+                                            $mail->SMTPSecure = 'tls';
+                                            $mail->Port = 587;
 
-                                  $mail->SMTPOptions = [
-                                    'ssl' => [
-                                      'verify_peer' => false,
-                                      'verify_peer_name' => false,
-                                      'allow_self_signed' => true
-                                    ]
-                                  ];
-                                  // Set the email details
-                                  $mail->setFrom('akapil21@tbc.edu.np', 'Team Tribus'); // the from email and name
-                                  $mail->addAddress($Vemail, $user); // the recipient email and name
-                                  $mail->Subject = 'Registration Form Received';
-                                  $mail->Body = 'Thank you for connecting with us, your application is under review.' . "\n" .
-                                    'It can take up to 2 working days for approving your form. Please have patience till then' . "\n" .
-                                    "We will contact you if for further query" . "\n" .
-                                    'Regards,' . "\n" .
-                                    'Team Tribus';
+                                            $mail->SMTPOptions = [
+                                                'ssl' => [
+                                                'verify_peer' => false,
+                                                'verify_peer_name' => false,
+                                                'allow_self_signed' => true
+                                                ]
+                                            ];
+                                            // Set the email details
+                                            $mail->setFrom('akapil21@tbc.edu.np', 'Team Tribus'); // the from email and name
+                                            $mail->addAddress($Vemail, $user); // the recipient email and name
+                                            $mail->Subject = 'Registration Form Received';
+                                            $mail->Body = 'Thank you for connecting with us, your application is under review.' . "\n" .
+                                                'It can take up to 2 working days for approving your form. Please have patience till then' . "\n" .
+                                                "We will contact you if for further query" . "\n" .
+                                                'Regards,' . "\n" .
+                                                'Team Tribus';
 
-                                  // Send the email
-                                  if (!$mail->send()) {
-                                    echo 'Mailer Error: ' . $mail->ErrorInfo;
-                                  } else {
-                                    echo ("Registration form submitted. Please check your email.");
-                                  }
+                                            // Send the email
+                                            if (!$mail->send()) {
+                                                echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                            } else {
+                                                echo ("Registration form submitted. Please check your email.");
+                                            }
+                                            }
+                                            oci_close($conn);                                            
+                                        }
+                                        }
+                                    } else {
+                                        echo "Invalid phone number: " . $contact;
+                                    }
                                 }
-                                oci_close($conn);
-                              }
+                                } else {
+                                    echo "Please agree to term and condition<br> before proceeding.";
+                                }
+                            } else {
+                                echo "All fields required.";
                             }
-                          } else {
-                            echo "Invalid phone number: " . $contact;
-                          }
                         }
-                      } else {
-                        echo "Please agree to term and condition<br> before proceeding.";
-                      }
-                    } else {
-                      echo "All fields required.";
-                    }
+                    }else{
+                        echo "The category of your shop is missing";
+                }
+                }else{
+                    echo "The name of your shop is missing";
+                }
                   } else {
-                    echo "The length of username must be<br> greater than or equal to 6 alphabets";
+                    echo "The trader name must contain<br> more than or equal to 6 alphabets";
                   }
                 } else {
                   echo "Username must have alphabets only.";

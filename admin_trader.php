@@ -1,3 +1,9 @@
+<?php
+include_once('connect.php');
+if(!issset($_SESSION['ADMIN'])){
+    header('location:./Login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -157,12 +163,50 @@
 </body>
 
 <!-- CONTENT -->
-<span class="md:ml-64 pl-6 pt-8 text-3xl font-sans font-bold">New Traders</span>
+<span class="md:ml-64 pl-6 pt-8 text-3xl font-sans font-bold">Trader's Request</span>
 <div class="flex md:ml-64 px-6 pt-2 gap-2">
-    <table class="table-auto w-full border-collapse border border-slate-500">
-
-
-    </table>
+<?php
+    $datas=oci_parse($conn,"SELECT * FROM TRADER_APPROVAL ORDER BY TRADER_APPROVAL_ID");
+    oci_execute($datas);
+    $datas1=oci_parse($conn, "SELECT COUNT(*) FROM TRADER_APPROVAL ORDER BY TRADER_APPROVAL_ID");
+    oci_execute($datas1);
+    $data1=oci_fetch_array($datas1,OCI_ASSOC);
+    $count=$data1['COUNT(*)'];
+    if($count>=1){
+        echo'<table class="table-auto w-full border-collapse border border-slate-500">
+    <tr><th class="border border-slate-600 ">FIRSTNAME</th><th class="border border-slate-600 ">LASTNAME</th><th class="border border-slate-600 ">ADDRESS</th><th class="border border-slate-600 ">CONTACT</th><th class="border border-slate-600 ">EMAIL</th><th class="border border-slate-600 ">GENDER</th><th class="border border-slate-600 ">SHOPCATEGORY</th><th class="border border-slate-600 ">SHOPNAME</th><th class="border border-slate-600 ">OPERATION</th></tr>';
+        while($data=oci_fetch_array($datas,OCI_ASSOC)){
+            $Ffirstname=$data['FIRSTNAME'];
+            $Flastname=$data['LASTNAME'];
+            $user=$Ffirstname.' '.$Flastname;
+            $Faddress=$data['ADDRESS'];
+            $contact=$data['CONTACT'];
+            $Vemail=$data['EMAIL'];
+           
+            echo"<tr><td class='border border-slate-600 '>".$Ffirstname."</td>";
+            echo"<td class='border border-slate-600 '>".$Flastname."</td>";
+            echo"<td class='border border-slate-600 '>".$Faddress."</td>";
+            echo"<td class='border border-slate-600 '>".$contact."</td>";
+            echo"<td class='border border-slate-600 '>".$Vemail."</td>";
+            
+        }
+    
+    oci_execute($datas);
+    while($data=oci_fetch_array($datas,OCI_ASSOC)){
+        $id=$data['TRADER_APPROVAL_ID'];
+        $gender=$data['GENDER'];
+        $Fscategory=$data['SHOPCATEGORY'];
+        $Fsname=$data['SHOPNAME'];
+        echo"<td class='border border-slate-600 '>".$gender."</td>";
+        echo"<td class='border border-slate-600 '>".$Fscategory."</td>";
+        echo"<td class='border border-slate-600 '>".$Fsname."</td>";
+        echo "<td class='border border-slate-600 '> <a href=./trader_approval.php?id=$id&action=add>Approve Trader</a> |
+        <a href=./trader_disapproval.php?id=$id&action=delete>Disapprove Trader</a></td></tr>";
+    }
+    echo "</table>";
+}
+?>
+</br>
 </div>
 
 <!-- Footer -->
