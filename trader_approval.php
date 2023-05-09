@@ -1,5 +1,5 @@
 <?php
-$conn = oci_connect('TeamProject', 'Nepal123', '//localhost/xe');
+include_once('connect.php');
 if(isset($_SESSION['ADMIN'])){
     header('location:Login.php');
 }

@@ -1,5 +1,5 @@
 <?php
-$conn = oci_connect('TeamProject', 'Nepal123', '//localhost/xe');
+include_once('connect.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -115,13 +115,13 @@ use PHPMailer\PHPMailer\Exception;
             <div class="flex justify-end items-center relative">
                 <div class="flex mr-4 items-center gap-4">
                     <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600"
-                        href="./Register.html">
+                        href="./Register.php">
                         <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                             Sign Up
                         </div>
                     </a>
                     <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white"
-                        href="./Login.html">
+                        href="./login.php">
                         <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                             Login
                         </div>
@@ -233,7 +233,7 @@ use PHPMailer\PHPMailer\Exception;
         <div class="flex md:pl-64 py-4">
             <form class="bg-slate-100 p-5 px-5 rounded-md border" method="post">
                 <div class=" text-3xl font-medium mb-5">
-                    Sign up for a free account
+                    Sign up for a trader account
                 </div>
                 <div class="grid gap-6 mb-4 md:grid-cols-2">
                     <div>
@@ -329,26 +329,32 @@ use PHPMailer\PHPMailer\Exception;
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Kathmadu" required>
                 </div>
-        <div class="mb-4">
-          <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 ">Gender</label>
+                <div class="mb-4">
+                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 ">Gender</label>
 
-          <div class="flex">
-            <div class="flex items-center mr-4">
-              <input id="inline-radio" type="radio" name="gender" value="Male" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 ">Male</label>
-            </div>
-            <div class="flex items-center mr-4">
-              <input id="inline-2-radio" type="radio" name="gender" value="Female" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 ">Female</label>
-            </div>
-            <div class="flex items-center mr-4">
-              <input checked id="inline-checked-radio" type="radio" name="gender" value="Others" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-              <label for="inline-checked-radio" class="ml-2 text-sm font-medium text-gray-900 ">Others</label>
-            </div>
+                    <div class="flex">
+                        <div class="flex items-center mr-4">
+                            <input id="inline-radio" type="radio" name="gender" value="Male" name="inline-radio-group"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 ">Male</label>
+                        </div>
+                        <div class="flex items-center mr-4">
+                            <input id="inline-2-radio" type="radio" name="gender" value="Female"
+                                name="inline-radio-group"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 ">Female</label>
+                        </div>
+                        <div class="flex items-center mr-4">
+                            <input checked id="inline-checked-radio" type="radio" name="gender" value="Others"
+                                name="inline-radio-group"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                            <label for="inline-checked-radio"
+                                class="ml-2 text-sm font-medium text-gray-900 ">Others</label>
+                        </div>
 
-          </div>
+                    </div>
 
-        </div>
+                </div>
                 <div class="flex items-start mb-4">
                     <div class="flex items-center h-5">
                         <input id="remember" type="checkbox" value="" name="confirm"
