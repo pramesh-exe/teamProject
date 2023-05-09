@@ -1,11 +1,5 @@
 <?php
 $conn = oci_connect('TeamProject', 'Nepal123', '//localhost/xe');
-if (!$conn) {
-  $m = oci_error();
-  echo $m['message'], "\n";
-  exit;
-}
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;

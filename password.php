@@ -1,4 +1,8 @@
 <?php
+include_once('connect.php');
+if (!isset(strtolower($_SESSION['email'])) || isset($_SESSION['contact'])) {
+  header('location:./Login.php');
+}
 if (isset($_POST['Rsubmit'])) {
   $email = trim($_POST['Remail']);
   $contact = trim($_POST['Rcontact']);
@@ -6,7 +10,6 @@ if (isset($_POST['Rsubmit'])) {
   $Femail = filter_var($lemail, FILTER_SANITIZE_EMAIL);
   $Vemail = filter_var($Femail, FILTER_VALIDATE_EMAIL);
   if (validatePhoneNumber($contact)) {
-    include_once('connect.php');
     $existsEmail = "SELECT * FROM USER_ONE WHERE EMAIL = :email";
     $resultEmail = oci_parse($conn, $existsEmail) or die(oci_error($conn, $existsEmail));
     oci_bind_by_name($resultEmail, ":email", $Vemail);

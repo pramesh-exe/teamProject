@@ -1,8 +1,6 @@
 <?php
 include_once('connect.php');
-$email = strtolower($_SESSION['email']);
-$contact = $_SESSION['contact'];
-if ($email == FALSE || $contact == FALSE) {
+if (!isset(strtolower($_SESSION['email'])) || isset($_SESSION['contact'])) {
   header('location:./Login.php');
 }
 ?>
