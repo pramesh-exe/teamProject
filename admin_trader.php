@@ -1,6 +1,6 @@
 <?php
 include_once('connect.php');
-if(!issset($_SESSION['ADMIN'])){
+if(!isset($_SESSION['ADMIN'])){
     header('location:./Login.php');
 }
 ?>

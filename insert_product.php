@@ -244,7 +244,7 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
                             $usize=$_FILES['upload']['size'];
                             $utype=$_FILES['upload']['type'];
                             $utmpname=$_FILES['upload']['tmp_name'];
-                            $ulocation="productphotos/".$cName."/".$uimage;
+                            $ulocation="productphotos/".$uimage;
 
                             if($utype=="image/jpeg" || $utype=="image/jpg" || $utype=="image/png" || $utype=="image/svg")
                             {
@@ -253,13 +253,13 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
                                         
                                     // SQL statement with placeholders for bind variables
                                     $sql ="INSERT INTO PRODUCT(NAME, PRODUCT_SIZE, DESCRIPTION, PRICE, PRODUCTIMAGE) 
-                                    VALUES(:Pname, :stock, :description, :image)";
+                                    VALUES(:Pname, :stock, :price, :description, :uimage)";
                                     // Prepare SQL statement for execution
                                     $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
                                     // Bind variables to placeholders
                                     oci_bind_by_name($stmt, ':Pname', $FPname);
                                     oci_bind_by_name($stmt,':stock',$Vstock);
-                                    oci_bind_by_name($stmt, ':Vprice', $Vprice);
+                                    oci_bind_by_name($stmt, ':price', $Vprice);
                                     oci_bind_by_name($stmt, ':Fdescription', $Fdescription);
                                     oci_bind_by_name($stmt, ':uimage', $uimage);
                                     // Execute SQL statement
