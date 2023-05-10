@@ -1,3 +1,7 @@
+<?php
+include_once('connect.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,70 +16,70 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .slick-slide {
+        margin: 0 1rem;
+        /* max-width: 300px; */
+    }
+
+    .slick-arrow {
+        position: relative;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        position: relative;
+        color: black;
+    }
+
+    .slick-prev,
+    .slick-next {
+        left: 0;
+        right: 0;
+        transform: unset;
+    }
+
+
+    .slick-slide {
+        transition: all ease-in-out .3s;
+    }
+
+    @media (min-width: 1024px) {
+        .top-navbar {
+            display: inline-flex !important;
         }
 
-        .slick-slide {
-            margin: 0 1rem;
-            /* max-width: 300px; */
+        .main-section {
+            width: calc(100% - 250px) !important;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .main-body {
+            display: flex;
+            width: calc(100% - 400px);
         }
 
-        .slick-arrow {
-            position: relative;
+        .main-section {
+            display: flex;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .main-body {
+            display: flex;
+            width: calc(100% - 400px);
         }
 
-        .slick-prev:before,
-        .slick-next:before {
-            position: relative;
-            color: black;
+        .main-section {
+            display: flex;
         }
-
-        .slick-prev,
-        .slick-next {
-            left: 0;
-            right: 0;
-            transform: unset;
-        }
-
-
-        .slick-slide {
-            transition: all ease-in-out .3s;
-        }
-
-        @media (min-width: 1024px) {
-            .top-navbar {
-                display: inline-flex !important;
-            }
-
-            .main-section {
-                width: calc(100% - 250px) !important;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .main-body {
-                display: flex;
-                width: calc(100% - 400px);
-            }
-
-            .main-section {
-                display: flex;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .main-body {
-                display: flex;
-                width: calc(100% - 400px);
-            }
-
-            .main-section {
-                display: flex;
-            }
-        }
+    }
     </style>
 </head>
 
@@ -286,138 +290,44 @@
                 </aside>
 
                 <!-- main-section -->
-                <section class="main-section w-full bg-slate-100">
+                <section class="main-section w-full ">
                     <div class="main-body 2xl:flex">
                         <div class="w-auto lg:w-full p-8">
                             <div class="mb-8">
                                 <h3 class="text-2xl font-sans font-bold">What's New?</h3>
                                 <div class="responsive-slider flex items-center">
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
+                                    <?php
+                                    $query = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY PRODUCT_ID DESC) WHERE ROWNUM <= 7";
+                                    $stid = oci_parse($conn, $query);
+                                    oci_execute($stid);
+                                    // $st = oci_fetch_assoc($stid);
+                                    while ($row = oci_fetch_array($stid))
+                                     {
+                                        $image=$row['PRODUCTIMAGE'];
+                                        echo '<div class="flex flex-col rounded-lg overflow-hidden shadow-md">
                                         <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
+                                            <a href="product.php?id='.$row['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                    src="./Imgaes/'.$image.'.jpg"
                                                     alt="product image" />
                                             </a>
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
+                                            <div class="font-medium">'.$row['NAME'].'</div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
+                                                <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>
+                                                <a href="login.php">
+                                                    <button
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</button>
+                                                    </a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>';
+                                    }
+                                    ?>
+
+
                                 </div>
                             </div>
                             <div class="mb-8">
@@ -426,8 +336,7 @@
                                     <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
                                         <div class="w-full h-40 overflow-hidden">
                                             <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                <img class="w-full h-40 object-cover" src="./Imgaes/apples.jpg"
                                                     alt="product image" />
                                             </a>
                                         </div>
@@ -1006,66 +915,66 @@
         </footer>
     </div>
 
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".nav-toggler").each(function (_, navToggler) {
-                var target = $(navToggler).data("target");
-                $(navToggler).on("click", function () {
-                    console.log("OK")
-                    $(target).animate({
-                        height: "toggle"
-                    });
+    $(document).ready(function() {
+        $(".nav-toggler").each(function(_, navToggler) {
+            var target = $(navToggler).data("target");
+            $(navToggler).on("click", function() {
+                console.log("OK")
+                $(target).animate({
+                    height: "toggle"
                 });
             });
-
-            $('.responsive-slider').slick({
-                infinite: false,
-                dots: false,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 4,
-                responsive: [
-                    {
-                        breakpoint: 1536,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3,
-                        }
-                    },
-                    {
-                        breakpoint: 1310,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 4,
-                        }
-                    },
-                    {
-                        breakpoint: 1280,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3,
-                        }
-                    },
-                    {
-                        breakpoint: 640,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 520,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
         });
+
+        $('.responsive-slider').slick({
+            infinite: false,
+            dots: false,
+            speed: 300,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            responsive: [{
+                    breakpoint: 1536,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                    }
+                },
+                {
+                    breakpoint: 1310,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                    }
+                },
+                {
+                    breakpoint: 1280,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                    }
+                },
+                {
+                    breakpoint: 640,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 520,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
     </script>
 
 </body>
