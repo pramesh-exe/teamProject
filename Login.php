@@ -21,16 +21,17 @@ if (isset($_POST['submit'])) {
     oci_bind_by_name($result, ":type", $type);
     oci_execute($result);
     $user = oci_fetch_array($result, OCI_ASSOC);
-    oci_close($conn);
+    
     if ($user) {
       $_SESSION['email'] = $lemail;
       $_SESSION['password'] = $password;
-      header('location./landing.php');
+      header('location:./landing.php');
       exit();
     } else {
       $_SESSION['error'] = 'Invalid login credentials!<br>Provide your valid email and password.';
     }
   }
+  oci_close($conn);
 }
 ?>
 <!DOCTYPE html>

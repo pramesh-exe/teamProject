@@ -25,10 +25,6 @@ $data=oci_fetch_array($datas,OCI_ASSOC);
     $pass=$data['PASSWORD'];
     $Fscategory=$data['SHOPCATEGORY'];
     $Fsname=$data['SHOPNAME'];
-        $insertC="INSERT INTO CATEGORY(TYPE) VALUES(:scategory)";
-        $insert=oci_parse($conn,$insertC) or die(oci_error($conn,$insertC));
-        oci_bind_by_name($insert,":scategory",$scategory);
-        oci_execute($insert);
 
         $type = 'trader';
         $sql = "INSERT INTO USER_ONE(FIRSTNAME,LASTNAME,ADDRESS,CONTACT,TYPE,EMAIL,GENDER,PASSWORD)
@@ -85,32 +81,43 @@ $data=oci_fetch_array($datas,OCI_ASSOC);
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            echo ("Registration confirmation email sent successfully.");
-        }
-        }
-        oci_close($conn);
-        $info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
-        $userinfo = oci_parse($conn, $existsEmail) or die(oci_error($conn, $existsEmail));
-        oci_bind_by_name($userinfo, ":email", $Vemail);
-        oci_bind_by_name($userinfo, ":password", $password);
-        oci_execute($userinfo);
-        $row = oci_fetch_assoc($userinfo);
-        $id=$row['USER_ID'];
+            $info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:pass";
+            $userinfo = oci_parse($conn, $info) or die(oci_error($conn, $info));
+            oci_bind_by_name($userinfo, ":email", $Vemail);
+            oci_bind_by_name($userinfo, ":contact", $contact);
+            oci_execute($userinfo);
+            $row = oci_fetch_array($userinfo,OCI_ASSOC);
+            $uid=$row['USER_ID'];
+                    
         $insertSsql="INSERT INTO SHOP(NAME, OWNER_NAME, TYPE, FK1_USER_ID) VALUES(:sname, :user ,:scategory ,:fk1_user_id)";
         $insertS=oci_parse($conn,$insertSsql) or oci_error($conn,$insertSsql);
         oci_bind_by_name($insertS,":sname",$Fsname); 
         oci_bind_by_name($insertS,":user",$user); 
         oci_bind_by_name($insertS,":scatgory",$Fscategory);
-        oci_bind_by_name($insertS,":fk1_user_id",$id);
+        oci_bind_by_name($insertS,":fk1_user_id",$uid);
         oci_execute($insertS);
-        if($insertS){
-            $delete_query=oci_parse($conn,"SELECT * FROM TRADER_APPROVAL WHERE TRADER_APPROVAL_ID=:id");
-            oci_bind_by_name($delete_query,":id",$id);
+        $insertC="INSERT INTO CATEGORY(TYPE,FK1_USER_ID) VALUES(:scategory, :user_id)";
+        $insert=oci_parse($conn,$insertC) or die(oci_error($conn,$insertC));
+        oci_bind_by_name($insert,":scategory",$scategory);
+        oci_bind_by_name($insert,":user_id",$uid)
+        oci_execute($insert);
+        if($insertS && $insert){
+            $delete_query=oci_parse($conn,"DELETE FROM TRADER_APPROVAL WHERE EMAIL=:email AND CONTACT=:contact");
+            oci_bind_by_name($userinfo, ":email", $Vemail);
+            oci_bind_by_name($userinfo, ":contact", $contact);
             oci_execute($delete_query);
             header('location:./admin_trader.php');
+            if($delete_query){
+                echo ("Registration confirmation email sent successfully.");
+            }
         }else{
             header('location:./admin_trader.php');
             echo "Something went wrong!";  
         } 
+            
+        }
+        }
+        oci_close($conn);
+        
     }
 ?>
