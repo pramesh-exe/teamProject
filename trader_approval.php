@@ -17,7 +17,7 @@ oci_execute($datas);
 $data=oci_fetch_array($datas,OCI_ASSOC);
     $Ffirstname=$data['FIRSTNAME'];
     $Flastname=$data['LASTNAME'];
-    $user=$Ffirstname.' '.$Flastname;
+    $user=$Ffirstname.$Flastname;
     $Faddress=$data['ADDRESS'];
     $contact=$data['CONTACT'];
     $Vemail=$data['EMAIL'];
