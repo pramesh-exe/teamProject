@@ -1,6 +1,7 @@
 <?php
 include 'connect.php';
 $id=$_GET['id'];
+$_SESSION['pid']=$id;
 
                 $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";
                 
@@ -250,7 +251,7 @@ $id=$_GET['id'];
                 <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
                     <div class="">
                         <?php          
-                        echo'<img src="./Imgaes/'.$image.'"
+                        echo'<img src="./Images/'.$image.'"
                         alt="product image" />
                         </a>';
                     ?>
