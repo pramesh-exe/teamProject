@@ -299,10 +299,10 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                     <div class="main-body 2xl:flex">
                         <div class="w-auto lg:w-full p-8">
                             <div class="mb-8">
-                                <h3 class="text-2xl font-sans font-bold">What's New?</h3>
+                                <h3 class="text-2xl font-sans font-bold mb-2">What's New?</h3>
                                 <div class="responsive-slider flex items-center">
                                     <?php
-                                    $query = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY PRODUCT_ID DESC) WHERE ROWNUM <= 7";
+                                    $query = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY PRODUCT_ID DESC) WHERE ROWNUM <= 10";
                                     $stid = oci_parse($conn, $query);
                                     oci_execute($stid);
                                     // $st = oci_fetch_assoc($stid);
@@ -313,12 +313,12 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                         <div class="w-full h-40 overflow-hidden">
                                             <a href="product.php?id='.$row['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="./Imgaes/'.$image.'.jpg"
+                                                    src="./Imgaes/'.$image.'"
                                                     alt="product image" />
                                             </a>
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">'.$row['NAME'].'</div>
+                                            <div class="font-medium whitespace-nowrap">'.$row['NAME'].'</div>
                                             <div class="flex justify-between flex-col gap-2">
                                                 <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>
                                                 <a href="login.php">
@@ -336,133 +336,39 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                 </div>
                             </div>
                             <div class="mb-8">
-                                <h3 class="text-2xl font-sans font-bold">What's New?</h3>
+                                <h3 class="text-2xl font-sans font-bold mb-2">You may like</h3>
                                 <div class="responsive-slider flex items-center">
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
+                                    <?php
+                                    $query2 = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY dbms_random.value) WHERE ROWNUM <= 10";
+                                    $stid2 = oci_parse($conn, $query2);
+                                    oci_execute($stid2);
+                                    while ($row2 = oci_fetch_array($stid2))
+                                     {
+                                        
+                                        echo '<div class="flex flex-col rounded-lg overflow-hidden shadow-md">
                                         <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover" src="./Imgaes/apples.jpg"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
+                                            <a href="product.php?id='.$row2['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                    src="./Imgaes/'.$row2['PRODUCTIMAGE'].'"
                                                     alt="product image" />
                                             </a>
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
+                                            <div class="font-medium whitespace-nowrap">'.$row2['NAME'].'</div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
+                                                <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
+                                                <a href="login.php">
+                                                    <button
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</button>
+                                                    </a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>';
+                                    }
+                                    ?>
+
+
                                 </div>
                             </div>
                             <div class="mb-8">
