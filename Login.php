@@ -278,7 +278,7 @@ if (isset($_POST['submit'])) {
                     <div class="flex items-center justify-between">
                         <a href="./trader_login.php" class="text-sm font-medium text-blue-600 hover:underline ">Trader
                             Login?</a>
-                        <a href="./forgot.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot
+                        <a href="./password.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot
                             password?</a>
                     </div>
                     <button type="submit" name="submit"

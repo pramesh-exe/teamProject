@@ -1,8 +1,6 @@
 <?php
 include_once('connect.php');
-if (!isset(strtolower($_SESSION['email'])) || isset($_SESSION['contact'])) {
-  header('location:./Login.php');
-}
+
 if (isset($_POST['Rsubmit'])) {
   $email = trim($_POST['Remail']);
   $contact = trim($_POST['Rcontact']);

@@ -1,6 +1,6 @@
 <?php
      if(isset($_POST['submit'])){
-      include("connect.php");
+      include_once("connect.php");
       $password=md5($_POST['password']);
       $pas=$_POST['password'];
       $email=trim($_POST['email']);
@@ -306,6 +306,7 @@
                           echo "<strong>".$_SESSION['error']."</strong>";     
                         }
                     }
+                    
                 ?>
         </div>
     </div>

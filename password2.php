@@ -1,6 +1,6 @@
 <?php
 include_once('connect.php');
-if (!isset(strtolower($_SESSION['email'])) || isset($_SESSION['contact'])) {
+if (empty(strtolower($_SESSION['email'])) || empty($_SESSION['contact'])) {
   header('location:./Login.php');
 }
 ?>
@@ -224,7 +224,7 @@ if (!isset(strtolower($_SESSION['email'])) || isset($_SESSION['contact'])) {
             echo "Weak or invalid password!<br>" .
               "The password must have length between 6 and 16 or more and must contain a number, capital letter and a special character.";
           } else {
-            if (strtolower(($_SESSION['Remail'])) && ($_SESSION['Rcontact'])) {
+            if (strtolower(($_SESSION['email'])) && ($_SESSION['contact'])) {
               $pass = md5($Fpassword);
               $sql = "UPDATE USER_ONE SET PASSWORD = :password where email=:email AND contact=:contact";
               $update = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
