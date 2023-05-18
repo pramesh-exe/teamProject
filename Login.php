@@ -2,18 +2,16 @@
 if (isset($_POST['submit'])) {
   include_once("connect.php");
   $password = md5($_POST['password']);
-  $pas = $_POST['password'];
+  $pas =strtolower($_POST['password']);
   $admin = strtolower("ADMIN");
   $email = trim($_POST['email']);
   $lemail = strtolower($email);
   $Femail = filter_var($lemail, FILTER_SANITIZE_EMAIL);
   $Vemail = filter_var($Femail, FILTER_VALIDATE_EMAIL);
-  if ($lemail == $admin) {
-    if (($pas == "ADMIN") || ($pas == "Admin") || ($pas == "admin")) {
-      $_SESSION['ADMIN'] = strtolower("ADMIN");
-      header('location:./admin_trader.php');
-    }
-  } else {
+  if (($lemail == $admin) &&($pas == $admin)) {
+      $_SESSION['ADMIN'] = "admin";
+      header('location:./admin_trader.php');   
+  }else{
     $type="user";
     $sql = "SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type= :type";
     $result = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
@@ -27,8 +25,10 @@ if (isset($_POST['submit'])) {
     if ($user) {
       $_SESSION['email'] = $lemail;
       $_SESSION['password'] = $password;
-      header('location:./landing.php');
+      header('location./landing.php');
       exit();
+    } else {
+      $_SESSION['error'] = 'Invalid login credentials!<br>Provide your valid email and password.';
     }
   }
 }
@@ -288,37 +288,6 @@ if (isset($_POST['submit'])) {
                             class="font-medium text-blue-600 hover:underline ">Sign up</a>
                     </p>
             </form>
-            <?php
-      if (isset($_POST['submit'])) {
-        include("connect.php");
-        $password = md5($_POST['password']);
-        $pas = $_POST['password'];
-        $email = trim($_POST['email']);
-        $lemail = strtolower($email);
-        $Femail = filter_var($lemail, FILTER_SANITIZE_EMAIL);
-        $Vemail = filter_var($Femail, FILTER_VALIDATE_EMAIL);
-        $type="user";
-        $sql = "SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type= :type";
-        $result = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
-
-        oci_bind_by_name($result, ":email", $Vemail);
-        oci_bind_by_name($result, ":password", $password);
-        oci_bind_by_name($result, ":type", $type);
-        oci_execute($result);
-        $user = oci_fetch_array($result, OCI_ASSOC);
-        oci_close($conn);
-        if ($user) {
-          $_SESSION['email'] = $lemail;
-          $_SESSION['password'] = $password;
-          header('location:./homepage.php');
-          exit();
-        } else {
-          $_SESSION['error'] = 'Invalid login credentials!<br>Provide your valid email and password.';
-          echo "<strong>" . $_SESSION['error'] . "</strong>";
-        }
-      }
-      ?>
-
             <?php
     // Output the error message if it exists
     if (isset($_SESSION['error'])) {
