@@ -182,27 +182,22 @@ if(!isset($_SESSION['ADMIN'])){
             $Faddress=$data['ADDRESS'];
             $contact=$data['CONTACT'];
             $Vemail=$data['EMAIL'];
-           
+            $id=$data['TRADER_APPROVAL_ID'];
+            $gender=$data['GENDER'];
+            $Fscategory=$data['SHOPCATEGORY'];
+            $Fsname=$data['SHOPNAME'];
             echo"<tr><td class='border border-slate-600 '>".$Ffirstname."</td>";
             echo"<td class='border border-slate-600 '>".$Flastname."</td>";
             echo"<td class='border border-slate-600 '>".$Faddress."</td>";
             echo"<td class='border border-slate-600 '>".$contact."</td>";
             echo"<td class='border border-slate-600 '>".$Vemail."</td>";
+            echo"<td class='border border-slate-600 '>".$gender."</td>";
+            echo"<td class='border border-slate-600 '>".$Fscategory."</td>";
+            echo"<td class='border border-slate-600 '>".$Fsname."</td>";
+            echo "<td class='border border-slate-600 '> <a href=./trader_approval.php?id=$id&action=add>Approve Trader</a> |
+            <a href=./trader_disapproval.php?id=$id&action=delete>Disapprove Trader</a></td></tr>";
             
         }
-    
-    oci_execute($datas);
-    while($data=oci_fetch_array($datas,OCI_ASSOC)){
-        $id=$data['TRADER_APPROVAL_ID'];
-        $gender=$data['GENDER'];
-        $Fscategory=$data['SHOPCATEGORY'];
-        $Fsname=$data['SHOPNAME'];
-        echo"<td class='border border-slate-600 '>".$gender."</td>";
-        echo"<td class='border border-slate-600 '>".$Fscategory."</td>";
-        echo"<td class='border border-slate-600 '>".$Fsname."</td>";
-        echo "<td class='border border-slate-600 '> <a href=./trader_approval.php?id=$id&action=add>Approve Trader</a> |
-        <a href=./trader_disapproval.php?id=$id&action=delete>Disapprove Trader</a></td></tr>";
-    }
     echo "</table>";
 }
 ?>
