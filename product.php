@@ -251,11 +251,7 @@ $_SESSION['pid']=$id;
                 <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
                     <div class="">
                         <?php          
-<<<<<<< HEAD
-                        echo'<img src="./Images/'.$image.'"
-=======
                         echo'<img src="./images/'.$image.'"
->>>>>>> a34524d7acc9658b1ac511ccb5c68b38e100a409
                         alt="product image" />
                         </a>';
                     ?>
