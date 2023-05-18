@@ -302,7 +302,7 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                 <h3 class="text-2xl font-sans font-bold">What's New?</h3>
                                 <div class="responsive-slider flex items-center">
                                     <?php
-                                    $query = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY PRODUCT_ID DESC) WHERE ROWNUM <= 7";
+                                    $query = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY PRODUCT_ID DESC) WHERE ROWNUM <= 9";
                                     $stid = oci_parse($conn, $query);
                                     oci_execute($stid);
                                     // $st = oci_fetch_assoc($stid);
@@ -313,12 +313,12 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                         <div class="w-full h-40 overflow-hidden">
                                             <a href="product.php?id='.$row['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="./Imgaes/'.$image.'.jpg"
+                                                    src="./Imgaes/'.$image.'"
                                                     alt="product image" />
                                             </a>
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">'.$row['NAME'].'</div>
+                                            <div class="font-medium whitespace-nowrap">'.$row['NAME'].'</div>
                                             <div class="flex justify-between flex-col gap-2">
                                                 <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>
                                                 <a href="login.php">
