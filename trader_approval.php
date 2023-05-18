@@ -50,7 +50,7 @@ $data=oci_fetch_array($datas,OCI_ASSOC);
             $row = oci_fetch_array($userinfo,OCI_ASSOC);
             $uid=$row['USER_ID'];
         $insertSql="INSERT INTO SHOP(NAME, OWNER_NAME, TYPE, FK1_USER_ID) VALUES(:sname, :user ,:scategory ,:user_id)";
-        $insertS=oci_parse($conn,$insertSql) or die($conn,$insertSql);
+        $insertS=oci_parse($conn,$insertSql) or die(oci_error($conn,$insertSql));
         oci_bind_by_name($insertS,":sname",$Fsname); 
         oci_bind_by_name($insertS,":user",$user); 
         oci_bind_by_name($insertS,":scatgory",$Fscategory);
