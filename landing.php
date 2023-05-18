@@ -313,7 +313,7 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                         <div class="w-full h-40 overflow-hidden">
                                             <a href="product.php?id='.$row['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="./Imgaes/'.$image.'"
+                                                    src="./images/'.$image.'"
                                                     alt="product image" />
                                             </a>
                                         </div>
@@ -349,7 +349,7 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                         <div class="w-full h-40 overflow-hidden">
                                             <a href="product.php?id='.$row2['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="./Imgaes/'.$row2['PRODUCTIMAGE'].'"
+                                                    src="./images/'.$row2['PRODUCTIMAGE'].'"
                                                     alt="product image" />
                                             </a>
                                         </div>

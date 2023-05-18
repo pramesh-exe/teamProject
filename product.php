@@ -251,7 +251,11 @@ $_SESSION['pid']=$id;
                 <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
                     <div class="">
                         <?php          
+<<<<<<< HEAD
                         echo'<img src="./Images/'.$image.'"
+=======
+                        echo'<img src="./images/'.$image.'"
+>>>>>>> a34524d7acc9658b1ac511ccb5c68b38e100a409
                         alt="product image" />
                         </a>';
                     ?>
@@ -270,11 +274,9 @@ $_SESSION['pid']=$id;
                             </p>
                         </div>
                         <div class="font-light mt-4">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus repellat amet iure
-                            iste
-                            repellendus minus officiis iusto, consequuntur, neque obcaecati facilis minima! Hic,
-                            repellendus
-                            vitae ab quis quo omnis sed.
+                            <?php    
+                                echo $desc;
+                            ?>
                         </div>
                         <div class="text-3xl font-sans font-semibold mt-4">
                             In stock: <?php 
@@ -282,14 +284,15 @@ $_SESSION['pid']=$id;
                         ?>
                         </div>
                         <div class="text-sm font-medium mt-4">
-                            <form class=action="">
-                                <button class="bg-blue-600 py-2 px-4 border rounded-lg text-white hover:bg-blue-900">Add
-                                    to
-                                    cart</button>
-                                <button class="bg-blue-600 py-2 px-4 border rounded-lg text-white hover:bg-blue-900">Add
-                                    to
-                                    wishlist</button>
-                            </form>
+                            <a href="./addToCart.php"
+                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
+                                to
+                                cart</a>
+                            <a href="./addtowishlist.php"
+                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
+                                to
+                                wishlist</a>
+
                         </div>
                     </div>
                 </div>
@@ -307,7 +310,7 @@ $_SESSION['pid']=$id;
                         echo'<div class=" rounded-lg overflow-hidden shadow-md">
                         <div class="w-full h-40 overflow-hidden">
                             <a href="product.php?id='.$row2['PRODUCT_ID'].'">
-                                <img class="w-full h-40 object-cover" src="./Imgaes/'.$row2['PRODUCTIMAGE'].'"
+                                <img class="w-full h-40 object-cover" src="./images/'.$row2['PRODUCTIMAGE'].'"
                                     alt="product image" />
                             </a>
                         </div>
