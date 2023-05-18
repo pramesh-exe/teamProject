@@ -392,7 +392,6 @@ $address = $row['ADDRESS'];
                     } else {
                         echo "All fields required.";
                     }
-                }
                 // Function to validate phone numbers with country code
                 function validatePhoneNumber($phoneNumber)
                 {
@@ -400,7 +399,6 @@ $address = $row['ADDRESS'];
                     $pattern = "/^\+(?:\d{1,3})?(\d{10})$/";
                     return preg_match($pattern, $phoneNumber, $matches) && strlen($matches[1]) === 10;
                 }
-            }
             ?>
         </div>
     </div>
