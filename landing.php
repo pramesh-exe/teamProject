@@ -372,306 +372,216 @@ if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
                                 </div>
                             </div>
                             <div class="mb-8">
-                                <h3 class="text-2xl font-sans font-bold">What's New?</h3>
+                                <h3 class="text-2xl font-sans font-bold mb-2">FRESH OFF THE SHELF</h3>
                                 <div class="responsive-slider flex items-center">
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
+                                    <?php
+                                    $query2 = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY dbms_random.value) WHERE ROWNUM <= 10";
+                                    $stid2 = oci_parse($conn, $query2);
+                                    oci_execute($stid2);
+                                    while ($row2 = oci_fetch_array($stid2))
+                                     {
+                                        
+                                        echo '<div class="flex flex-col rounded-lg overflow-hidden shadow-md">
                                         <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
+                                            <a href="product.php?id='.$row2['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                    src="./images/'.$row2['PRODUCTIMAGE'].'"
                                                     alt="product image" />
                                             </a>
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
+                                            <div class="font-medium whitespace-nowrap">'.$row2['NAME'].'</div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
+                                                <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
+                                                <a href="login.php">
+                                                    <button
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</button>
+                                                    </a>
                                             </div>
+                                        </div>
+                                    </div>';
+                                    }
+                                    ?>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="flex flex-col p-8 min-w-[300px] w-full gap-8">
+                            <div class="flex flex-col gap-6">
+                                <div
+                                    class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
+                                    <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
+                                    <div class="flex justify-between items-center">
+                                        <a href="#"><span
+                                                class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
+                                                it now <i class="fas fa-arrow-right"></i></span></a>
+                                        <div class="flex items-center text-sm transition-colors duration-200 transform">
+                                            <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                alt="jane avatar">
                                         </div>
                                     </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col rounded-lg overflow-hidden shadow-md">
-                                        <div class="w-full h-40 overflow-hidden">
-                                            <a href="#">
-                                                <img class="w-full h-40 object-cover"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="product image" />
-                                            </a>
-                                        </div>
-                                        <div class="p-4 flex flex-col gap-2">
-                                            <div class="font-medium">Product Name</div>
-                                            <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$999</div>
-                                                <button
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
-                                                    to cart</button>
-                                            </div>
+                                </div>
+                                <div
+                                    class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
+                                    <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
+                                    <div class="flex justify-between items-center">
+                                        <a href="#"><span
+                                                class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
+                                                it now <i class="fas fa-arrow-right"></i></span></a>
+                                        <div class="flex items-center text-sm transition-colors duration-200 transform">
+                                            <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                alt="jane avatar">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col p-8 min-w-[300px] w-full gap-8">
-                        <div class="flex flex-col gap-6">
-                            <div
-                                class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
-                                <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
-                                <div class="flex justify-between items-center">
+                            <div class="flex flex-col gap-6">
+                                <div class="flex justify-between">
+                                    <h3 class="font-bold text-xl">Daily Deals</h3>
                                     <a href="#"><span
-                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
-                                            it now <i class="fas fa-arrow-right"></i></span></a>
-                                    <div class="flex items-center text-sm transition-colors duration-200 transform">
-                                        <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                            src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                            alt="jane avatar">
-                                    </div>
+                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">See
+                                            all <i class="fas fa-arrow-right"></i></span></a>
                                 </div>
-                            </div>
-                            <div
-                                class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
-                                <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
-                                <div class="flex justify-between items-center">
-                                    <a href="#"><span
-                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
-                                            it now <i class="fas fa-arrow-right"></i></span></a>
-                                    <div class="flex items-center text-sm transition-colors duration-200 transform">
-                                        <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                            src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                            alt="jane avatar">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-6">
-                            <div class="flex justify-between">
-                                <h3 class="font-bold text-xl">Daily Deals</h3>
-                                <a href="#"><span
-                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">See
-                                        all <i class="fas fa-arrow-right"></i></span></a>
-                            </div>
-                            <div class="items-list">
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                <div class="items-list">
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col mb-6">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="flex gap-2">
-                                            <div
-                                                class="flex items-center text-sm transition-colors duration-200 transform gap-2">
-                                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                                    alt="jane avatar">
-                                                <div class="flex flex-col gap-1">
-                                                    <h3 class="text-md">Summer headphones from top brands</h3>
-                                                    <span class="text-sm font-medium text-slate-400">2406 Reviews | 1629
-                                                        Orders</span>
+                                    <div class="flex flex-col mb-6">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex gap-2">
+                                                <div
+                                                    class="flex items-center text-sm transition-colors duration-200 transform gap-2">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
+                                                        src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
+                                                        alt="jane avatar">
+                                                    <div class="flex flex-col gap-1">
+                                                        <h3 class="text-md">Summer headphones from top brands</h3>
+                                                        <span class="text-sm font-medium text-slate-400">2406 Reviews |
+                                                            1629
+                                                            Orders</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="flex justify-between items-center">
-                                                <a href="#"><span
-                                                        class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                <div class="flex justify-between items-center">
+                                                    <a href="#"><span
+                                                            class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">$320</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
                 </section>
             </div>
         </div>
