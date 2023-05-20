@@ -3,7 +3,7 @@ include 'connect.php';
 if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
     header('location:./Login.php');
 }
-$user$_SESSION['email'];
+$user=$_SESSION['email'];
 $pass=$_SESSION['password'];
 $uid=$_SESSION['id'];
 ?>

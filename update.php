@@ -3,9 +3,6 @@ include_once('connect.php');
 if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))) {
     header('location:./Login.php');
 }
-if (!empty($_SESSION['error'])) {
-    header('location:./Login.php');
-}
 $user = strtolower($_SESSION['email']);
 $pass = $_SESSION['password'];
 $info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
@@ -20,6 +17,7 @@ $lname = $row['LASTNAME'];
 $email = strtolower($row['EMAIL']);
 $contact = $row['CONTACT'];
 $address = $row['ADDRESS'];
+echo $fname;
 ?>
 <!DOCTYPE html>
 <html lang="en">
