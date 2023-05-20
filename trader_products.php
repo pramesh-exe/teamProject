@@ -93,7 +93,7 @@ $uid=$_SESSION['id'];
                 </li>
             </ul>
             <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Sign
+                <a href="./logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Sign
                     out</a>
             </div>
         </div>
