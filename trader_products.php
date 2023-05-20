@@ -67,57 +67,30 @@ $uid=$_SESSION['id'];
                 </div>
             </div>
         </div> -->
-        <div class="flex px-3 lg:px-0 lg:justify-end items-center relative">
-            <!-- component -->
-            <div class="flex justify-center">
-                <div class="relative inline-block">
-                    <!-- Dropdown toggle button -->
-                    <button data-target="#user-dropdown"
-                        class="user-dropdown rounded-full transition-border border-2 border-slate-300 hover:border-black focus:border-black relative z-10 flex items-center text-sm text-gray-600 focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
-                        <a href="#"
-                            class="flex items-center text-sm transition-colors w-12 h-12 overflow-hidden items-center justify-center duration-200 transform shadow-lg rounded-full">
-                            <h3 class="text-xl font-medium text-slate-700">MK</h3>
-                        </a>
-                    </button>
+        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
+            class="w-10 h-10 rounded-full cursor-pointer" src="/docs/images/people/profile-picture-5.jpg"
+            alt="User dropdown">
 
-                    <!-- Dropdown menu -->
-                    <div id="user-dropdown"
-                        class="hidden absolute -right-100 lg:right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                        <a href="#"
-                            class="flex items-center p-3 -mt-2 text-sm transition-colors duration-200 transform hover:bg-black  hover:text-white">
-                            <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-                                src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8d29tYW4lMjBibHVlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=face&w=500&q=200"
-                                alt="jane avatar">
-                            <div class="mx-1">
-                                <h1 class="text-sm font-semibold">Admin</h1>
-                                <p class="text-sm">admin@admin.com</p>
-                            </div>
-                        </a>
-
-                        <hr class="border-gray-200">
-
-                        <a href="./profile.php"
-                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
-                            view profile
-                        </a>
-
-                        <a href="#"
-                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
-                            Settings
-                        </a>
-
-                        <hr class="border-gray-200">
-
-                        <a href="#"
-                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
-                            Help
-                        </a>
-                        <a href="./logout.php"
-                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
-                            Sign Out
-                        </a>
-                    </div>
-                </div>
+        <!-- Dropdown menu -->
+        <div id="userDropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 d">
+            <!-- <div class="px-4 py-3 text-sm text-gray-900 ">
+                <div>Bonnie Green</div>
+                <div class="font-medium truncate">name@flowbite.com</div>
+            </div> -->
+            <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Settings</a>
+                </li>
+                <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Earnings</a>
+                </li>
+            </ul>
+            <div class="py-1">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Sign
+                    out</a>
             </div>
         </div>
         <!-- end login -->
@@ -226,54 +199,84 @@ $uid=$_SESSION['id'];
 
     <!-- CONTENT -->
 
-    <div class=" md:ml-64 pl-4 pt-4 gap-x-8 gap-y-4 mb-5">
-        <div class="grid gap-8">
-            <h3 class="text-2xl font-sans font-bold mb-2">Welcome to your Dashboard</h3>
-            <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 ">
-                <a href="./trader_products.php"
-                    class="flex flex-col items-cente border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
-                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="./images/trader/product.png"
-                        alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    </div>
-                </a>
-                <a href="#"
-                    class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
-                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg" src="./images/trader/add.png" alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Add Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 lg:mt-8">
-                <a href="#"
-                    class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
-                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="./images/trader/edit.png"
-                        alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Manage Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    </div>
-                </a>
-                <a href="#"
-                    class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
-                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2"
-                        src="./images/trader/report-icon.png" alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Reports</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    </div>
-                </a>
-            </div>
+    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
+
+    <div class="flex:col md:ml-72 ml-6 mb-8 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
+
+        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+            class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mb-4"
+            type="button">Sort by <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg></button>
+        <!-- Dropdown menu -->
+        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+                <li>
+                    <a href="./trader_products.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name</a>
+                </li>
+                <li>
+                    <a href="./trader_products.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Price</a>
+                </li>
+            </ul>
         </div>
+
+        <?php
+            $qry = "SELECT SHOP_ID FROM SHOP WHERE FK1_USER_ID = '$uid'";
+            $stid = oci_parse($conn, $qry);
+            oci_execute($stid);
+            $id = oci_fetch($stid);
+            if (isset($_GET['sid'])) {
+                if ($_GET['sid']==1) {
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id' ORDER BY NAME ASC";
+                } 
+                elseif ($_GET['sid']==2){
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id' ORDER BY PRICE ASC";
+                }
+            }
+            else {
+                $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id'";
+            }
+            $statement = oci_parse($conn, $query);
+            oci_execute($statement);
+            
+
+            echo'<table class="table-auto w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            image
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            product name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            description
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            action
+                        </th>
+                    </tr>
+                </thead>';
+                while($row=oci_fetch_array($statement,OCI_ASSOC)){
+                    $id=$row['PRODUCT_ID'];
+                    echo"<tr class='bg-white border-b '>";
+                    echo'<td><img src="./images/'.$row['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+                    echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
+                    echo"<td>$".$row['PRICE']."</td>";
+                    echo"<td>".$row['DESCRIPTION']."</td>";
+                    echo'<td><a href="./updateProduct.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./updateProduct.php" class="text-red-500 hover:underline">DELETE</a></td> </tr>';
+                    ;
+                    
+                }
+            echo "</table>";
+        ?>
+        <img src="" alt="">
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 
 <!-- Footer -->
