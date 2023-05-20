@@ -67,16 +67,20 @@ $uid=$_SESSION['id'];
                 </div>
             </div>
         </div> -->
-        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
-            class="w-10 h-10 rounded-full cursor-pointer" src="/docs/images/people/profile-picture-5.jpg"
-            alt="User dropdown">
+        <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full hover:cursor-pointer" type="button">
+            <svg data-dropdown-toggle="userDropdown" class=" absolute w-12 h-12 text-gray-100 -left-1"
+                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                </path>
+            </svg>
+        </div>
 
         <!-- Dropdown menu -->
         <div id="userDropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 d">
-            <!-- <div class="px-4 py-3 text-sm text-gray-900 ">
+            <div class="px-4 py-3 text-sm text-gray-900 ">
                 <div>Bonnie Green</div>
                 <div class="font-medium truncate">name@flowbite.com</div>
-            </div> -->
+            </div>
             <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
                 <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
@@ -201,27 +205,28 @@ $uid=$_SESSION['id'];
 
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
 
-    <div class="flex:col md:ml-72 ml-6 mb-8 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
-
-        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-            class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mb-4"
-            type="button">Sort by <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg></button>
-        <!-- Dropdown menu -->
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
-                <li>
-                    <a href="./trader_products.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name</a>
-                </li>
-                <li>
-                    <a href="./trader_products.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Price</a>
-                </li>
-            </ul>
+    <div class="flex:col md:ml-72 ml-6 mb-8 pt-2 gap-2 ">
+        <div>
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mb-4"
+                type="button">Sort by <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="./trader_products.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name</a>
+                    </li>
+                    <li>
+                        <a href="./trader_products.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Price</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <?php
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <?php
             $qry = "SELECT SHOP_ID FROM SHOP WHERE FK1_USER_ID = '$uid'";
             $stid = oci_parse($conn, $qry);
             oci_execute($stid);
@@ -274,7 +279,7 @@ $uid=$_SESSION['id'];
                 }
             echo "</table>";
         ?>
-        <img src="" alt="">
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
