@@ -216,37 +216,30 @@ echo $fname;
                     <div>
                         <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First name</label>
                         <input type="text" id="first_name" name="fname" value="<?php
-                        $fname
+                        echo $fname;
                         ?>"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="<?php echo $row['FIRSTNAME']; ?>" placeholder="John" required>
                     </div>
                     <div>
                         <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Last name</label>
                         <input type="text" id="last_name" name="lname" value="<?php
-                        $lname
+                        echo $lname;
                         ?>" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="<?php echo $row['LASTNAME']; ?>" placeholder="Doe" required>
                     </div>
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
-                    <input type="email" id="email" name="email" value="<?php
-                        $email
-                        ?>" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="<?php echo $row['EMAIL']; ?>" placeholder="john.doe@company.com" required>
                 </div>
                 <div class="grid gap-6 mb-4 md:grid-cols-2">
                     <div>
                         <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
                         <input type="contact" id="contact" name="contact" value="<?php
-                        $contact
+                        echo $contact;
                         ?>"
                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="<?php echo $row['CONTACT']; ?>" placeholder="+9779876543210" required>
                     </div>
                     <div>
                         <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
                         <input type="address" id="address" name="address" value="<?php
-                        $address
+                        echo $address;
                         ?>" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="<?php echo $row['ADDRESS']; ?>" placeholder="Kathmadu" required>
                     </div>

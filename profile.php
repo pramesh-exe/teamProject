@@ -246,17 +246,17 @@ echo $fname;
             <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
                 <Span class="font-serif font-semibold text-lg mr-2">Personal Profile</Span>
                 <a href="./update.php" class="text-blue-600 hover:underline">Edit Profile</a>
-                <p class="mt-2">Name: <p> <?php 
-                $fname
-                ?></p></p>
+                <p class="mt-2">Name: <?php 
+                echo $fname;
+                ?></p>
                 <p class="mt-2">Email: <?php 
-                $email
+                 echo $email;
                 ?></p>
                 <p class="mt-2">Contact: <?php
-                 $contact
+                 echo $contact;
                   ?></p>
                 <p class="mt-2">Address: <?
-                $address
+                echo $address;
                  ?></p>
             </div>
             <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
