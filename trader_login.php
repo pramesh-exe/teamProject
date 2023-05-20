@@ -1,6 +1,6 @@
 <?php
     if(isset($_POST['submit'])){
-        $conn = oci_connect('TeamProject', 'Nepal123', '//localhost/xe'); 
+        include_once('./connect.php');
     if(!isset($_POST['password'])||!isset($_POST['email'])){
         header('location:./trader_login.php');
     }else{

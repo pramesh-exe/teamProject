@@ -217,11 +217,11 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))) {
         </aside>
     </div>
 
-   <!-- CONTENT -->
+    <!-- CONTENT -->
     <div class="md:ml-64 pl-6 pt-8">
         <div class="flex items-end justify-start gap-3">
-            <p class="font-semibold text-4xl ">My Account 
-            <?php
+            <p class="font-semibold text-4xl ">My Account
+                <?php
 
 $user = strtolower($_SESSION['email']);
 $pass = $_SESSION['password'];
@@ -237,7 +237,6 @@ $lname = $row['LASTNAME'];
 $email = strtolower($row['EMAIL']);
 $contact = $row['CONTACT'];
 $address = $row['ADDRESS'];
-echo $fname;
 ?>
             </p>
 
@@ -247,7 +246,7 @@ echo $fname;
                 <Span class="font-serif font-semibold text-lg mr-2">Personal Profile</Span>
                 <a href="./update.php" class="text-blue-600 hover:underline">Edit Profile</a>
                 <p class="mt-2">Name: <?php 
-                echo $fname;
+                echo $fname." ".$lname ; 
                 ?></p>
                 <p class="mt-2">Email: <?php 
                  echo $email;
@@ -255,9 +254,11 @@ echo $fname;
                 <p class="mt-2">Contact: <?php
                  echo $contact;
                   ?></p>
-                <p class="mt-2">Address: <?
+                <p class="mt-2">Address:
+                    <?
                 echo $address;
-                 ?></p>
+                 ?>
+                </p>
             </div>
             <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
                 <Span class="font-serif font-semibold text-lg mr-2">Orders</Span>
