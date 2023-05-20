@@ -43,7 +43,7 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
         // Giving decision
             if(move_uploaded_file($utmpname, $ulocation)){
                 // SQL statement with placeholders for bind variables
-                $sql ="INSERT INTO PRODUCT(NAME, PRODUCT_SIZE, DESCRIPTION, PRICE, PRODUCTIMAGE,FK1_CATEGORY_ID,FK3_SHOP_ID) 
+                $sql ="INSERT INTO PRODUCT(NAME, PRODUCT_SIZE, DESCRIPTION, PRICE, PRODUCTIMAGE,FK1_CATEGORY_ID,FK2_SHOP_ID) 
                 VALUES('$FPname', '$Vstock',  '$Fdescription', '$price', '$uimage','$cid','$sid')";
                 // Prepare SQL statement for execution
                 $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
