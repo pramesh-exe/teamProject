@@ -1,17 +1,79 @@
 <?php
 include_once('connect.php');
-if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||empty($_SESSION['id'])) {
-    header('location:./Login.php');
-}else{
-    $id=$_SESSION['id'];
-    $query=oci_parse($conn,"SELECT * FROM WISHLIST WHERE FK1_USER_ID='$id'");
-    oci_execute($query);
-    $data=oci_fetch_array($query,OCI_ASSOC);
-    $query1=oci_parse($conn,"SELECT W.FK1_USER_ID,W.WISHLIST_ID,P.FK1_PRODUCT_ID
-    FROM WISHLIST W, PRODUCT_WISHLIST P 
-    WHERE W.WISHLIST_ID=P.FK1_WISHLIST_ID");
-    oci_execute($query1);
-    $query2=oci_pars
+if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['password'])){
+    header('location:./trader_login.php');
+}
+if(!isset($_GET['id']) && !isset($_GET['action'])){
+    header('location:./trader_dashboard.php');
+}
+$editid=$_GET['id'];
+$data=oci_parse($conn,"SELECT * FROM PRODUCT WHERE PRODUCT_ID=:pid");
+oci_bind_by_name($data,":pid",$editid);
+oci_execute($data);
+$row=oci_fetch_array($data, OCI_ASSOC);
+$productName=$row['NAME'];
+$des=$row['DESCRIPTION'];
+$st=$row['PRODUCT_SIZE'];
+$pr=$row['PRICE'];
+$pimage=$row['PRODUCTIMAGE'];
+?>
+<?php
+  if(isset($_POST['updateproduct']))
+  {
+      if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"])
+      {
+          $id=$_SESSION['id'];
+          $email=$_SESSION['email'];
+          $password=$_SESSION['password'];
+          $Pname= trim($_POST['Pname']);
+          $FPname=filter_var($Pname,FILTER_SANITIZE_STRING);
+          $description=trim($_POST['description']);
+          $Fdescription=filter_var($description,FILTER_SANITIZE_STRING);
+          $stock=trim($_POST['stock']);
+          $Fstock=filter_var($stock,FILTER_SANITIZE_NUMBER_INT);
+          $Vstock=filter_var($Fstock,FILTER_VALIDATE_INT);
+          $price=trim($_POST['price']);
+          
+
+          //capturing the image name
+          if(!empty($_FILES['upload'])){
+              $uimage=$_FILES["upload"]["name"];
+              $usize=$_FILES['upload']['size'];
+              $utype=$_FILES['upload']['type'];
+              $utmpname=$_FILES['upload']['tmp_name'];
+              $location="images/";
+              $ulocation=$location.basename($_FILES["upload"]["name"]);
+              $utype = strtolower(pathinfo($ulocation,PATHINFO_EXTENSION));
+      if($utype=="jpeg" || $utype=="jpg" || $utype=="png" || $utype=="svg" || $utype=="gif")
+      {
+          if(isset($Pname) )
+          {   
+      // Giving decision
+          if(move_uploaded_file($utmpname, $ulocation)){
+              // SQL statement with placeholders for bind variables
+              $sql ="UPDATE PRODUCT SET NAME='$FPname', PRODUCT_SIZE='$Fstock', DESCRIPTION='$Fdescription', PRICE='$price', PRODUCTIMAGE='$uimage'";
+              // Prepare SQL statement for execution
+              $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
+              $result = oci_execute($stmt);
+              if($result){
+                  $message="Product updated successfully";
+              }
+          }else{
+              $message= "Unable to upload the image";
+          }
+          }else{
+              $message= "Please fill Category Name";
+          }
+
+   }else{
+      $message= "Image format should be Jpeg, png, jpg or svg only.";
+  }
+      }else{
+          $message= "Product image not found.";
+      }
+  }else{
+      $message= "All details of the product are required";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +91,8 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
 
 <body class="flex flex-col min-h-screen">
     <!-- component -->
-    <nav class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b">
+    <nav
+        class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b bg-opacity-[0.97]">
         <div class="flex items-start justify-between gap">
 
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -123,13 +186,13 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
             <div class="flex justify-end items-center relative">
                 <div class="flex mr-4 items-center gap-4">
                     <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600"
-                        href="./Register.php">
+                        href="./Register.html">
                         <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                             Sign Up
                         </div>
                     </a>
                     <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white"
-                        href="./Login.php">
+                        href="./Login.html">
                         <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                             Login
                         </div>
@@ -221,7 +284,7 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
                         </a>
 
                         <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                            href="#">
+                            href="./contact.html">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -236,55 +299,68 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
             </div>
         </aside>
     </div>
-
     <!-- CONTENT -->
-    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
-    <div class="md:ml-72 ml-6 mb-8 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
-        <?php
-        echo'<table class="table-auto w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    IMAGE
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    PRODUCT NAME
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    PRICE
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    DESCRIPTION
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    ADD TO CART | REMOVE FROM WISHLIST
-                </th>
-                </tr>
-        </thead>';
-        while($data1=oci_fetch_array($query1,OCI_ASSOC)){
+    <div class="md:ml-64 ml:8 py-4">
+        <section class="bg-slate-100 border flex-grow rounded-lg mx-8">
+            <div class="py-8 lg:py-16 px-4">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Upload product</h2>
 
-            echo '<tr>
-                <td scope="col" class="px-6 py-3"> 
-                
-                </td>
-                <td scope="col" class="px-6 py-3"> 
-                
-                </td>
-                <td scope="col" class="px-6 py-3">
-                
-                </td>
-                <td scope="col" class="px-6 py-3">
-                <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> <a href="./removefromwishlist.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a>";
-                </td>
-            </tr>';
-        }
-        echo'</table>';
-        ?>
+                <form method="post" class="space-y-8" enctype="multipart/form-data">
+                    <div>
+                        <label for="pname" class="block mb-2 text-sm font-medium text-gray-900 ">Product name</label>
+                        <input type="pname" id="Pname" name="Pname" value="<?php
+                        $productName
+                        ?>" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  "
+                            placeholder="Product Name" required>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Product
+                            Description</label>
+                        <textarea id="description" name="description" value="<?php
+                        $des
+                        ?>" rows="6"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
+                            placeholder="Leave a comment..."></textarea>
+                    </div>
+                    <div class="grid gap-6 mb-4 md:grid-cols-2">
+                        <div>
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Avilable
+                                Stock</label>
+                            <input type="text" id="first_name" name="stock" value="<?php
+                        $st
+                        ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                placeholder="000" required>
+                        </div>
+                        <div>
+                            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>
+                            <input type="text" id="last_name" name="price" value="<?php
+                        $pr
+                        ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                placeholder="00.00" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Upload file</label>
+                        <input
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none "
+                            aria-describedby="file_input_help" id="file_input" type="file" name="upload">
+                        <p class="mt-1 text-sm text-gray-500" value="<?php
+                        echo'<img src=\"productphotos/".$pimage."\"alt=" .$productName. " width= "100px">';
+                        ?>" id="file_input_help">SVG, JPEG, PNG or JPG.</p>
+                    </div>
+                    <button type="submit" name="updateproduct"
+                        class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
+                    <?php 
+                       echo $message;                      
+                    ?>
+                </form>
+            </div>
+        </section>
     </div>
 </body>
 
 <!-- Footer -->
-<footer class=" md:ml-64 bg-slate-100 text-center text-neutral-600 lg:text-left border-t-2 mt-auto">
+<footer class="md:ml-64 mt-auto bg-slate-100 text-center text-neutral-600  lg:text-left border-t-2">
     <div class="flex items-center justify-center border-b border-neutral-200 p-4  lg:justify-between ">
         <div class="mr-12 hidden lg:block">
             <span>Get connected with us on social networks:</span>

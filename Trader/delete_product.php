@@ -1,7 +1,7 @@
 <?php
 include_once('connect.php');
 if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['password'])){
-    header('location:./Login.php');
+    header('location:./trader_login.php');
 }
 if(isset($_GET['id']) && isset($_GET['action'])){
     $deleteID=$_GET['id'];
