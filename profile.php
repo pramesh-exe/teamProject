@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-if(!isset($_SESSION['email'])||!isset($_SESSION['password'])) {
+include_once('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))) {
     header('location:./Login.php');
 }
 ?>
@@ -216,11 +216,16 @@ if(!isset($_SESSION['email'])||!isset($_SESSION['password'])) {
             </div>
         </aside>
     </div>
-<?php
-$user=$_SESSION['email'];
-$pass=$_SESSION['password'];
 
-$info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND PASSWORD=:password";
+   <!-- CONTENT -->
+    <div class="md:ml-64 pl-6 pt-8">
+        <div class="flex items-end justify-start gap-3">
+            <p class="font-semibold text-4xl ">My Account 
+            <?php
+
+$user = strtolower($_SESSION['email']);
+$pass = $_SESSION['password'];
+$info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
 $userinfo = oci_parse($conn, $info) or die(oci_error($conn, $info));
 oci_bind_by_name($userinfo, ":email", $user);
 oci_bind_by_name($userinfo, ":password", $pass);
@@ -229,25 +234,21 @@ $row = oci_fetch_assoc($userinfo);
     // populate HTML form fields with data from $row
 $fname = $row['FIRSTNAME'];
 $lname = $row['LASTNAME'];
-$name=$fname.' '.$lname;
 $email = strtolower($row['EMAIL']);
 $contact = $row['CONTACT'];
 $address = $row['ADDRESS'];
-$uid=$row['USER_ID'];
+echo $fname;
 ?>
-   <!-- CONTENT -->
-    <div class="md:ml-64 pl-6 pt-8">
-        <div class="flex items-end justify-start gap-3">
-            <p class="font-semibold text-4xl ">My Account</p>
+            </p>
 
         </div>
         <div class="flex flex-grow flex-wrap lg:flex-nowrap my-4 gap-2 w-11/12">
             <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">
                 <Span class="font-serif font-semibold text-lg mr-2">Personal Profile</Span>
                 <a href="./update.php" class="text-blue-600 hover:underline">Edit Profile</a>
-                <p class="mt-2">Name: <?php 
-                $name
-                ?></p>
+                <p class="mt-2">Name: <p> <?php 
+                $fname
+                ?></p></p>
                 <p class="mt-2">Email: <?php 
                 $email
                 ?></p>
