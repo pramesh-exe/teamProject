@@ -1,3 +1,9 @@
+<?php
+include_once('connect.php');
+if(!isset($_SESSION['ADMIN'])){
+    header('location:./Login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -196,10 +202,10 @@
 
                                     <hr class="border-gray-200">
                                     
-                                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
+                                    <a href="contact.html" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
                                         Help
                                     </a>
-                                    <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
+                                    <a href="./logout.php" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
                                         Sign Out
                                     </a>
                                 </div>

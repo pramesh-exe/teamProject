@@ -10,7 +10,7 @@ if (isset($_POST['submit'])) {
   $Vemail = filter_var($Femail, FILTER_VALIDATE_EMAIL);
   if (($lemail == $admin) &&($pas == $admin)) {
       $_SESSION['ADMIN'] = "admin";
-      header('location:./admin_trader.php');   
+      header('location:./admin_dashboard.php');   
   }else{
     $type="user";
     $sql = "SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type= :type";

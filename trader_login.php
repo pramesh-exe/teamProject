@@ -22,7 +22,7 @@
               $_SESSION['id']=$user['USER_ID'];
               $_SESSION['email']=$lemail;
               $_SESSION['password']=$password;
-              header('location:./trader.php');
+              header('location:./trader-dashboard.php');
               exit();
           }
   }
@@ -299,7 +299,7 @@
                         if($user){
                             $_SESSION['email']=$lemail;
                             $_SESSION['password']=$password;
-                            header('location:./homepage.php');
+                            header('location:./admin-dashboard.php');
                             exit();
                         }else{
                           $_SESSION['error']='Invalid login credentials!<br>Provide your valid email and password.';
