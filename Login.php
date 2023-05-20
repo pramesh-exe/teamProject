@@ -23,6 +23,8 @@ if (isset($_POST['submit'])) {
     $user = oci_fetch_array($result, OCI_ASSOC);
     
     if ($user) {
+        $_SESSION['id']=$user['USER_ID'];
+        $_SESSION['user'] = "user";
       $_SESSION['email'] = $Vemail;
       $_SESSION['password'] = $password;
       header('location:./landing.php');

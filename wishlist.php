@@ -1,3 +1,19 @@
+<?php
+include_once('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||empty($_SESSION['id'])) {
+    header('location:./Login.php');
+}else{
+    $id=$_SESSION['id'];
+    $query=oci_parse($conn,"SELECT * FROM WISHLIST WHERE FK1_USER_ID='$id'");
+    oci_execute($query);
+    $data=oci_fetch_array($query,OCI_ASSOC);
+    $query1=oci_parse($conn,"SELECT W.FK1_USER_ID,W.WISHLIST_ID,P.FK1_PRODUCT_ID
+    FROM WISHLIST W, PRODUCT_WISHLIST P 
+    WHERE W.WISHLIST_ID=P.FK1_WISHLIST_ID");
+    oci_execute($query1);
+    $query2=oci_pars
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -229,23 +245,39 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    image
+                    IMAGE
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    product name
+                    PRODUCT NAME
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    price
+                    PRICE
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    description
+                    DESCRIPTION
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    action
+                    ADD TO CART | REMOVE FROM WISHLIST
                 </th>
                 </tr>
         </thead>';
-        
+        while($data1=oci_fetch_array($query1,OCI_ASSOC)){
+
+            echo '<tr>
+                <td scope="col" class="px-6 py-3"> 
+                
+                </td>
+                <td scope="col" class="px-6 py-3"> 
+                
+                </td>
+                <td scope="col" class="px-6 py-3">
+                
+                </td>
+                <td scope="col" class="px-6 py-3">
+                <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> <a href="./removefromwishlist.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a>";
+                </td>
+            </tr>';
+        }
         echo'</table>';
         ?>
     </div>

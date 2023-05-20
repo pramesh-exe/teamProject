@@ -23,6 +23,7 @@
           $user=oci_fetch_array($result, OCI_ASSOC);
           oci_close($conn);
           if($user){
+            $_SESSION['trader'] = "trader";
               $_SESSION['id']=$user['USER_ID'];
               $_SESSION['email']=$lemail;
               $_SESSION['password']=$password;

@@ -1,6 +1,6 @@
 <?php
 include_once('connect.php');
-if(!empty($_SESSION['email']) || !empty($_SESSION['password'])){
+if(!empty($_SESSION['email']) || !empty($_SESSION['password'])||empty($_SESSION['id'])){
     $user=strtolower($_SESSION['email']);
     $pass=$_SESSION['password'];
 }else{
