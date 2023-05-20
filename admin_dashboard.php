@@ -1,34 +1,8 @@
 <?php
-include 'connect.php';
-if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
+include_once('connect.php');
+if(!isset($_SESSION['ADMIN'])){
     header('location:./Login.php');
 }
-$user=$_SESSION['email'];
-$pass=$_SESSION['password'];
-$uid=$_SESSION['id'];
-
-$id=$_GET['id'];
-$_SESSION['pid']=$id;
-
-    $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";
-                
-    $stid = oci_parse($conn, $query);
-    oci_execute($stid);
-                
-    $row = oci_fetch_array($stid, OCI_ASSOC);
-                
-    $image=$row['PRODUCTIMAGE'];
-    $name=$row['NAME'];
-    if(isset($row['DESCRIPTION'])){
-        $desc=$row['DESCRIPTION'];
-    }
-    $stock=$row['PRODUCT_SIZE'];
-    $price=$row['PRICE'];
-    $shop=$row['FK2_SHOP_ID'];
-                
-    $query2 = "SELECT * FROM ( SELECT * FROM PRODUCT WHERE FK2_SHOP_ID=$shop ORDER BY dbms_random.value ) WHERE rownum <= 6";
-    $stid2 = oci_parse($conn, $query2);
-    oci_execute($stid2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +19,8 @@ $_SESSION['pid']=$id;
 
 <body class="flex flex-col min-h-screen">
     <!-- component -->
-    <nav class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b">
+    <nav
+        class="bg-slate-100 sticky top-0 w-full flex justify-between items-center mx-auto md:px-8 h-20 border-b bg-opacity-[0.97]">
         <div class="flex items-start justify-between gap">
 
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -69,91 +44,24 @@ $_SESSION['pid']=$id;
             </a>
 
             <!-- end logo -->
-
+            <span class="self-end"> Admin </span>
             <!-- nav links -->
-            <div class="ml-2 flex-initial hidden lg:inline">
-                <div class="flex justify-end items-center relative">
-                    <div class="flex mr-4 items-center text-sm">
-                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
-                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                                About Us
-                            </div>
-                        </a>
-                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
-                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                                Pricing
-                            </div>
-                        </a>
-                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
-                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                                Community
-                            </div>
-                        </a>
-                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
-                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                                Support
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
             <!-- end nav links -->
         </div>
 
-        <!-- search bar -->
-        <div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
-            <div class="inline-block">
-                <div class="inline-flex items-center max-w-full">
-                    <button
-                        class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-60 border rounded-lg px-1 py-1 bg-white"
-                        type="button">
-                        <input class="block flex-grow flex-shrink overflow-hidden focus:outline-none px-4 py-1"
-                            placeholder="Search Product" />
 
-                        <div class="flex items-center justify-center relative h-8 w-8 rounded-lg">
-                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                role="presentation" focusable="false" style="
-                    display: block;
-                    fill: none;
-                    height: 12px;
-                    width: 12px;
-                    stroke: currentcolor;
-                    stroke-width: 5.33333;
-                    overflow: visible;
-                  ">
-                                <g fill="none">
-                                    <path
-                                        d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9">
-                                    </path>
-                                </g>
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- end search bar -->
-
-        <!-- login -->
+        <!-- logout -->
         <div class="flex-initial">
             <div class="flex justify-end items-center relative">
-                <div class="flex mr-4 items-center gap-4">
-                    <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600"
-                        href="./Register.php">
-                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                            Sign Up
-                        </div>
-                    </a>
-                    <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white"
-                        href="./Login.php">
-                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                            Login
-                        </div>
-                    </a>
-                </div>
+                <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.php">
+                    <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                        Logout
+                    </div>
+                </a>
             </div>
         </div>
-        <!-- end login -->
+        <!-- end logout -->
     </nav>
 
     <!-- Sidebar -->
@@ -237,7 +145,7 @@ $_SESSION['pid']=$id;
                         </a>
 
                         <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                            href="#">
+                            href="./contact.html">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -251,89 +159,42 @@ $_SESSION['pid']=$id;
                 </nav>
             </div>
         </aside>
-
-        <!-- CONTENT -->
-        <div class="flex flex-col lg:flex-row max-w-full md:ml-64 pl-4 pt-4 gap-x-8 gap-y-4">
-            <div>
-                <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
-                    <div class="">
-                        <?php          
-                        echo'<img src="./images/'.$image.'"
-                        alt="product image" />
-                        </a>';
-                    ?>
-                    </div>
-                    <div class="flex flex-col p-2 justify-between">
-                        <div class="">
-                            <span class="text-4xl font-sans font-bold">
-                                <?php 
-                        echo $name;
-                        ?>
-                            </span>
-                            <p class="text-3xl font-sans font-semibold">
-                                $<?php 
-                        echo $price;
-                        ?>
-                            </p>
-                        </div>
-                        <div class="font-light mt-4">
-                            <?php    
-                                echo $desc;
-                            ?>
-                        </div>
-                        <div class="text-3xl font-sans font-semibold mt-4">
-                            In stock: <?php 
-                        echo $stock;
-                        ?>
-                        </div>
-                        <div class="text-sm font-medium mt-4">
-                            <a href="./addToCart.php"
-                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
-                                to
-                                cart</a>
-                            <a href="./addtowishlist.php"
-                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
-                                to
-                                wishlist</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="">
-
-                </div>
-            </div>
-            <div class="bg-slate-200 p-2 rounded-md flex-col min-w-[256px]">
-                <span class="text-2xl font-sans font-semibold">
-                    More from the same seller
-                </span>
-                <div class="grid gap-8 grid-cols-2 lg:grid-cols-1">
-                    <?php
-                        while ($row2 = oci_fetch_array($stid2))
-                        echo'<div class=" rounded-lg overflow-hidden shadow-md">
-                        <div class="w-full h-40 overflow-hidden">
-                            <a href="product.php?id='.$row2['PRODUCT_ID'].'">
-                                <img class="w-full h-40 object-cover" src="./images/'.$row2['PRODUCTIMAGE'].'"
-                                    alt="product image" />
-                            </a>
-                        </div>
-                        <div class="p-4 flex flex-col gap-2">
-                            <div class="font-medium">'.$row2['NAME'].'</div>
-                        </div>
-                    </div>';
-                    ?>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
     </div>
 </body>
 
+<!-- CONTENT -->
+<span class="md:ml-64 pl-6 pt-8 text-3xl font-sans font-bold">Traders</span>
+<div class="flex md:ml-64 px-6 pt-2 gap-2">
+    <?php
+    $query = "SELECT * FROM USER_ONE WHERE type = 'trader'";
+    $statement = oci_parse($conn, $query);
+    oci_execute($statement);
+    echo'<table class="table-auto w-full border-collapse border border-slate-500">
+    <tr> <th>Name</th>
+    <th>Contact</th>
+    <th>Shop</th>
+    <th>Action</th>
+    </tr>';
+        while($row=oci_fetch_array($statement,OCI_ASSOC)){
+            echo"<tr><td class='border border-slate-600 '>".$row['FIRSTNAME']." ".$row['LASTNAME']."</td>";
+            if(isset($row['CONTACT'])){
+                echo"<td class='border border-slate-600 '>".$row['CONTACT']."</td>";
+            }
+            else{
+                echo"<td class='border border-slate-600 '>-</td>";
+            }
+            echo"<td class='border border-slate-600 '></td>";
+            echo"<td class='border border-slate-600 '></td></tr>";
+            ;
+            
+        }
+    echo "</table>";
+?>
+    </br>
+</div>
+
 <!-- Footer -->
-<footer class=" md:ml-64 bg-slate-100 text-center text-neutral-600 lg:text-left border-t-2 mt-4">
+<footer class="md:ml-64 mt-auto bg-slate-100 text-center text-neutral-600  lg:text-left border-t-2">
     <div class="flex items-center justify-center border-b border-neutral-200 p-4  lg:justify-between ">
         <div class="mr-12 hidden lg:block">
             <span>Get connected with us on social networks:</span>
