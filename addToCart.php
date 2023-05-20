@@ -20,13 +20,13 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
                 $_SESSION['quantity']=1;
                 $_SESSION['message'] = "Product successfully added to your cart.";
                 $_SESSION['pid']=$_GET['pid'];
-                header('location: ./displayProduct.php');
+                header('location: ./product.php');
                 exit();
             }
         }
         $product = oci_fetch_array($sql, OCI_ASSOC);
     }
-    header('location: ./displayProduct.php');
+    header('location: ./product.php');
     exit();
 }
 ?>

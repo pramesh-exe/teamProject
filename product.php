@@ -1,27 +1,34 @@
 <?php
 include 'connect.php';
+if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
+    header('location:./Login.php');
+}
+$user$_SESSION['email'];
+$pass=$_SESSION['password'];
+$uid=$_SESSION['id'];
+
 $id=$_GET['id'];
 $_SESSION['pid']=$id;
 
-                $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";
+    $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";
                 
-                $stid = oci_parse($conn, $query);
-                oci_execute($stid);
+    $stid = oci_parse($conn, $query);
+    oci_execute($stid);
                 
-                $row = oci_fetch_array($stid, OCI_ASSOC);
+    $row = oci_fetch_array($stid, OCI_ASSOC);
                 
-                $image=$row['PRODUCTIMAGE'];
-                $name=$row['NAME'];
-                if(isset($row['DESCRIPTION'])){
-                    $desc=$row['DESCRIPTION'];
-                }
-                $stock=$row['PRODUCT_SIZE'];
-                $price=$row['PRICE'];
-                $shop=$row['FK2_SHOP_ID'];
+    $image=$row['PRODUCTIMAGE'];
+    $name=$row['NAME'];
+    if(isset($row['DESCRIPTION'])){
+        $desc=$row['DESCRIPTION'];
+    }
+    $stock=$row['PRODUCT_SIZE'];
+    $price=$row['PRICE'];
+    $shop=$row['FK2_SHOP_ID'];
                 
-                $query2 = "SELECT * FROM ( SELECT * FROM PRODUCT WHERE FK2_SHOP_ID=$shop ORDER BY dbms_random.value ) WHERE rownum <= 6";
-                $stid2 = oci_parse($conn, $query2);
-                oci_execute($stid2);
+    $query2 = "SELECT * FROM ( SELECT * FROM PRODUCT WHERE FK2_SHOP_ID=$shop ORDER BY dbms_random.value ) WHERE rownum <= 6";
+    $stid2 = oci_parse($conn, $query2);
+    oci_execute($stid2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
