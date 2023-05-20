@@ -195,8 +195,7 @@ if(!isset($_SESSION['ADMIN'])){
             echo"<td class='border border-slate-600 '>".$Fscategory."</td>";
             echo"<td class='border border-slate-600 '>".$Fsname."</td>";
             echo "<td class='border border-slate-600 '> <a href=./trader_approval.php?id=$id&action=add>Approve Trader</a> |
-            <a href=./trader_disapproval.php?id=$id&action=delete>Disapprove Trader</a></td></tr>";
-            
+            <a href=./trader_disapproval.php?id=$id&action=delete>Disapprove Trader</a></td></tr>";   
         }
     echo "</table>";
 }

@@ -4,7 +4,7 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
     header('location:./Login.php');
 }
 if(!isset($_GET['id']) && !isset($_GET['action'])){
-    header('location:./traderproduct.php');
+    header('location:./trader_dashboard.php');
 }
 $editid=$_GET['id'];
 $data=oci_parse($conn,"SELECT * FROM PRODUCT WHERE PRODUCT_ID=:pid");
@@ -16,6 +16,65 @@ $des=$row['DESCRIPTION'];
 $st=$row['PRODUCT_SIZE'];
 $pr=$row['PRICE'];
 $pimage=$row['PRODUCTIMAGE'];
+?>
+<?php
+  if(isset($_POST['updateproduct']))
+  {
+      if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"])
+      {
+          $id=$_SESSION['id'];
+          $email=$_SESSION['email'];
+          $password=$_SESSION['password'];
+          $Pname= trim($_POST['Pname']);
+          $FPname=filter_var($Pname,FILTER_SANITIZE_STRING);
+          $description=trim($_POST['description']);
+          $Fdescription=filter_var($description,FILTER_SANITIZE_STRING);
+          $stock=trim($_POST['stock']);
+          $Fstock=filter_var($stock,FILTER_SANITIZE_NUMBER_INT);
+          $Vstock=filter_var($Fstock,FILTER_VALIDATE_INT);
+          $price=trim($_POST['price']);
+          
+
+          //capturing the image name
+          if(!empty($_FILES['upload'])){
+              $uimage=$_FILES["upload"]["name"];
+              $usize=$_FILES['upload']['size'];
+              $utype=$_FILES['upload']['type'];
+              $utmpname=$_FILES['upload']['tmp_name'];
+              $location="productphotos/";
+              $ulocation=$location.basename($_FILES["upload"]["name"]);
+              $utype = strtolower(pathinfo($ulocation,PATHINFO_EXTENSION));
+      if($utype=="jpeg" || $utype=="jpg" || $utype=="png" || $utype=="svg" || $utype=="gif")
+      {
+          if(isset($Pname) )
+          {   
+      // Giving decision
+          if(move_uploaded_file($utmpname, $ulocation)){
+              // SQL statement with placeholders for bind variables
+              $sql ="UPDATE PRODUCT SET NAME='$FPname', PRODUCT_SIZE='$Fstock', DESCRIPTION='$Fdescription', PRICE='$price', PRODUCTIMAGE='$uimage'";
+              // Prepare SQL statement for execution
+              $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
+              $result = oci_execute($stmt);
+              if($result){
+                  $message="Product updated successfully";
+              }
+          }else{
+              $message= "Unable to upload the image";
+          }
+          }else{
+              $message= "Please fill Category Name";
+          }
+
+   }else{
+      $message= "Image format should be Jpeg, png, jpg or svg only.";
+  }
+      }else{
+          $message= "Product image not found.";
+      }
+  }else{
+      $message= "All details of the product are required";
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -212,7 +271,7 @@ $pimage=$row['PRODUCTIMAGE'];
             <div class="py-8 lg:py-16 px-4">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Upload product</h2>
 
-                <form method="post" class="space-y-8">
+                <form method="post" class="space-y-8" enctype="multipart/form-data">
                     <div>
                         <label for="pname" class="block mb-2 text-sm font-medium text-gray-900 ">Product name</label>
                         <input type="pname" id="Pname" name="Pname" value="<?php
@@ -249,72 +308,10 @@ $pimage=$row['PRODUCTIMAGE'];
                         echo'<img src=\"productphotos/".$pimage."\"alt=" .$productName. " width= "100px">';
                         ?>" id="file_input_help">SVG, JPEG, PNG or JPG.</p>
                     </div>
-                    <button type="submit" name="addproduct" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
-                    <?php
-                        if(isset($_POST['addproduct'])){
-                            if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"]){
-                            $id=$_GET['id'];
-                            $email=$_SESSION['email'];
-                            $password=$_SESSION['password'];
-                            $Pname= trim($_POST['Pname']);
-                            $FPname=filter_var($Pname,FILTER_SANITIZE_STRING);
-                            $description=trim($_POST['description']);
-                            $Fdescription=filter_var($description,FILTER_SANITIZE_STRING);
-                            $stock=trim($_POST['stock']);
-                            $Fstock=filter_var($stock,FILTER_SANITIZE_NUMBER_INT);
-                            $Vstock=filter_var($Fstock,FILTER_SANITIZE_INT);
-                            $price=trim($_POST['price']);
-                            $Fprice=filter_var($price,FILTER_SANITIZE_NUMBER_FLOAT);
-                            $Vprice=filter_var($Fprice,FILTER_SANITIZE_FLOAT);
-                             //capturing the image name
-                            $uimage=$_FILES["upload"]["name"];
-                            $usize=$_FILES['upload']['size'];
-                            $utype=$_FILES['upload']['type'];
-                            $utmpname=$_FILES['upload']['tmp_name'];
-                            $ulocation="productphotos/".$uimage;
-
-                            if($utype=="image/jpeg" || $utype=="image/jpg" || $utype=="image/png" || $utype=="image/svg")
-                            {
-                                if(isset($Pname) )
-                                {   
-                                        
-                                    // SQL statement with placeholders for bind variables
-                                    $sql ="UPDATE PRODUCT SET NAME=:Pname, PRODUCT_SIZE=:stock, DESCRIPTION=:description, PRICE=:price, PRODUCTIMAGE=:uimage"; 
-                                   
-                                    // Prepare SQL statement for execution
-                                    $stmt = oci_parse($conn, $sql) or die(oci_error($conn, $sql));
-                                    // Bind variables to placeholders
-                                    oci_bind_by_name($stmt, ':Pname', $FPname);
-                                    oci_bind_by_name($stmt,':stock',$Vstock);
-                                    oci_bind_by_name($stmt, ':price', $Vprice);
-                                    oci_bind_by_name($stmt, ':Fdescription', $Fdescription);
-                                    oci_bind_by_name($stmt, ':uimage', $uimage);
-                                    // Execute SQL statement
-                                    $result = oci_execute($stmt, OCI_COMMIT_ON_SUCCESS);
-                                    // Giving decision
-                                    if($result)
-                                    {
-                                        if(move_uploaded_file($utmpname, $ulocation)){
-                                            echo "New product added and is currently on review mode!<br>It can take up to 8 hours to review a product.<br><br>";
-                                            echo "<a href='./trader_homepage.php'>HOMEPAGE</a>";
-                                        }else{
-                                            echo "Unable to upload the file";
-                                        }
-                                    }else{
-                                        echo "Unable to upload product please try again later.";
-                                    }
-                                }else{
-                                    echo "Please fill Category Name";
-                                }
-                            
-                        }else{
-                        echo "Image format should be Jpeg, png, jpg or svg only.";
-                        }
-                    }else{
-                        echo "All details of the product is required";
-                    }
-                }                            
-            ?>
+                    <button type="submit" name="updateproduct" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
+                    <?php 
+                       echo $message;                      
+                    ?>
                 </form>
             </div>
         </section>

@@ -230,23 +230,21 @@ $uid=$_SESSION['id'];
         <div class="grid gap-8">
             <h3 class="text-2xl font-sans font-bold mb-2">Welcome to your Dashboard</h3>
             <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 ">
-                <a href="#"
+                <a href="trader_product.php"
                     class="flex flex-col items-cente border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="./images/trader/product.png"
                         alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">Muji Haru</p>
                     </div>
                 </a>
-                <a href="#"
+                <a href="insert_product.php"
                     class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg" src="./images/trader/add.png" alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Add Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">The BIG MUJI, The British College </p>
                     </div>
                 </a>
             </div>
@@ -254,11 +252,10 @@ $uid=$_SESSION['id'];
                 <a href="#"
                     class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="./images/trader/edit.png"
-                        alt="">
+                        alt="updateProduct.php">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Manage Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">Monark Mula AAyush Mula Prameh Mula Sushan Mula Kapil MUla</p>
                     </div>
                 </a>
                 <a href="#"
