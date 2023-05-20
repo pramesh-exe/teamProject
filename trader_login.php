@@ -1,13 +1,17 @@
 <?php
-     if(isset($_POST['submit'])){
-      include_once("connect.php");
-      $password=md5($_POST['password']);
-      $pas=$_POST['password'];
-      $email=trim($_POST['email']);
-      $lemail=strtolower($email);
-      $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
-      $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
-      $type="trader";
+    if(isset($_POST['submit'])){
+        $conn = oci_connect('TeamProject', 'Nepal123', '//localhost/xe'); 
+    if(!isset($_POST['password'])||!isset($_POST['email'])){
+        header('location:./trader_login.php');
+    }else{
+        session_start();
+        $password=md5($_POST['password']);
+        $pas=$_POST['password'];
+        $email=trim($_POST['email']);
+        $lemail=strtolower($email);
+        $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
+        $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
+        $type="trader";
           $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type=:type";
           $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
   
@@ -22,9 +26,10 @@
               $_SESSION['id']=$user['USER_ID'];
               $_SESSION['email']=$lemail;
               $_SESSION['password']=$password;
-              header('location:./trader-dashboard.php');
+              header('location:./trader_dashboard.php');
               exit();
-          }
+          }  
+    }
   }
 ?>
 <!DOCTYPE html>

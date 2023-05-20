@@ -1,3 +1,12 @@
+<?php
+include 'connect.php';
+if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
+    header('location:./Login.php');
+}
+$user$_SESSION['email'];
+$pass=$_SESSION['password'];
+$uid=$_SESSION['id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,7 +96,7 @@
 
                         <hr class="border-gray-200">
 
-                        <a href="#"
+                        <a href="./profile.php"
                             class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
                             view profile
                         </a>
@@ -103,7 +112,7 @@
                             class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
                             Help
                         </a>
-                        <a href="#"
+                        <a href="./logout.php"
                             class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-black hover:text-white">
                             Sign Out
                         </a>
@@ -403,5 +412,4 @@
         <a class="font-semibold text-neutral-600 " href="/index.html">TRIBUS</a>
     </div>
 </footer>
-
 </html>

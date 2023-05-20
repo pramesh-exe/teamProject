@@ -9,7 +9,7 @@ if (!empty($_SESSION['error'])) {
 $user = strtolower($_SESSION['email']);
 $pass = $_SESSION['password'];
 $info = "SELECT * FROM USER_ONE WHERE EMAIL=:email AND password=:password";
-$userinfo = oci_parse($conn, $existsEmail) or die(oci_error($conn, $existsEmail));
+$userinfo = oci_parse($conn, $info) or die(oci_error($conn, $info));
 oci_bind_by_name($userinfo, ":email", $user);
 oci_bind_by_name($userinfo, ":password", $pass);
 oci_execute($userinfo);
@@ -368,30 +368,32 @@ $address = $row['ADDRESS'];
                                                                 }
                                                             }
                                                             oci_close($conn);
-                                                        }
-                                                    }
-                                                } else {
-                                                    echo "Invalid phone number: " . $contact;
+                                                        }else {
+                                                        echo "Invalid phone number: " . $contact;
+                                                    } 
                                                 }
+                                            }else {
+                                                    echo "All fields required.";
                                             }
-                                        } else {
-                                            echo "All fields required.";
+                                        }else {
+                                            echo "The length of username must be <br>greater than or equal to 6 alphabets";
                                         }
+                                        }else {
+                                            echo "User's name must have alphabets only.";
+                                        }
+                                        
                                     } else {
-                                        echo "The length of username must be <br>greater than or equal to 6 alphabets";
+                                        echo "All fields required.";
                                     }
-                                } else {
-                                    echo "User's name must have alphabets only.";
+                                }  else {
+                                    echo " Confirmation password and password didn't match";
                                 }
-                            } else {
+                            }else {
                                 echo "All fields required.";
                             }
-                        } else {
-                            echo " Confirmation password and password didn't match";
                         }
-                    } else {
-                        echo "All fields required.";
-                    }
+                    } 
+                
                 // Function to validate phone numbers with country code
                 function validatePhoneNumber($phoneNumber)
                 {
