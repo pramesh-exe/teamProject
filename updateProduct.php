@@ -41,7 +41,7 @@ $pimage=$row['PRODUCTIMAGE'];
               $usize=$_FILES['upload']['size'];
               $utype=$_FILES['upload']['type'];
               $utmpname=$_FILES['upload']['tmp_name'];
-              $location="productphotos/";
+              $location="images/";
               $ulocation=$location.basename($_FILES["upload"]["name"]);
               $utype = strtolower(pathinfo($ulocation,PATHINFO_EXTENSION));
       if($utype=="jpeg" || $utype=="jpg" || $utype=="png" || $utype=="svg" || $utype=="gif")

@@ -33,7 +33,7 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
                 $usize=$_FILES['upload']['size'];
                 $utype=$_FILES['upload']['type'];
                 $utmpname=$_FILES['upload']['tmp_name'];
-                $location="productphotos/";
+                $location="images/";
                 $ulocation=$location.basename($_FILES["upload"]["name"]);
                 $utype = strtolower(pathinfo($ulocation,PATHINFO_EXTENSION));
         if($utype=="jpeg" || $utype=="jpg" || $utype=="png" || $utype=="svg" || $utype=="gif")
@@ -59,10 +59,10 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
             }
 
      }else{
-        $message= "Image format should be Jpeg, png, jpg or svg only.";
+        $message= "Image format should be Jpeg, png, jpg or svg only";
     }
         }else{
-            $message= "Product image not found.";
+            $message= "Product image not found";
         }
     }else{
         $message= "All details of the product are required";
@@ -338,7 +338,14 @@ d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513
                     <button type="submit" name="addproduct"
                         class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 ">Upload</button>
                                 <?php
-                                    echo $message;
+                                if(isset($_POST['addproduct']))
+                                {
+                                    if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"])
+                                    {
+                                        echo "<script>alert('TRIBUS=> {$message}');</script>";
+
+                                    }
+                                }
                                 ?>
                                     </form>
                                 </div>

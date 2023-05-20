@@ -273,8 +273,7 @@ $uid=$_SESSION['id'];
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td>$".$row['PRICE']."</td>";
                     echo"<td>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./updateProduct.php" class="text-red-500 hover:underline">DELETE</a></td> </tr>';
-                    ;
+                    echo'<td><a href="./updateProduct.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./delete_product.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a></td> </tr>';
                     
                 }
             echo "</table>";
