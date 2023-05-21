@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="mx-6 py-6 text-center md:text-left">
-        <div class="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div class="">
                 <h6 class="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">
                     <img src="../Logo/Tribus1.png" alt="" class="h-4">
@@ -55,44 +55,27 @@
                 </p>
             </div>
             <div class="">
-                <h6 class="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                    Products
-                </h6>
-                <p class="mb-4">
-                    <a href="#!" class="text-neutral-600 ">Bakery</a>
-                </p>
-                <p class="mb-4">
-                    <a href="#!" class="text-neutral-600 ">Butcher</a>
-                </p>
-                <p class="mb-4">
-                    <a href="#!" class="text-neutral-600 ">Greengrocer</a>
-                </p>
-                <p>
-                    <a href="#!" class="text-neutral-600 ">Delicatessen</a>
-                </p>
-            </div>
-            <div class="">
-                <h6 class="mb-4 flex justify-center font-semibold uppercase md:justify-start">
+                <h6 class="mb-4 flex justify-center font-semibold uppercase md:justify-start lg:justify-center">
                     Useful links
                 </h6>
-                <p class="mb-4">
+                <p class="mb-4 flex justify-center md:justify-start lg:justify-center">
                     <a href="#!" class="text-neutral-600 ">About Us</a>
                 </p>
-                <p class="mb-4">
+                <p class="mb-4 flex justify-center md:justify-start lg:justify-center">
                     <a href="#!" class="text-neutral-600 ">Pricing</a>
                 </p>
-                <p class="mb-4">
+                <p class="mb-4 flex justify-center md:justify-start lg:justify-center">
                     <a href="#!" class="text-neutral-600 ">Community</a>
                 </p>
-                <p>
+                <p class="flex justify-center md:justify-start lg:justify-center">
                     <a href="#!" class="text-neutral-600 ">Support</a>
                 </p>
             </div>
             <div>
-                <h6 class="mb-4 flex justify-center font-semibold uppercase md:justify-start">
+                <h6 class="mb-4 flex justify-center font-semibold uppercase md:justify-start lg:justify-end">
                     Contact
                 </h6>
-                <p class="mb-4 flex items-center justify-center md:justify-start">
+                <p class="mb-4 flex items-center justify-center md:justify-start lg:justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="mr-3 h-5 w-5">
                         <path
@@ -103,7 +86,7 @@
                     Cleckhuddersfax, UK
                 </p>
 
-                <p class="mb-4 flex items-center justify-center md:justify-start">
+                <p class="mb-4 flex items-center justify-center md:justify-start lg:justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="mr-3 h-5 w-5">
                         <path fill-rule="evenodd"
@@ -112,7 +95,7 @@
                     </svg>
                     + 44 234 567 88
                 </p>
-                <p class="flex items-center justify-center md:justify-start">
+                <p class="flex items-center justify-center md:justify-start lg:justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="mr-3 h-5 w-5">
                         <path fill-rule="evenodd"
