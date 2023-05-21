@@ -275,7 +275,7 @@
                             required="">
                     </div>
                     <div class="flex items-center justify-between">
-                        <a href="./password.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot
+                        <a href="../password.php" class="text-sm font-medium text-blue-600 hover:underline ">Forgot
                             password?</a>
                     </div>
                     <button type="submit" name="submit"
