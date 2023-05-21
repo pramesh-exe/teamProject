@@ -256,7 +256,7 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))||e
                   ?></p>
                 <p class="mt-2">Address:
                 <?php
-                  echo $address;
+                   echo $address;
                   ?>
                 </p>
             </div>
@@ -290,10 +290,7 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))||e
         </div>
     </div>
 </body>
-
-<!-- Footer -->
 <?php
 include 'footer.php';
 ?>
-
 </html>
