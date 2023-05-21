@@ -4,9 +4,7 @@
     if(!isset($_POST['password'])||!isset($_POST['email'])){
         header('location:./trader_login.php');
     }else{
-        session_start();
         $password=md5($_POST['password']);
-        $pas=$_POST['password'];
         $email=trim($_POST['email']);
         $lemail=strtolower($email);
         $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
@@ -29,7 +27,9 @@
               $_SESSION['password']=$password;
               header('location:./trader_dashboard.php');
               exit();
-          }  
+          }else{
+            $_SESSION['error']='Invalid login credentials!<br>Provide your valid email and password.';
+          }
     }
   }
 ?>
@@ -284,36 +284,9 @@
                         in</button>
                 </div>
             </form>
-            <?php
-                  if(isset($_POST['submit'])){
-                    $password=md5($_POST['password']);
-                    $pas=$_POST['password'];
-                    $email=trim($_POST['email']);
-                    $lemail=strtolower($email);
-                    $Femail=filter_var($lemail,FILTER_SANITIZE_EMAIL);
-                    $Vemail=filter_var($Femail,FILTER_VALIDATE_EMAIL);
-                    $type="trader";
-                        $sql="SELECT * FROM USER_ONE WHERE email = :email AND password = :password AND type= :type";
-                        $result=oci_parse($conn,$sql) or die(oci_error($conn,$sql));
-                
-                        oci_bind_by_name($result,":email",$Vemail);
-                        oci_bind_by_name($result,":password",$password);
-                        oci_bind_by_name($result,":type",$type);
-                        oci_execute($result);
-                        $user=oci_fetch_array($result, OCI_ASSOC);
-                        oci_close($conn);
-                        if($user){
-                            $_SESSION['email']=$lemail;
-                            $_SESSION['password']=$password;
-                            header('location:./admin-dashboard.php');
-                            exit();
-                        }else{
-                          $_SESSION['error']='Invalid login credentials!<br>Provide your valid email and password.';
-                          echo "<strong>".$_SESSION['error']."</strong>";     
-                        }
-                    }
-                    
-        ?>
+    <?php    
+        echo "<strong>".$_SESSION['error']."</strong>";                     
+   ?>
 
         </div>
     </div>
