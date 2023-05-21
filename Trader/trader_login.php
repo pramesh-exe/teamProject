@@ -1,6 +1,6 @@
 <?php
-    if(isset($_POST['submit'])){
-        include_once('./connect.php');
+if(isset($_POST['submit'])){
+        include_once('../connect.php');
     if(!isset($_POST['password'])||!isset($_POST['email'])){
         header('location:./trader_login.php');
     }else{
@@ -28,7 +28,7 @@
               header('location:./trader_dashboard.php');
               exit();
           }else{
-            $_SESSION['error']='Invalid login credentials!<br>Provide your valid email and password.';
+            $message='Invalid login credentials!<br>Provide your valid email and password.';
           }
     }
   }
@@ -283,10 +283,15 @@
                         class="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign
                         in</button>
                 </div>
-            </form>
-    <?php    
-        echo "<strong>".$_SESSION['error']."</strong>";                     
-   ?>
+                <?php    
+                if(isset($_POST['submit'])){
+                    if(!$user){
+                        echo "<strong>$message</strong>";  
+                    }
+
+                }                   
+            ?>
+        </form>
 
         </div>
     </div>
