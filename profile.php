@@ -255,9 +255,9 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))||e
                  echo $contact;
                   ?></p>
                 <p class="mt-2">Address:
-                    <?
-                echo $address;
-                 ?>
+                <?php
+                  echo $address;
+                  ?>
                 </p>
             </div>
             <div class="bg-gray-100 p-3 border rounded grow lg:basis-1/2">

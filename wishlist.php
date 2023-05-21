@@ -11,7 +11,10 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
     FROM WISHLIST W, PRODUCT_WISHLIST P 
     WHERE W.WISHLIST_ID=P.FK1_WISHLIST_ID");
     oci_execute($query1);
-    $query2=oci_pars
+    $data1=oci_fetch_array($query1,OCI_ASSOC);
+    $pid=$data1['FK1_PRODUCT_ID'];
+    $query2=oci_parse($conn,"SELECT * FROM PRODUCT WHERE PRODUCT_ID='$pid'");
+    oci_execute($query2);
 }
 ?>
 <!DOCTYPE html>
@@ -261,17 +264,20 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
                 </th>
                 </tr>
         </thead>';
-        while($data1=oci_fetch_array($query1,OCI_ASSOC)){
+        while($data2=oci_fetch_array($query2,OCI_ASSOC)){
 
             echo '<tr>
                 <td scope="col" class="px-6 py-3"> 
-                
+                $row["PRODUCTIMAGE"];
                 </td>
                 <td scope="col" class="px-6 py-3"> 
-                
+                $row["NAME"];
                 </td>
                 <td scope="col" class="px-6 py-3">
-                
+                $row["PRICE"];
+                </td>
+                <td scope="col" class="px-6 py-3">
+                $row["DESCRIPTION"];
                 </td>
                 <td scope="col" class="px-6 py-3">
                 <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> <a href="./removefromwishlist.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a>";
