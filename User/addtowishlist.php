@@ -7,6 +7,7 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
 } else {
     if (isset($_GET['id']) && isset($_GET['action'])) {
         $pid = $_GET['pid'];
+        $referpage=$_SERVER['HTTP_REFERER'];
         $quantity=1;
         $sql = oci_parse($conn, "SELECT * FROM PRODUCT WHERE PRODUCT_ID = '$pid'");
         oci_bind_by_name($sql, ":PRODUCT_ID", $pid);
@@ -23,13 +24,13 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
                 $_SESSION['quan']=1;
                 $_SESSION['name']=$name;
                 $_SESSION['message'] = "Product successfully added to your wishlist.";
-                header('location: ./displayProduct.php');
+                header('location: $referpage');
                 exit();
             }
         }
         
     }
-    header('location: ./displayProduct.php');
+    header('location: $referpage');
     exit();
 }
 ?>

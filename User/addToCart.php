@@ -6,6 +6,7 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
 } else {
     if (isset($_GET['pid']) && isset($_GET['action'])) {
         $quantity=1;
+        $referpage=$_SERVER['HTTP_REFERER'];
         $pid = $_GET['pid'];
         $user_id=$_SESSION['id'];
         $sql = oci_parse($conn, "SELECT * FROM PRODUCT WHERE PRODUCT_ID = '$pid'");
@@ -20,13 +21,13 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
                 $_SESSION['quantity']=1;
                 $_SESSION['message'] = "Product successfully added to your cart.";
                 $_SESSION['pid']=$_GET['pid'];
-                header('location: ./product.php');
+                header('location: $referpage');
                 exit();
             }
         }
         $product = oci_fetch_array($sql, OCI_ASSOC);
     }
-    header('location: ./product.php');
+    header('location: $referpage');
     exit();
 }
 ?>

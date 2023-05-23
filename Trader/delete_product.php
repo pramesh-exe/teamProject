@@ -9,9 +9,13 @@ if(isset($_GET['id']) && isset($_GET['action'])){
     oci_bind_by_name($deleteProduct,":pid",$deleteID);
     oci_execute($deleteProduct);
     if(!$deleteProduct){
-        echo"Couldn't Delete product data. Please try again later.<br>";
-        echo "<a href='./traderproduct.php'>Proceed to product page</a>";
+        $_SESSION['message']="Couldn't Delete product data. Please try again later.<br>";
+        header('location:./trader_products.php');
+    }else{
+        $_SESSION['message']="Product deleted successfully.";
+        header('location:./trader_products.php');
     }
 }else{
-    header('location:./traderproduct.php');
+    $_SESSION['message']="Couldn't perform operation. Please try again later.<br>";
+    header('location:./trader_products.php');
 }

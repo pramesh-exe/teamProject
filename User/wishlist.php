@@ -3,6 +3,7 @@ include_once('connect.php');
 if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||empty($_SESSION['id'])) {
     header('location:./Login.php');
 }else{
+
     $id=$_SESSION['id'];
     $query=oci_parse($conn,"SELECT * FROM WISHLIST WHERE FK1_USER_ID='$id'");
     oci_execute($query);
@@ -15,6 +16,10 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
     $pid=$data1['FK1_PRODUCT_ID'];
     $query2=oci_parse($conn,"SELECT * FROM PRODUCT WHERE PRODUCT_ID='$pid'");
     oci_execute($query2);
+    if($_SESSION['message']){
+        $message=$_SESSION['message'];
+        echo "<script>alert('TRIBUS=> {$message}');</script>";
+    }
 }
 ?>
 <!DOCTYPE html>

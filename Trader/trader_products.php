@@ -6,6 +6,13 @@ if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION[
 $user=$_SESSION['email'];
 $pass=$_SESSION['password'];
 $uid=$_SESSION['id'];
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+}
+if(isset($SESSION['update'])){
+    echo $_SESSION['update'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,18 +63,18 @@ $uid=$_SESSION['id'];
             $stid = oci_parse($conn, $qry);
             oci_execute($stid);
             while($rows=oci_fetch_array($stid,OCI_ASSOC)){
-                $id=$rows['SHOP_ID'];
+                $sid=$rows['SHOP_ID'];
             }
             if (isset($_GET['sid'])) {
                 if ($_GET['sid']==1) {
-                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id' ORDER BY NAME ASC";
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid' ORDER BY NAME ASC";
                 } 
                 elseif ($_GET['sid']==2){
-                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id' ORDER BY PRICE ASC";
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid' ORDER BY PRICE ASC";
                 }
             }
             else {
-                $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$id'";
+                $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid'";
             }         
             $statement = oci_parse($conn, $query);
             oci_execute($statement);
@@ -94,12 +101,14 @@ $uid=$_SESSION['id'];
                     </tr>
                 </thead>';
                 while($row=oci_fetch_array($statement,OCI_ASSOC)){
+                    $id=$row['PRODUCT_ID'];
+                    $_SESSION['image']='<img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" ';
                     echo"<tr class='bg-white border-b '>";
                     echo'<td><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td>$".$row['PRICE']."</td>";
                     echo"<td>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./delete_product.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a></td> </tr>';
+                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./delete_product.php?id='.$id.'&action=delete" class="mr-2 text-blue-500 hover:underline">DELETE</a></td>';
                     
                 }
             echo "</table>";

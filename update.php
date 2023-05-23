@@ -369,7 +369,9 @@ function validatePhoneNumber($phoneNumber)
                 <button type='reset' value="clear">
             </form>
             <?php
-                echo "<script>alert('TRIBUS=> {$message}');</script>";
+                if(isset($_POST['submit'])){
+                    echo "<script>alert('TRIBUS=> {$message}');</script>";
+                }
             ?>
         </div>
     </div>
