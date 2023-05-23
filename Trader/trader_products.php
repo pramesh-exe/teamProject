@@ -9,6 +9,7 @@ $uid=$_SESSION['id'];
 if(isset($_SESSION['message'])){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
 }
 if(isset($SESSION['update'])){
     echo $_SESSION['update'];
@@ -120,6 +121,7 @@ if(isset($SESSION['update'])){
 
 <!-- Footer -->
 <?php
+session_destroy();
 include('footer.php');
 ?>
 

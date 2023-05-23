@@ -1,7 +1,11 @@
 <?php
 include_once('connect.php');
 if(!isset($_SESSION['ADMIN'])){
-    header('location:./Login.php');
+    header('location:../Login.php');
+}
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
 }
 ?>
 <!DOCTYPE html>

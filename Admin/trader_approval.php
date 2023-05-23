@@ -1,7 +1,7 @@
 <?php
 include_once('connect.php');
 if (!isset($_SESSION['ADMIN'])) {
-    header('location: ./Login.php');
+    header('location: ../Login.php');
 }
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -58,16 +58,14 @@ if (isset($_GET['id']) && isset($_GET['action'])) {
     $result = oci_execute($insertS); // Execute the statement and get the result
 
     if ($result) { // Check if the insertion was successful
-        $insertC = "INSERT INTO CATEGORY(TYPE, FK1_USER_ID) VALUES(:scategory, :user_id)";
+        $insertC = "INSERT INTO CATEGORY(TYPE, FK1_USER_ID) VALUES('$Fscategory', '$uid')";
         $insert = oci_parse($conn, $insertC) or die(oci_error($conn, $insertC));
-        oci_bind_by_name($insert, ":scategory", $Fscategory);
-        oci_bind_by_name($insert, ":user_id", $uid);
         oci_execute($insert);
 
         if ($query && $insert && $insertS) {
-            require_once('./PHPMailer/src/PHPMailer.php');
-            require_once('./PHPMailer/src/SMTP.php');
-            require './PHPMailer/src/Exception.php';
+            require_once('../PHPMailer/src/PHPMailer.php');
+            require_once('../PHPMailer/src/SMTP.php');
+            require '../PHPMailer/src/Exception.php';
 
             // Create a new PHPMailer instance
             $mail = new PHPMailer();
