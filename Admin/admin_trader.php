@@ -6,6 +6,7 @@ if(!isset($_SESSION['ADMIN'])){
 if(isset($_SESSION['message'])){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
 }
 ?>
 <!DOCTYPE html>

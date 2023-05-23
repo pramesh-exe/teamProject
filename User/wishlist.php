@@ -1,5 +1,13 @@
 <?php
 include_once('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+    header('location:./Login.php');
+}
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -240,7 +248,7 @@ include_once('connect.php');
         $stid2 = oci_parse($conn, $query2);
         oci_execute($stid2);
         while($rows=oci_fetch_array($stid2,OCI_ASSOC)){
-            $pid[]=$rows['FK1_PRODUCT_ID'];
+            $pid[]=$rows['FK2_PRODUCT_ID'];
         }
         $query3 = 'SELECT * FROM PRODUCT WHERE PRODUCT_ID IN (' . implode(',', $pid) . ')';
         $stid3 = oci_parse($conn, $query3);
@@ -267,14 +275,16 @@ include_once('connect.php');
                 </tr>
         </thead>';
         while($rows=oci_fetch_array($stid3,OCI_ASSOC)){
+            $id=$rows['PRODUCT_ID'];
+           
             echo"<tr class='bg-white border-b '>";
-            echo'<td><img src="./images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+            echo'<td><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
             echo"<td class='bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$rows['NAME']."</td>";
             echo"<td class='px-6 text-gray-900'>$".$rows['PRICE']."</td>";
             echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";
             echo'<td class="px-6">
-                <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> |
-                <a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a>
+                <a href="./addToCart.php?id='.$id.'&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> |
+                <a href="./removefromwishlist.php"?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a>
                 </td>
             </tr>';
         }

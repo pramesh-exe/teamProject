@@ -25,8 +25,8 @@ if (isset($_POST['submit'])) {
     if ($user) {
         $_SESSION['id']=$user['USER_ID'];
         $_SESSION['user'] = "user";
-      $_SESSION['email'] = $Vemail;
-      $_SESSION['password'] = $password;
+        $_SESSION['email'] = $Vemail;
+        $_SESSION['password'] = $password;
       header('location:./landing.php');
       exit();
     } else {

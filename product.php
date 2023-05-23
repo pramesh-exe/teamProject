@@ -6,6 +6,7 @@ if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION[
 if($_SESSION['message']){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
 }
 $user=$_SESSION['email'];
 $pass=$_SESSION['password'];

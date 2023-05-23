@@ -1,8 +1,10 @@
 <?php
-session_start();
-include('connection.php');
-
+include('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+  header('location:./Login.php');
+}
 if (isset($_GET['wishlistid']) && isset($_GET['action'])){
+  echo "Kapil";
      
   $wishlistid = $_GET['wishlistid'];
     
@@ -13,5 +15,7 @@ if (isset($_GET['wishlistid']) && isset($_GET['action'])){
   if($deletefromcart){
     header('location:./wishlist.php');
   }
+}else{
+  echo "not";
 }
 ?>

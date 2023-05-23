@@ -1,33 +1,38 @@
 <?php
 include_once('connect.php');
+if(isset($_SERVER['HTTP_REFERER'])){
+    $referpage=$_SERVER['HTTP_REFERER'];
 
-if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
-    header('location: ./Login.php');
-} else {
-    if (isset($_GET['pid']) && isset($_GET['action'])) {
+    if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+        header('location:../Login.php');
+    }else {
+    if (isset($_GET['id']) && isset($_GET['action'])) {
         $quantity=1;
-        $referpage=$_SERVER['HTTP_REFERER'];
-        $pid = $_GET['pid'];
+        $pid = $_GET['id'];
         $user_id=$_SESSION['id'];
         $sql = oci_parse($conn, "SELECT * FROM PRODUCT WHERE PRODUCT_ID = '$pid'");
-        oci_bind_by_name($sql, ":PRODUCT_ID", $pid);
-        if (oci_execute($sql)) {
-            $name=$product['NAME'];
-            $sql1=oci_parse($conn,"INSERT INTO CART(NUMBER_OF_ITEMS,NAME,FK1_USER_ID) VALUES(:Number_of_items,:Name,:user_id)");
-            oci_bind_by_name($sql1,":Number_of_items",$quantity);
-            oci_bind_by_name($sql1,":Name",$name);
-            oci_bind_by_name($sql1,":user_id",$user_id);
-            if(oci_execute($sql1)){
-                $_SESSION['quantity']=1;
+        oci_execute($sql);
+        if($product = oci_fetch_array($sql, OCI_ASSOC)){
+            $_SESSION['quantity']=1;
+            $quantity=$_SESSION['quantity'];
+            $sql1=oci_parse($conn,"INSERT INTO CART(NUMBER_OF_ITEMS,FK1_USER_ID) VALUES('$quantity','$user_id')");
+            oci_execute($sql1);
+            $sql2=oci_parse($conn, "SELECT * FROM CART ORDER BY CART_ID DESC");
+            oci_execute($sql2);
+            $row=oci_fetch_assoc($sql2);
+            $cid=$row['CART_ID'];
+            $sql3=oci_parse($conn,"INSERT INTO CART_PRODUCT(FK1_CART_ID,FK2_PRODUCT_ID) VALUES('$cid','$pid')");
+            oci_execute($sql3);
+
+            if($sql1){
                 $_SESSION['message'] = "Product successfully added to your cart.";
                 $_SESSION['pid']=$_GET['pid'];
-                header('location: $referpage');
-                exit();
+                header("location:$referpage");
+                 exit();
+                }
             }
         }
-        $product = oci_fetch_array($sql, OCI_ASSOC);
     }
-    header('location: $referpage');
     exit();
 }
 ?>

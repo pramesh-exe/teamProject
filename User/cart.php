@@ -238,13 +238,12 @@ include_once('connect.php');
             while($rows=oci_fetch_array($stid,OCI_ASSOC)){
                 $cid[]=$rows['CART_ID'];
                 $quantity[]=$rows['NUMBER_OF_ITEMS'];
-                $price[]=$rows['TOTAL_COST'];
             }
             $query2 = 'SELECT * FROM CART_PRODUCT WHERE FK1_CART_ID IN (' . implode(',', $cid) . ')';
             $stid2 = oci_parse($conn, $query2);
             oci_execute($stid2);
             while($rows=oci_fetch_array($stid2,OCI_ASSOC)){
-                $pid[]=$rows['FK1_PRODUCT_ID'];
+                $pid[]=$rows['FK2_PRODUCT_ID'];
             }
             $query3 = 'SELECT * FROM PRODUCT WHERE PRODUCT_ID IN (' . implode(',', $pid) . ')';
             $stid3 = oci_parse($conn, $query3);

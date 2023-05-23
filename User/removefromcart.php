@@ -1,7 +1,8 @@
 <?php
-session_start();
-include('connection.php');
-
+include('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+  header('location:./Login.php');
+}
 if (isset($_GET['cartid']) && isset($_GET['action'])){
      
   $cartid = $_GET['cartid'];
