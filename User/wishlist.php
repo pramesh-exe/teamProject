@@ -1,26 +1,5 @@
 <?php
 include_once('connect.php');
-if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||empty($_SESSION['id'])) {
-    header('location:./Login.php');
-}else{
-
-    $id=$_SESSION['id'];
-    $query=oci_parse($conn,"SELECT * FROM WISHLIST WHERE FK1_USER_ID='$id'");
-    oci_execute($query);
-    $data=oci_fetch_array($query,OCI_ASSOC);
-    $query1=oci_parse($conn,"SELECT W.FK1_USER_ID,W.WISHLIST_ID,P.FK1_PRODUCT_ID
-    FROM WISHLIST W, PRODUCT_WISHLIST P 
-    WHERE W.WISHLIST_ID=P.FK1_WISHLIST_ID");
-    oci_execute($query1);
-    $data1=oci_fetch_array($query1,OCI_ASSOC);
-    $pid=$data1['FK1_PRODUCT_ID'];
-    $query2=oci_parse($conn,"SELECT * FROM PRODUCT WHERE PRODUCT_ID='$pid'");
-    oci_execute($query2);
-    if($_SESSION['message']){
-        $message=$_SESSION['message'];
-        echo "<script>alert('TRIBUS=> {$message}');</script>";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -247,8 +226,26 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
 
     <!-- CONTENT -->
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
-    <div class="md:ml-72 ml-6 mb-8 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="md:ml-72 ml-6 mb-8 pt-2 gap-2 mr-4 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
+        $wid=[];
+        $pid=[];
+        $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= 6";
+        $stid = oci_parse($conn, $query);
+        oci_execute($stid);
+        while($rows=oci_fetch_array($stid,OCI_ASSOC)){
+            $wid[]=$rows['WISHLIST_ID'];
+        }
+        $query2 = 'SELECT * FROM PRODUCT_WISHLIST WHERE FK1_WISHLIST_ID IN (' . implode(',', $wid) . ')';
+        $stid2 = oci_parse($conn, $query2);
+        oci_execute($stid2);
+        while($rows=oci_fetch_array($stid2,OCI_ASSOC)){
+            $pid[]=$rows['FK1_PRODUCT_ID'];
+        }
+        $query3 = 'SELECT * FROM PRODUCT WHERE PRODUCT_ID IN (' . implode(',', $pid) . ')';
+        $stid3 = oci_parse($conn, $query3);
+        oci_execute($stid3);
+
         echo'<table class="table-auto w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -269,23 +266,15 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password'])) ||
                 </th>
                 </tr>
         </thead>';
-        while($data2=oci_fetch_array($query2,OCI_ASSOC)){
-
-            echo '<tr>
-                <td scope="col" class="px-6 py-3"> 
-                $row["PRODUCTIMAGE"];
-                </td>
-                <td scope="col" class="px-6 py-3"> 
-                $row["NAME"];
-                </td>
-                <td scope="col" class="px-6 py-3">
-                $row["PRICE"];
-                </td>
-                <td scope="col" class="px-6 py-3">
-                $row["DESCRIPTION"];
-                </td>
-                <td scope="col" class="px-6 py-3">
-                <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> <a href="./removefromwishlist.php"?id=$id&action=delete" class="text-red-500 hover:underline">DELETE</a>";
+        while($rows=oci_fetch_array($stid3,OCI_ASSOC)){
+            echo"<tr class='bg-white border-b '>";
+            echo'<td><img src="./images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+            echo"<td class='bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$rows['NAME']."</td>";
+            echo"<td class='px-6 text-gray-900'>$".$rows['PRICE']."</td>";
+            echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";
+            echo'<td class="px-6">
+                <a href="./addToCart.php?id=$id&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> |
+                <a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a>
                 </td>
             </tr>';
         }

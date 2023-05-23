@@ -150,7 +150,7 @@ include 'connect.php';
                                 <input class="block flex-grow flex-shrink overflow-hidden focus:outline-none px-4 py-1"
                                     placeholder="Search Product" />
 
-                                <div class="flex items-center justify-center relative h-8 w-8 rounded-lg">
+                                <a href="#" class="flex items-center justify-center relative h-8 w-8 rounded-lg">
                                     <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
                                         role="presentation" focusable="false" style="
                                 display: block;
@@ -167,7 +167,7 @@ include 'connect.php';
                                             </path>
                                         </g>
                                     </svg>
-                                </div>
+                                </a>
                             </button>
                         </div>
                     </div>

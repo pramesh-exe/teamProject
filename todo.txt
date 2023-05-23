@@ -1,0 +1,3 @@
+admin/reports
+order/slot
+payments/aboutus.....

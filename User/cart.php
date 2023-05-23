@@ -1,3 +1,6 @@
+<?php
+include_once('connect.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -219,14 +222,90 @@
                 </nav>
             </div>
         </aside>
+    </div>
 
-        <!-- CONTENT -->
-        <div class="flex md:pl-64 py-4">
-            asdasdasdasdasdasdasdasdasdasdasdf
-        </div>
+    <!-- CONTENT -->
+    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Traders</span>
+    <div class="flex md:ml-72 ml-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
+        <?php
+            $cid=[];
+            $pid=[];
+            $quantity=[];
+            $price=[];
+            $query = "SELECT * FROM CART WHERE FK1_USER_ID= 6";
+            $stid = oci_parse($conn, $query);
+            oci_execute($stid);
+            while($rows=oci_fetch_array($stid,OCI_ASSOC)){
+                $cid[]=$rows['CART_ID'];
+                $quantity[]=$rows['NUMBER_OF_ITEMS'];
+                $price[]=$rows['TOTAL_COST'];
+            }
+            $query2 = 'SELECT * FROM CART_PRODUCT WHERE FK1_CART_ID IN (' . implode(',', $cid) . ')';
+            $stid2 = oci_parse($conn, $query2);
+            oci_execute($stid2);
+            while($rows=oci_fetch_array($stid2,OCI_ASSOC)){
+                $pid[]=$rows['FK1_PRODUCT_ID'];
+            }
+            $query3 = 'SELECT * FROM PRODUCT WHERE PRODUCT_ID IN (' . implode(',', $pid) . ')';
+            $stid3 = oci_parse($conn, $query3);
+            oci_execute($stid3);
+            
+            $count=0;
+            echo'<table class="table-auto w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Product
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Quantity
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            unit Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            action
+                        </th>
+                    </tr>
+                </thead>';
+                while($rows=oci_fetch_array($stid3,OCI_ASSOC)){
+                        echo"<tr class='bg-white border-b '>";
+                        echo'<td><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+                        echo"<td class='bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$rows['NAME']."</td>";
+                        echo"<td class=' px-6'>";
+                        echo'<form id="myForm" method="post" action="">';
+                        echo'<select name="options" onchange="submitForm()">';
+                        for ($i = 1; $i <= $rows['PRODUCT_SIZE']; $i++) {
+                            if($quantity[$count]==$i){
+                            echo"<option selected value=".$i.">".$i."</option>";
+                            }else{
+                            echo"<option value=".$i.">".$i."</option>"; 
+                            }     
+                        }
+                        echo'</select>
+                            <input type="hidden" name="submit" value="true">
+                            </form></td>';
+                        echo"<td class='px-6 bg-slate-50 text-gray-900'>$".$rows['PRICE']."</td>";
+                        echo"<td class='px-6  text-gray-900'>$".$rows['PRICE']*$quantity[$count]."</td>";
+                        echo'<td class="px-6 bg-slate-50"><a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo"</tr>";
+                        $count++;            
+                }
+            echo "</table>";
+        ?>
     </div>
-    </form>
-    </div>
+    <script>
+    function submitForm() {
+        document.getElementById('myForm').submit();
+    }
+    </script>
+
 </body>
 
 <!-- Footer -->

@@ -1,8 +1,8 @@
 <?php
 include_once('connect.php');
-if(!isset($_SESSION['ADMIN'])){
-    header('location:../Login.php');
-}
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,24 +44,91 @@ if(!isset($_SESSION['ADMIN'])){
             </a>
 
             <!-- end logo -->
-            <span class="self-end"> Admin </span>
-            <!-- nav links -->
 
+            <!-- nav links -->
+            <div class="ml-2 flex-initial hidden lg:inline">
+                <div class="flex justify-end items-center relative">
+                    <div class="flex mr-4 items-center text-sm">
+                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                                About Us
+                            </div>
+                        </a>
+                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                                Pricing
+                            </div>
+                        </a>
+                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                                Community
+                            </div>
+                        </a>
+                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                                Support
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <!-- end nav links -->
         </div>
 
+        <!-- search bar -->
+        <div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
+            <div class="inline-block">
+                <div class="inline-flex items-center max-w-full">
+                    <button
+                        class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-60 border rounded-lg px-1 py-1 bg-white"
+                        type="button">
+                        <input class="block flex-grow flex-shrink overflow-hidden focus:outline-none px-4 py-1"
+                            placeholder="Search Product" />
 
-        <!-- logout -->
-        <div class="flex-initial">
-            <div class="flex justify-end items-center relative">
-                <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white" href="./Login.php">
-                    <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                        Logout
-                    </div>
-                </a>
+                        <div class="flex items-center justify-center relative h-8 w-8 rounded-lg">
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                role="presentation" focusable="false" style="
+                    display: block;
+                    fill: none;
+                    height: 12px;
+                    width: 12px;
+                    stroke: currentcolor;
+                    stroke-width: 5.33333;
+                    overflow: visible;
+                  ">
+                                <g fill="none">
+                                    <path
+                                        d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
-        <!-- end logout -->
+        <!-- end search bar -->
+
+        <!-- login -->
+        <div class="flex-initial">
+            <div class="flex justify-end items-center relative">
+                <div class="flex mr-4 items-center gap-4">
+                    <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600"
+                        href="./Register.php">
+                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                            Sign Up
+                        </div>
+                    </a>
+                    <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white"
+                        href="./Login.php">
+                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                            Login
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- end login -->
     </nav>
 
     <!-- Sidebar -->
@@ -159,57 +226,18 @@ if(!isset($_SESSION['ADMIN'])){
                 </nav>
             </div>
         </aside>
+
+
+        <!-- CONTENT -->
+        <div class="flex md:pl-64 py-4">
+
+        </div>
     </div>
 </body>
 
-<!-- CONTENT -->
-<span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Traders</span>
-<div class="flex md:ml-72 ml-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
-    <?php
-    $query = "SELECT * FROM USER_ONE WHERE type = 'trader'";
-    $statement = oci_parse($conn, $query);
-    oci_execute($statement);
-    
-
-    echo'<table class="table-auto w-full text-sm text-left text-gray-500">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    contact
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    shop
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    action
-                </th>
-            </tr>
-        </thead>';
-        while($row=oci_fetch_array($statement,OCI_ASSOC)){
-            $id = $row['USER_ID'];;
-            $query2 = "SELECT NAME FROM SHOP WHERE FK1_USER_ID = '$id'";
-            $stid = oci_parse($conn, $query2);
-            oci_execute($stid);
-            echo"<tr class='bg-white border-b '><td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['FIRSTNAME']." ".$row['LASTNAME']."</td>";
-            if(isset($row['CONTACT'])){
-                echo"<td>".$row['CONTACT']."</td>";
-            }
-            else{
-                echo"<td>-</td>";
-            }
-            echo"<td>".oci_fetch_assoc($stid)['NAME']."</td>";
-            echo"<td><a href='' class='mr-2 text-blue-500 hover:underline'>VIEW</a> <a href='' class='text-red-500 hover:underline'>DELETE</a></td> </tr>";
-            ;
-            
-        }
-    echo "</table>";
-    ?>
-</div>
-
 <!-- Footer -->
-
+<?php
+include 'footer.php';
+?>
 
 </html>
