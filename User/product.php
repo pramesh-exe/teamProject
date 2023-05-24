@@ -1,6 +1,8 @@
 <?php
 include 'connect.php';
-
+if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id'])) {
+    header('location:../product.php');
+}
 if($_SESSION['message']){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
@@ -254,64 +256,65 @@ $_SESSION['pid']=$id;
                 </nav>
             </div>
         </aside>
+    </div>
 
-        <!-- CONTENT -->
-        <div class="flex flex-col lg:flex-row max-w-full md:ml-64 pl-4 pt-4 gap-x-8 gap-y-4">
-            <div>
-                <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
-                    <div class="">
-                        <?php          
+    <!-- CONTENT -->
+    <div class="flex flex-col lg:flex-row max-w-full md:ml-64 pl-4 pt-4 gap-x-8 gap-y-4">
+        <div>
+            <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 bg-gray-200 p-2 rounded-lg">
+                <div class="">
+                    <?php          
                         echo'<img src="./images/'.$image.'"
                         alt="product image" />
                         </a>';
                     ?>
-                    </div>
-                    <div class="flex flex-col p-2 justify-between">
-                        <div class="">
-                            <span class="text-4xl font-sans font-bold">
-                                <?php 
+                </div>
+                <div class="flex flex-col p-2 justify-between">
+                    <div class="">
+                        <span class="text-4xl font-sans font-bold">
+                            <?php 
                         echo $name;
                         ?>
-                            </span>
-                            <p class="text-3xl font-sans font-semibold">
-                                $<?php 
+                        </span>
+                        <p class="text-3xl font-sans font-semibold">
+                            $<?php 
                         echo $price;
                         ?>
-                            </p>
-                        </div>
-                        <div class="font-light mt-4">
-                            <?php    
+                        </p>
+                    </div>
+                    <div class="font-light mt-4">
+                        <?php    
                                 echo $desc;
                             ?>
-                        </div>
-                        <div class="text-3xl font-sans font-semibold mt-4">
-                            In stock: <?php 
+                    </div>
+                    <div class="text-3xl font-sans font-semibold mt-4">
+                        In stock: <?php 
                         echo $stock;
                         ?>
-                        </div>
-                        <div class="text-sm font-medium mt-4">
-                            <a href="./addToCart.php"
-                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
-                                to
-                                cart</a>
-                            <a href="./addtowishlist.php"
-                                class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
-                                to
-                                wishlist</a>
+                    </div>
+                    <div class="text-sm font-medium mt-4">
+                        <a href="./addToCart.php"
+                            class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
+                            to
+                            cart</a>
+                        <a href="./addtowishlist.php"
+                            class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
+                            to
+                            wishlist</a>
 
-                        </div>
                     </div>
                 </div>
-                <div class="">
-
-                </div>
             </div>
-            <div class="bg-slate-200 p-2 rounded-md flex-col min-w-[256px]">
-                <span class="text-2xl font-sans font-semibold">
-                    More from the same seller
-                </span>
-                <div class="grid gap-8 grid-cols-2 lg:grid-cols-1">
-                    <?php
+            <div class="">
+
+            </div>
+        </div>
+        <div class="bg-slate-200 p-2 rounded-md flex-col min-w-[256px]">
+            <span class="text-2xl font-sans font-semibold">
+                More from the same seller
+            </span>
+            <div class="grid gap-8 grid-cols-2 lg:grid-cols-1">
+                <?php
                         while ($row2 = oci_fetch_array($stid2))
                         echo'<div class=" rounded-lg overflow-hidden shadow-md">
                         <div class="w-full h-40 overflow-hidden">
@@ -327,12 +330,11 @@ $_SESSION['pid']=$id;
                     ?>
 
 
-                </div>
             </div>
+
         </div>
     </div>
-    </form>
-    </div>
+
 </body>
 
 <!-- Footer -->
