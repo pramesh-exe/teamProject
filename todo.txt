@@ -1,4 +1,4 @@
 admin/reports
-order/slot
+order/slot/checkout
 payments/aboutus.....
 review system
