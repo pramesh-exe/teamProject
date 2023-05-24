@@ -1,7 +1,7 @@
 <?php
-include 'connect.php';
+include './connect.php';
 if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
-    header('location:./Login.php');
+    header('location:./trader_login.php');
 }
 $user=$_SESSION['email'];
 $pass=$_SESSION['password'];

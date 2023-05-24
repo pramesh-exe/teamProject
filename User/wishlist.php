@@ -1,7 +1,7 @@
 <?php
 include_once('connect.php');
 if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
-    header('location:./Login.php');
+    header('location:../Login.php');
 }
 if(isset($_SESSION['message'])){
     $message=$_SESSION['message'];

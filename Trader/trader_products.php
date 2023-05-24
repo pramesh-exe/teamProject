@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-if(!isset($_SESSION['email'])||!isset($_SESSION['password']) ||!isset($_SESSION['id'])) {
+include_once 'connect.php';
+if(empty($_SESSION['email'])||empty($_SESSION['password']) ||empty($_SESSION['id'])) {
     header('location:./trader_login.php');
 }
 $user=$_SESSION['email'];
@@ -81,7 +81,7 @@ if(isset($SESSION['update'])){
             oci_execute($statement);
             
 
-            echo'<table class="table-auto w-full text-sm text-left text-gray-500">
+            echo'<table class=" w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">
@@ -104,12 +104,12 @@ if(isset($SESSION['update'])){
                 while($row=oci_fetch_array($statement,OCI_ASSOC)){
                     $id=$row['PRODUCT_ID'];
                     $_SESSION['image']='<img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" ';
-                    echo"<tr class='bg-white border-b '>";
-                    echo'<td><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+                    echo"<tr class='bg-white border-b hover:bg-gray-50'>";
+                    echo'<td class="w-48 p-2"><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
-                    echo"<td>$".$row['PRICE']."</td>";
-                    echo"<td>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> <a href="./delete_product.php?id='.$id.'&action=delete" class="mr-2 text-blue-500 hover:underline">DELETE</a></td>';
+                    echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
+                    echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
+                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
                     
                 }
             echo "</table>";
@@ -121,7 +121,6 @@ if(isset($SESSION['update'])){
 
 <!-- Footer -->
 <?php
-session_destroy();
 include('footer.php');
 ?>
 
