@@ -29,7 +29,7 @@ if(isset($_SESSION['message'])){
 
 
     <!-- CONTENT -->
-    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
+    <span class="md:ml-72 mb-4 pt-8 text-3xl font-sans font-bold">Wishlist</span>
     <div class="md:ml-72 ml-6 mb-8 pt-2 gap-2 mr-4 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
         $id=$_SESSION['id'];
@@ -51,7 +51,7 @@ if(isset($_SESSION['message'])){
         $stid3 = oci_parse($conn, $query3);
         oci_execute($stid3);
 
-        echo'<table class="table-auto w-full text-sm text-left text-gray-500">
+        echo'<table class=" w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -75,7 +75,7 @@ if(isset($_SESSION['message'])){
             $id=$rows['PRODUCT_ID'];
            
             echo"<tr class='bg-white border-b '>";
-            echo'<td><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="w-32" /></a></td>';
+            echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></a></td>';
             echo'<td class="bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><a href="../product.php?id='.$id.'">'.$rows["NAME"].'</a></td>';
             echo"<td class='px-6 text-gray-900'>$".$rows['PRICE']."</td>";
             echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";

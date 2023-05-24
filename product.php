@@ -1,6 +1,9 @@
 <?php
 include 'connect.php';
-
+$id=$_GET['id'];
+if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id'])) {
+    header('location:./user/product.php?id='.$id);
+}
 if($_SESSION['message']){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
@@ -10,7 +13,6 @@ $user=$_SESSION['email'];
 $pass=$_SESSION['password'];
 $uid=$_SESSION['id'];
 
-$id=$_GET['id'];
 $_SESSION['pid']=$id;
 
     $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";

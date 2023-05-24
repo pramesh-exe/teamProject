@@ -305,7 +305,7 @@ include 'connect.php';
                                         $image=$row['PRODUCTIMAGE'];
                                         echo '<div class="flex flex-col rounded-lg overflow-hidden shadow-md">
                                         <div class="w-full h-40 overflow-hidden">
-                                            <a href="./user/product.php?id='.$row['PRODUCT_ID'].'">
+                                            <a href="./product.php?id='.$row['PRODUCT_ID'].'">
                                                 <img class="w-full h-40 object-cover"
                                                     src="./images/'.$image.'"
                                                     alt="product image" />
