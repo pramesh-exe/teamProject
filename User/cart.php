@@ -1,5 +1,13 @@
 <?php
 include_once('connect.php');
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+    header('location:./Login.php');
+}
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -228,11 +236,12 @@ include_once('connect.php');
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Traders</span>
     <div class="flex md:ml-72 ml-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
         <?php
+            $id=$_SESSION['id'];
             $cid=[];
             $pid=[];
             $quantity=[];
             $price=[];
-            $query = "SELECT * FROM CART WHERE FK1_USER_ID= 6";
+            $query = "SELECT * FROM CART WHERE FK1_USER_ID= '$id'";
             $stid = oci_parse($conn, $query);
             oci_execute($stid);
             while($rows=oci_fetch_array($stid,OCI_ASSOC)){

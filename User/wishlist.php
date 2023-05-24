@@ -236,9 +236,10 @@ if(isset($_SESSION['message'])){
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
     <div class="md:ml-72 ml-6 mb-8 pt-2 gap-2 mr-4 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
+        $id=$_SESSION['id'];
         $wid=[];
         $pid=[];
-        $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= 6";
+        $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= '$id'";
         $stid = oci_parse($conn, $query);
         oci_execute($stid);
         while($rows=oci_fetch_array($stid,OCI_ASSOC)){
