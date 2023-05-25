@@ -28,7 +28,7 @@ if(isset($_SESSION['message'])){
 
 
     <!-- CONTENT -->
-    <span class="md:ml-64 pl-6 pt-8 text-3xl font-sans font-bold">Trader's Request</span>
+    <span class="md:ml-64 pl-6 pt-8 mt-14 text-3xl font-sans font-bold">Trader's Request</span>
     <div class="flex md:ml-72 mx-6 pt-2 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
     $datas=oci_parse($conn,"SELECT * FROM TRADER_APPROVAL ORDER BY TRADER_APPROVAL_ID");

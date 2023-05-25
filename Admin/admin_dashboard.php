@@ -21,12 +21,12 @@ if(!isset($_SESSION['ADMIN'])){
     <!-- component -->
     <?php include "header.php"; ?>
     <!-- CONTENT -->
-    <h3 class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Welcome to your Dashboard</h3>
+    <h3 class="md:ml-64 mb-4 pl-6 pt-8 mt-14 text-3xl font-sans font-bold">Welcome to your Dashboard</h3>
     <div class=" md:ml-64 pl-4 pt-4 gap-x-8 gap-y-4 mb-5">
         <div class="grid gap-8">
             <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 ">
 
-                <a href="./trader_products.php"
+                <a href="./admin_viewproducts.php"
                     class="flex flex-col items-cente border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="../images/trader/product.png"
                         alt="">

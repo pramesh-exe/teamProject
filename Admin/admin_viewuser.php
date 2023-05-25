@@ -19,7 +19,7 @@ if(!isset($_SESSION['ADMIN'])){
 
 <body class="flex flex-col min-h-screen">
     <?php include "header.php"; ?>
-    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Customers</span>
+    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold mt-14">Customers</span>
     <div class="flex md:ml-72 mx-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
         <?php
         $query = "SELECT * FROM USER_ONE WHERE type = 'user'";

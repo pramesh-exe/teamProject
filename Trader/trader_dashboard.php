@@ -34,7 +34,7 @@ $uid=$_SESSION['id'];
             <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 ">
 
                 <a href="./trader_products.php"
-                    class="flex flex-col items-cente border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
+                    class="flex flex-col items-center border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="../images/trader/product.png"
                         alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
