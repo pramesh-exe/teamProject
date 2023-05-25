@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <form method="post">
+            <form method="post" action="./allproducts.php">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                 <div class="relative">
                     <input type="search" id="default-search"
