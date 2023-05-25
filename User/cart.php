@@ -31,13 +31,15 @@ if(isset($_SESSION['message'])){
 
     <!-- CONTENT -->
     <span class="md:ml-72 mb-4 pt-8 text-3xl font-sans font-bold">CART</span>
-    <div class="flex md:ml-72 ml-6 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex md:ml-72 mx-6 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
             $id=$_SESSION['id'];
             $cid=[];
             $pid=[];
             $quantity=[];
             $price=[];
+            $total = 0;
+            $items = 0;
             $query = "SELECT * FROM CART WHERE FK1_USER_ID= '$id'";
             $stid = oci_parse($conn, $query);
             oci_execute($stid);
@@ -66,16 +68,16 @@ if(isset($_SESSION['message'])){
                             Name
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Quantity
+                            action
                         </th>
                         <th scope="col" class="px-6 py-3">
                             unit Price
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Price
+                            Quantity
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            action
+                            Price
                         </th>
                     </tr>
                 </thead>';
@@ -89,6 +91,8 @@ if(isset($_SESSION['message'])){
                         echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></td>';
                         echo"<td class='bg-slate-50 px-6 py-4  whitespace-nowrap'><a href='../product.php?id=".$rows['PRODUCT_ID']."' class='font-medium text-gray-900'>".$rows['NAME']."</a><br>
                             <p class ='text=gray-200'>In Stock: ".$rows['PRODUCT_SIZE']."</p></td>";
+                        echo'<td class="px-6 "><a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo"<td class='px-6 bg-slate-50 text-gray-900'>$".$rows['PRICE']."</td>";
                         echo"<td class=' px-6'>";
                         echo'<form id="myForm" method="post" action="">';
                         echo'<select name="options" onchange="submitForm()">';
@@ -102,18 +106,24 @@ if(isset($_SESSION['message'])){
                         echo'</select>
                             <input type="hidden" name="submit" value="true">
                             </form></td>';
-                        echo"<td class='px-6 bg-slate-50 text-gray-900'>$".$rows['PRICE']."</td>";
                         
-                        echo"<td class='px-6  text-gray-900'>$".$rows['PRICE']*$count."</td>";
-                        echo'<td class="px-6 bg-slate-50"><a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo"<td class='px-6 bg-slate-50 text-gray-900'>$".$rows['PRICE']*$count."</td>";
                         echo"</tr>";
-                                    
+                        $total = $total + $rows['PRICE']*$count;
+                        $items = $items + $count;                                    
                 }
+                echo"<tr class='font-bold'><td></td>
+                <td></td>
+                <td></td>
+                <td class='flex justify-end py-6 px-3 text-lg underline'>Total</td>
+                <td class='py-6 px-6'>Items: ".$items."</td>
+                <td class='py-6 px-6'>$".$total."</td>
+                </tr>";
             echo "</table>";
             
         ?>
     </div>
-    <div class="mt-6 flex justify-end">
+    <div class="my-6 mx-3 flex justify-end">
         <button type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"

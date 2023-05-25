@@ -19,13 +19,13 @@ if(!isset($_SESSION['ADMIN'])){
 
 <body class="flex flex-col min-h-screen">
     <?php include "header.php"; ?>
-    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Traders</span>
+    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Customers</span>
     <div class="flex md:ml-72 mx-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
         <?php
-        $query = "SELECT * FROM USER_ONE WHERE type = 'trader'";
+        $query = "SELECT * FROM USER_ONE WHERE type = 'user'";
         $statement = oci_parse($conn, $query);
         oci_execute($statement);
-        
+        $order = 0;
     
         echo'<table class="table-auto w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -37,7 +37,10 @@ if(!isset($_SESSION['ADMIN'])){
                         contact
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        shop
+                        email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Total Orders
                     </th>
                     <th scope="col" class="px-6 py-3">
                         action
@@ -46,9 +49,12 @@ if(!isset($_SESSION['ADMIN'])){
             </thead>';
             while($row=oci_fetch_array($statement,OCI_ASSOC)){
                 $id = $row['USER_ID'];;
-                $query2 = "SELECT NAME FROM SHOP WHERE FK1_USER_ID = '$id'";
+                $query2 = "SELECT * FROM PRODUCT_ORDER WHERE FK2_USER_ID = '$id'";
                 $stid = oci_parse($conn, $query2);
                 oci_execute($stid);
+                while($rows=oci_fetch_array($stid,OCI_ASSOC)){
+                    $order++;
+                }
                 echo"<tr class='bg-white border-b '><td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['FIRSTNAME']." ".$row['LASTNAME']."</td>";
                 if(isset($row['CONTACT'])){
                     echo"<td>+".$row['CONTACT']."</td>";
@@ -56,8 +62,9 @@ if(!isset($_SESSION['ADMIN'])){
                 else{
                     echo"<td>-</td>";
                 }
-                echo"<td>".oci_fetch_assoc($stid)['NAME']."</td>";
-                echo"<td class=''><a href='' class='mr-2 text-blue-500 hover:underline'>VIEW</a> <a href='' class='text-red-500 hover:underline'>DELETE</a></td> </tr>";
+                echo"<td class='px-6'>".$row['EMAIL']."</td>";
+                echo"<td class='px-6'>".$order."</td>";
+                echo"<td><a href='' class='mr-2 text-blue-500 hover:underline'>VIEW</a> <a href='' class='text-red-500 hover:underline'>DELETE</a></td> </tr>";
                 ;
                 
             }

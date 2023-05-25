@@ -1,5 +1,8 @@
 <?php
 include 'connect.php';
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+    header('location:../Login.php');
+}
 // if($_SESSION['message']){
 //     $message=$_SESSION['message'];
 //     echo "<script>alert('TRIBUS=> {$message}');</script>";
@@ -135,13 +138,14 @@ $_SESSION['pid']=$id;
                 <div class="mb-4">
                     <span class="pt-8 text-3xl font-sans font-semibold ">Add a review</span>
                 </div>
+
                 <div class="border-b border-gray-400">
                     <form>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 m-2">
-                            <div class="px-4 py-2 bg-white rounded-t-lg ">
+                            <div class=" bg-white rounded-t-lg ">
                                 <textarea id="comment" rows="4"
-                                    class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0 focus:border-transparent"
-                                    placeholder="Leave a review..." required></textarea>
+                                    class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0 focus:border-transparent rounded-t-lg"
+                                    placeholder=" Leave a review..." required></textarea>
                             </div>
                             <div class="flex items-center px-3 py-2 border-t justify-end">
                                 <button type="submit"
