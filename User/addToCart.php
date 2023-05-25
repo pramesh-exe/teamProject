@@ -20,18 +20,25 @@ if(isset($_SERVER['HTTP_REFERER'])){
             $sql2=oci_parse($conn, "SELECT * FROM CART ORDER BY CART_ID DESC");
             oci_execute($sql2);
             $row=oci_fetch_assoc($sql2);
-            $cid=$row['CART_ID'];
-            $sql3=oci_parse($conn,"INSERT INTO CART_PRODUCT(FK1_CART_ID,FK2_PRODUCT_ID) VALUES('$cid','$pid')");
-            oci_execute($sql3);
-            if(oci_execute($sql1) && oci_execute($sql3)){
-                $_SESSION['message'] = "Product successfully added to your cart.";
-                $_SESSION['pid']=$_GET['pid'];
-                header("location:$referpage");
-                 exit();
+            if($row<=20){
+                $cid=$row['CART_ID'];
+                $sql3=oci_parse($conn,"INSERT INTO CART_PRODUCT(FK1_CART_ID,FK2_PRODUCT_ID) VALUES('$cid','$pid')");
+                oci_execute($sql3);
+                if(oci_execute($sql1) && oci_execute($sql3)){
+                    $_SESSION['message'] = "Product successfully added to your cart.";
+                    $_SESSION['pid']=$_GET['pid'];
+                    header("location:$referpage");
+                    exit();
+                    }
                 }
+            }else{
+                $_SESSION['message'] = "Cart is full! Cannot have more than 20 items.";
+                header("location:$referpage");
+                exit();
             }
         }
     }
+    header("location:$referpage");
     exit();
 }
 ?>

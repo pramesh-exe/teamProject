@@ -197,6 +197,4 @@ if(isset($_SESSION['message'])){
 <?php
     include 'footer.php';
     ?>
-
-
 </html>
