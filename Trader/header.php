@@ -1,3 +1,11 @@
+<?php
+    $user = $_SESSION['email'];
+    $uid = $_SESSION['id'];
+    $query=oci_parse($conn, "SELECT * FROM USER_ONE WHERE USER_ID = '$uid'");
+    oci_execute($query);
+    $row=oci_fetch_assoc($query);
+    $name=$row['FIRSTNAME']." ".$row['LASTNAME'];
+?>
 <nav class="fixed top-0 z-50 w-full bg-slate-100 border-b border-gray-200 ">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -32,7 +40,7 @@
             <!-- Dropdown menu -->
             <div id="userDropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 d">
                 <div class="px-4 py-3 text-sm text-gray-900 ">
-                    <div>Bonnie Green</div>
+                    <div><?php echo $name?></div>
                     <div class="font-medium truncate"><?php echo $user?></div>
                 </div>
                 <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">

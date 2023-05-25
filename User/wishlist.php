@@ -38,7 +38,7 @@ if(isset($_SESSION['message'])){
         $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= '$id'";
         $stid = oci_parse($conn, $query);
         oci_execute($stid);
-        if(oci_fetch_array($stid,OCI_ASSOC)>0){
+        // if(oci_fetch_array($stid,OCI_ASSOC)>=0){
         while($rows=oci_fetch_array($stid,OCI_ASSOC)){
             $wid[]=$rows['WISHLIST_ID'];
         }
@@ -87,9 +87,9 @@ if(isset($_SESSION['message'])){
             </tr>';
         }
         echo'</table>';
-    }else{
-        echo "Wishlist is empty.";
-    }
+    // }else{
+    //     echo "Wishlist is empty.";
+    // }
         ?>
     </div>
 </body>

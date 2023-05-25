@@ -1,11 +1,3 @@
-<?php
-    $user = $_SESSION['email'];
-    $uid = $_SESSION['id'];
-    $query=oci_parse($conn, "SELECT * FROM USER_ONE WHERE USER_ID = '$uid'");
-    oci_execute($query);
-    $row=oci_fetch_assoc($query);
-    $name=$row['FIRSTNAME']." ".$row['LASTNAME'];
-?>
 <nav class="fixed top-0 z-50 w-full bg-slate-100 border-b border-gray-200 ">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -23,7 +15,7 @@
                 </button>
                 <a class="flex gap-2 self-center mr-2" href="./landing.php">
 
-                    <img src="../Logo/Tribus1.png" width="35">
+                    <img src="./Logo/Tribus1.png" width="35">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap">TRIBUS</span>
 
                 </a>
@@ -71,34 +63,20 @@
                 </div>
             </form>
 
-            <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full hover:cursor-pointer" type="button">
-                <svg data-dropdown-toggle="userDropdown" class=" absolute w-12 h-12 text-gray-100 -left-1"
-                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd">
-                    </path>
-                </svg>
-            </div>
-            <!-- Dropdown menu -->
-            <div id="userDropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 d">
-                <div class="px-4 py-3 text-sm text-gray-900 ">
-                    <div><?php echo $name?></div>
-                    <div class="font-medium truncate"><?php echo $user?></div>
-                </div>
-                <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Earnings</a>
-                    </li>
-                </ul>
-                <div class="py-1">
-                    <a href="../logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Sign
-                        out</a>
+            <div class="flex px-3 lg:px-0 lg:justify-end items-center relative">
+                <div class="flex mr-4 items-center gap-4">
+                    <a class="inline-block py-2 px-4 hover:bg-gray-200 rounded-lg border border-slate-600"
+                        href="./Register.php">
+                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                            Sign Up
+                        </div>
+                    </a>
+                    <a class="inline-block py-2 px-6 bg-black rounded-lg border border-black text-white"
+                        href="./Login.php">
+                        <div class="flex items-center relative cursor-pointer whitespace-nowrap">
+                            Login
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -123,7 +101,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900 hover:text-gray-100"
-                    href="#">
+                    href="./">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -134,7 +112,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900 hover:text-gray-100"
-                    href="./wishlist.php">
+                    href="./user/wishlist.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -156,7 +134,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                    href="./profile.php">
+                    href="../profile.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -191,4 +169,3 @@
     </div>
 </aside>
 <div class="mb-14"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
