@@ -6,7 +6,7 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
 if(isset($_SESSION['message'])){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
-    unset($message);
+    unset($_SESSION['message']);
 }
 ?>
 <!DOCTYPE html>
@@ -38,6 +38,7 @@ if(isset($_SESSION['message'])){
         $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= '$id'";
         $stid = oci_parse($conn, $query);
         oci_execute($stid);
+        if(oci_fetch_array($stid,OCI_ASSOC)>0){
         while($rows=oci_fetch_array($stid,OCI_ASSOC)){
             $wid[]=$rows['WISHLIST_ID'];
         }
@@ -77,7 +78,7 @@ if(isset($_SESSION['message'])){
             echo"<tr class='bg-white border-b '>";
             echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></a></td>';
             echo'<td class="bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><a href="../product.php?id='.$id.'">'.$rows["NAME"].'</a></td>';
-            echo"<td class='px-6 text-gray-900'>$".$rows['PRICE']."</td>";
+            echo"<td class='px-6 text-gray-900'>&pound;".$rows['PRICE']."</td>";
             echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";
             echo'<td class="px-6">
                 <a href="./addToCart.php?id='.$id.'&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> |
@@ -86,6 +87,9 @@ if(isset($_SESSION['message'])){
             </tr>';
         }
         echo'</table>';
+    }else{
+        echo "Wishlist is empty.";
+    }
         ?>
     </div>
 </body>

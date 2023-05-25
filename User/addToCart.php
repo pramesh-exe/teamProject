@@ -23,8 +23,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
             $cid=$row['CART_ID'];
             $sql3=oci_parse($conn,"INSERT INTO CART_PRODUCT(FK1_CART_ID,FK2_PRODUCT_ID) VALUES('$cid','$pid')");
             oci_execute($sql3);
-
-            if($sql1){
+            if(oci_execute($sql1) && oci_execute($sql3)){
                 $_SESSION['message'] = "Product successfully added to your cart.";
                 $_SESSION['pid']=$_GET['pid'];
                 header("location:$referpage");

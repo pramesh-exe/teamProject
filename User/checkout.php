@@ -1,37 +1,90 @@
 <?php
-include_once('connect.php');
+include('connect.php');
+
+// Check if the user is logged in
 if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
     header('location:../Login.php');
 }
-if(isset($_SESSION['message'])){
-    $message=$_SESSION['message'];
-    echo "<script>alert('TRIBUS=> {$message}');</script>";
-    unset($message);
+
+// Function to display collection days
+function collection(){
+    date_default_timezone_set("Asia/Kathmandu");
+    $a = date("Y/m/d");
+    $b = date("l");
+    $c = date("h:i:sa");
+
+    if ($b == "Sunday" || $b == "Monday" || $b =="Tuesday") {
+        $day1 = <<<SPLIT
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+SPLIT;
+        echo $day1;
+    } else if($b == "Wednesday") {
+        $day2 = <<<SPLIT
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+SPLIT;
+        echo $day2;
+    } else if($b == "Thursday") {
+        $day1 = <<<SPLIT
+            <option value="Friday">Friday</option>
+            <option value="Wednesday">Next Wednesday</option>
+SPLIT;
+        echo $day1;
+    } else if($b == "Friday") {
+        $day1 = <<<SPLIT
+            <option value="Wednesday">Next Wednesday</option>
+            <option value="Thursday">Next Thursday</option>
+SPLIT;
+        echo $day1;
+    } else {
+        $day1 = <<<SPLIT
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+SPLIT;
+        echo $day1;
+    }
+}
+
+
+// Function to display collection time slots
+function timer(){
+    $b = date("l");
+    $c = date("h G");
+
+    if ($b == "Sunday" || $b == "Monday" || $b =="Tuesday" || $b == "Saturday") {
+        $d5 = <<<SPLIT
+            <option value="10am to 1pm">10 a.m to 1 p.m</option>
+            <option value="1pm to 4pm">1 p.m to 4 p.m</option>
+            <option value="4pm to 7pm">4 p.m to 7 p.m</option>
+SPLIT;
+        echo $d5;
+    } else {
+        if ($c > "18" || $c < "10"){
+            $d1 = <<<SPLIT
+                <option value="10am to 1pm">10 a.m to 1 p.m</option>
+                <option value="1pm to 4pm">1 p.m to 4 p.m</option>
+                <option value="4pm to 7pm">4 p.m to 7 p.m</option>
+SPLIT;
+            echo $d1;
+        } elseif ($c < 13) {
+            $d2 = <<<SPLIT
+                <option value="1pm to 4pm">1 p.m to 4 p.m</option>
+                <option value="4pm to 7pm">4 p.m to 7 p.m</option>
+SPLIT;
+            echo $d2;
+        } elseif ($c < 16) {
+            $d3 = <<<SPLIT
+                <option value="4pm to 7pm">4 p.m to 7 p.m</option>
+SPLIT;
+            echo $d3;
+        }
+    }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TRIBUS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
-    <link rel="stylesheet" href="main.css">
-</head>
-
-<body class="flex flex-col min-h-screen">
-    <!-- component -->
-    <?php
-    include 'header.php';
-    ?>
-
-
-    <!-- CONTENT -->
-    <span class="md:ml-72 mb-4 pt-8 text-3xl font-sans font-bold">CART</span>
-    <div class="flex md:ml-72 mx-6 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
+<div class="flex md:ml-72 mx-6 pt-2 gap-2 overflow-x-auto shadow-md sm:rounded-lg">
         <?php
             $id=$_SESSION['id'];
             $cid=[];
@@ -62,13 +115,10 @@ if(isset($_SESSION['message'])){
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Product
+                           Product Name
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            action
+                            Decription
                         </th>
                         <th scope="col" class="px-6 py-3">
                             unit Price
@@ -88,10 +138,8 @@ if(isset($_SESSION['message'])){
                         }
                     }    
                     echo"<tr class='bg-white border-b hover:bg-gray-50'>";
-                        echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></td>';
-                        echo"<td class='bg-slate-50 px-6 py-4  whitespace-nowrap'><a href='../product.php?id=".$rows['PRODUCT_ID']."' class='font-medium text-gray-900'>".$rows['NAME']."</a><br>
-                            <p class ='text=gray-200'>In Stock: ".$rows['PRODUCT_SIZE']."</p></td>";
-                        echo'<td class="px-6 "><a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo"<td class='bg-slate-50 px-6 py-4  whitespace-nowrap'><a href='../product.php?id=".$rows['PRODUCT_ID']."' class='font-medium text-gray-900'>".$rows['NAME']."</a><br></td>";
+                        echo"<td class='px-6 bg-slate-50 text-gray-900'>".$rows['DESCRIPTION']."</td>";
                         echo"<td class='px-6 bg-slate-50 text-gray-900'>&pound;".$rows['PRICE']."</td>";
                         echo"<td class=' px-6'>";
                         echo'<form id="myForm" method="post" action="">';
@@ -117,39 +165,24 @@ if(isset($_SESSION['message'])){
                 <td></td>
                 <td class='flex justify-end py-6 px-3 text-lg underline'>Total</td>
                 <td class='py-6 px-6'>Items: ".$items."</td>
-                <td class='py-6 px-6'>&pound;".$total."</td>
+                <td class='py-6 px-6'>Total Amount: &pound;".$total."</td>
                 </tr>";
             echo "</table>";
             
         ?>
     </div>
-    <div class="my-6 mx-3 flex justify-end">
-        <a href="./checkout.php">
-        <button type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
-                </path>
-            </svg>
-            Proceed to payment
-        </button>
-        </a>
-    </div>
-   
-    <script>
-    function submitForm() {
-        document.getElementById('myForm').submit();
-    }
-    </script>
 
-</body>
+<!-- HTML form -->
+<form>
+    <label for="collection_day">Select Collection Day:</label>
+    <select name="collection_day" id="collection_day">
+        <?php collection(); ?>
+    </select>
 
-<!-- Footer -->
-<?php
-    include 'footer.php';
-    ?>
+    <label for="collection_time">Select Collection Time:</label>
+    <select name="collection_time" id="collection_time">
+        <?php timer(); ?>
+    </select>
 
-
-</html>
+    <button type="submit">Submit</button>
+</form>
