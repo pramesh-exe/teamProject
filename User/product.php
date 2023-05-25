@@ -46,7 +46,6 @@ $_SESSION['pid']=$id;
         $number++;
     }
     if ($number!=0) {
-        # code...
         $rating = $rating/$number;
     }
 
