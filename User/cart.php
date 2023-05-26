@@ -7,6 +7,7 @@ if(isset($_SESSION['message'])){
     $message=$_SESSION['message'];
     echo "<script>alert('TRIBUS=> {$message}');</script>";
     unset($_SESSION['message']);
+
 }
 ?>
 <!DOCTYPE html>
@@ -128,7 +129,7 @@ if(isset($_SESSION['message'])){
                 </tr>";
             echo "</table>";
             $_SESSION['items'] = $items;
-            $_SESSION['total']=$total;
+            $_SESSION['total'] = $total;
             $_SESSION['AMOUNT'] = $total;
         ?>
     </div>
