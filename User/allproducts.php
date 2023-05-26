@@ -28,71 +28,261 @@ include_once 'connect.php';
 
     <div class="flex:col md:ml-72 ml-6 mb-8 pt-2 gap-2 ">
         <div>
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mb-4"
-                type="button">Sort by <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg></button>
-            <!-- Dropdown menu -->
-            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                        <a href="./allproducts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name Ascending</a>
-                    </li>
-                    <li>
-                        <a href="./allproducts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Name Descending</a>
-                    </li>
-                    <li>
-                        <a href="./allproducts.php?sid=3" class="block px-4 py-2 hover:bg-gray-100">Lowest Price</a>
-                    </li>
-                    <li>
-                        <a href="./allproducts.php?sid=4" class="block px-4 py-2 hover:bg-gray-100">Highest Price</a>
-                    </li>
-                </ul>
-            </div>
+            <form action="" method="post">
+                <label for="Sort">Sort by:</label>
+                <select id="sort" name="sort"
+                    class="inline bg-gray-50 border border-gray-300 text-gray-900 text-sm mr-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 ">
+                    <option value="1"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 1) {echo 'selected';}}?>>Name
+                        Ascending</option>
+                    <option value="2"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 2) {echo 'selected';}}?>>Name
+                        Descending</option>
+                    <option value="3"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 3) {echo 'selected';}}?>>Price
+                        Highest</option>
+                    <option value="4"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 4) {echo 'selected';}}?>>Price
+                        lowest</option>
+                </select>
+                <label for="Sort">Shop:</label>
+                <select id="shop" name="shop"
+                    class="inline bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 ">
+                    <option value="6"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '6') {echo ' selected';}}?>>
+                        All</option>
+                    <option value="1"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '1') {echo ' selected';}}?>>
+                        Greengrocer</option>
+                    <option value="2"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '2') {echo ' selected';}}?>>Fishmonger
+                    </option>
+                    <option value="3"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '3') {echo ' selected';}}?>>
+                        Delicatessen</option>
+                    <option value="4"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '4') {echo ' selected';}}?>>Butchers
+                    </option>
+                    <option value="5"
+                        <?php if (isset($_POST['submit'])) {if ($_POST['shop'] == '5') {echo ' selected';}}?>>Bakery
+                    </option>
+                </select>
+                <?php if(isset($_POST['search'])){
+                    $name=$_POST['search'];
+                    echo '<input type="hidden" name="search" value="'.$name.'">';
+                }?>
+                <button type="submit" name="submit"
+                    class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Filter</button>
+                <button type="submit" name="reset"
+                    class="text-white bg-gradient-to-r from-red-800 to-pink-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reset
+                    Filters</button>
+            </form>
+
         </div>
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
             <?php
-                if(empty($_POST['search'])){
-                    if (isset($_GET['sid'])) {
-                        if ($_GET['sid']==1) {
-                            $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
-                        }elseif ($_GET['sid']==2) {
-                            $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
-                        }elseif ($_GET['sid']==3){
-                            $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
-                        }elseif ($_GET['sid']==4){
-                            $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                
+                if(empty($_POST['search']) || $search == ''){
+                    if (isset($_POST['shop'])) {
+                        if ($_POST['shop']==1) {
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' ORDER BY PRICE DESC";
+                                }
+                            }
+                                else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1'";
+                            }
+                        }elseif ($_POST['shop']==2) {
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==3){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==4){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==5){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==6){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT";
+                                }
+                            }
                         }
                     }
-                    else {
+                    
+                    elseif (isset($_POST['sort'])) {
+                            if ($_POST['sort']==1) {
+                                $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
+                            }elseif ($_POST['sort']==2) {
+                                $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
+                            }elseif ($_POST['sort']==3) {
+                                $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+                            }elseif ($_POST['sort']==4) {
+                                $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                            }
+                        }
+                    else
+                    {
                         $query = "SELECT * FROM PRODUCT";
                     }
                 }
-                if(isset($_POST['search'])){
-                    $name=$_POST['search'];
-                    $name=strtolower($name);
-                    if (isset($_GET['sid'])) {
-                        if ($_GET['sid']==1) {
-                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
-                        }elseif ($_GET['sid']==2) {
-                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
-                        }elseif ($_GET['sid']==3){
-                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
-                        }elseif ($_GET['sid']==4){
-                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                if(isset($_POST['search']) && $_POST['search'] != '') {
+                    if (isset($_POST['shop'])) {
+                        if ($_POST['shop']==1) {
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '1' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==2) {
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '2' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==3){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '3' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==4){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '4' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                                }
+                            }
+                        }elseif ($_POST['shop']==5){
+                            if (isset($_POST['sort'])) {
+                                if ($_POST['sort']==1) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                                }elseif ($_POST['sort']==2) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                                }elseif ($_POST['sort']==3) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                                }elseif ($_POST['sort']==4) {
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                                }else{
+                                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '5' AND WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                                }
+                            }
                         }
                     }
-                    else {
-                        $sql="SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                    
+                    elseif (isset($_POST['sort'])) {
+                            if ($_POST['sort']==1) {
+                                $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                            }elseif ($_POST['sort']==2) {
+                                $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                            }elseif ($_POST['sort']==3) {
+                                $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                            }elseif ($_POST['sort']==4) {
+                                $query = "SELECT * FROM PRODUCt WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                            }
+                        }
+                    else{
+                        $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
                     }
-                }else{
-                    $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID DESC";
-            }
-            $statement=oci_parse($conn,$sql);
-            oci_execute($statement);
-                 
+                } 
+                if(isset($_POST['reset'])){
+                    $query = "SELECT * FROM PRODUCT";
+                }
+            $statement=oci_parse($conn,$query);
+            oci_execute($statement);  
             echo'<table class=" w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -120,7 +310,7 @@ include_once 'connect.php';
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
                     echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">Add to cart</a> ';
+                    echo'<td><a href="./addToCart.php?id='.$id.'&action=add" class="mr-2 text-blue-500 hover:underline">Add to cart</a> ';
                     
                 }
             echo "</table>";

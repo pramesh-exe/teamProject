@@ -37,7 +37,7 @@
                                     Community
                                 </div>
                             </a>
-                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="./contact.php">
                                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                                     Support
                                 </div>
@@ -158,7 +158,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                    href="./contact.html">
+                    href="./contact.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
