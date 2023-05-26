@@ -39,7 +39,7 @@ $uid=$_SESSION['id'];
                         alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Muji Haru</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View all the products from your shop.</p>
                     </div>
                 </a>
                 <a href="insert_product.php"
@@ -47,7 +47,7 @@ $uid=$_SESSION['id'];
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg" src="../images/trader/add.png" alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Add Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">The BIG MUJI, The British College </p>
+                        <p class="mb-3 font-normal text-gray-700 ">You can add multiple datas one after another.</p>
                     </div>
                 </a>
             </div>
@@ -58,8 +58,7 @@ $uid=$_SESSION['id'];
                         alt="updateProduct.php">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Manage Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Monark Mula AAyush Mula Prameh Mula Sushan Mula Kapil
-                            MUla</p>
+                        <p class="mb-3 font-normal text-gray-700 ">You can update and delete your product information.</p>
                     </div>
                 </a>
                 <a href="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::"
