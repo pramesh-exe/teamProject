@@ -87,13 +87,13 @@
                 </div>
                 <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
+                        <a href="./profile.php" class="block px-4 py-2 hover:bg-gray-100 ">Profile</a>
                     </li>
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Settings</a>
+                        <a href="./cart.php" class="block px-4 py-2 hover:bg-gray-100 ">Cart</a>
                     </li>
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Earnings</a>
+                        <a href="./wishlist.php" class="block px-4 py-2 hover:bg-gray-100 ">Wishlist</a>
                     </li>
                 </ul>
                 <div class="py-1">

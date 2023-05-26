@@ -18,58 +18,106 @@ if(!isset($_SESSION['ADMIN'])){
 </head>
 
 <body class="flex flex-col min-h-screen">
-    <?php include "header.php"; ?>
-    <span class="md:ml-64 mt-14 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Customers</span>
-    <div class="flex md:ml-72 mx-6 pt-2 gap-2 relative overflow-x-auto shadow-md sm:rounded-lg">
-        <?php
-        $query = "SELECT * FROM USER_ONE WHERE type = 'user'";
-        $statement = oci_parse($conn, $query);
-        oci_execute($statement);
-        $order = 0;
-    
-        echo'<table class="table-auto w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        contact
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        email
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Total Orders
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        action
-                    </th>
-                </tr>
-            </thead>';
-            while($row=oci_fetch_array($statement,OCI_ASSOC)){
-                $id = $row['USER_ID'];;
-                $query2 = "SELECT * FROM PRODUCT_ORDER WHERE FK2_USER_ID = '$id'";
-                $stid = oci_parse($conn, $query2);
-                oci_execute($stid);
-                while($rows=oci_fetch_array($stid,OCI_ASSOC)){
-                    $order++;
-                }
-                echo"<tr class='bg-white border-b '><td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['FIRSTNAME']." ".$row['LASTNAME']."</td>";
-                if(isset($row['CONTACT'])){
-                    echo"<td>+".$row['CONTACT']."</td>";
-                }
-                else{
-                    echo"<td>-</td>";
-                }
-                echo"<td class='px-6'>".$row['EMAIL']."</td>";
-                echo"<td class='px-6'>".$order."</td>";
-                echo"<td><a href='' class='mr-2 text-blue-500 hover:underline'>VIEW</a> <a href='' class='text-red-500 hover:underline'>DELETE</a></td> </tr>";
-                ;
-                
+    <?php
+    include 'header.php';
+    ?>
+
+    <!-- CONTENT -->
+
+    <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
+
+    <div class="flex:col md:ml-72 ml-6 mb-8 pt-2 gap-2 ">
+        <div>
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mb-4"
+                type="button">Sort by <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="./admin_viewproducts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name
+                            Ascending</a>
+                    </li>
+                    <li>
+                        <a href="./admin_viewproducts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Name
+                            Descending</a>
+                    </li>
+                    <li>
+                        <a href="./admin_viewproducts.php?sid=3" class="block px-4 py-2 hover:bg-gray-100">Price
+                            Ascending</a>
+                    </li>
+                    <li>
+                        <a href="./admin_viewproducts.php?sid=4" class="block px-4 py-2 hover:bg-gray-100">Price
+                            Descending</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <?php
+            $qry = "SELECT * FROM SHOP";
+            $stid = oci_parse($conn, $qry);
+            oci_execute($stid);
+            while($rows=oci_fetch_array($stid,OCI_ASSOC)){
+                $sid=$rows['SHOP_ID'];
             }
-        echo "</table>";
+            if (isset($_GET['sid'])) {
+                if ($_GET['sid']==1) {
+                    $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
+                } 
+                elseif ($_GET['sid']==2) {
+                    $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
+                } 
+                elseif ($_GET['sid']==3){
+                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+                }
+                elseif ($_GET['sid']==4){
+                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                }
+            }
+            else {
+                $query = "SELECT * FROM PRODUCT";
+            }         
+            $statement = oci_parse($conn, $query);
+            oci_execute($statement);
+            
+
+            echo'<table class=" w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            image
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            product name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            description
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            action
+                        </th>
+                    </tr>
+                </thead>';
+                while($row=oci_fetch_array($statement,OCI_ASSOC)){
+                    $id=$row['PRODUCT_ID'];
+                    echo"<tr class='bg-white border-b hover:bg-gray-50'>";
+                    echo'<td class="w-48 p-2"><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
+                    echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
+                    echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
+                    echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
+                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                    
+                }
+            echo "</table>";
         ?>
+        </div>
     </div>
 </body>
 

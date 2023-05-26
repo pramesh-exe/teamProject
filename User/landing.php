@@ -83,7 +83,7 @@ include 'connect.php';
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-slate-50">
     <?php include 'header.php'; ?>
 
     <section class="main-section w-full md:ml-64 ml-6 mb-8 pt-2">
@@ -108,7 +108,7 @@ include 'connect.php';
                                                     alt="product image" />
                                             </a>
                                         </div>
-                                        <div class="p-4 flex flex-col gap-2">
+                                        <div class="p-4 flex flex-col gap-2 bg-slate-100">
                                             <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row['PRODUCT_ID'].'">'.$row['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2">
                                                 <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>                                                
@@ -146,7 +146,7 @@ include 'connect.php';
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
-                                            <div class="flex justify-between flex-col gap-2">
+                                            <div class="flex justify-between flex-col gap-2 bg-slate-100">
                                                 <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
                                                 <a href="login.php">
                                                 <div
@@ -182,7 +182,7 @@ include 'connect.php';
                                         </div>
                                         <div class="p-4 flex flex-col gap-2">
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
-                                            <div class="flex justify-between flex-col gap-2">
+                                            <div class="flex justify-between flex-col gap-2 bg-slate-100">
                                                 <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
                                                 <a href="login.php">
                                                 <div
@@ -200,36 +200,6 @@ include 'connect.php';
                 </div>
             </div>
             <div class="flex flex-col p-8 min-w-[300px] w-full gap-8">
-                <div class="flex flex-col gap-6">
-                    <div
-                        class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
-                        <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
-                        <div class="flex justify-between items-center">
-                            <a href="#"><span
-                                    class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
-                                    it now <i class="fas fa-arrow-right"></i></span></a>
-                            <div class="flex items-center text-sm transition-colors duration-200 transform">
-                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                    alt="jane avatar">
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="card shadow-lg p-4 rounded-lg bg-gradient-to-r from-white to-slate-200 flex flex-col gap-2">
-                        <h3 class="text-lg font-medium">Summer headphones from top brands</h3>
-                        <div class="flex justify-between items-center">
-                            <a href="#"><span
-                                    class="text-slate-500 font-medium hover:text-slate-900 duration-200 transition">Get
-                                    it now <i class="fas fa-arrow-right"></i></span></a>
-                            <div class="flex items-center text-sm transition-colors duration-200 transform">
-                                <img class="flex-shrink-0 object-cover mx-1 rounded-full w-14 h-14"
-                                    src="https://th.bing.com/th/id/R.947c05f4a206f9b351e39dab7110482c?rik=IrKmzwj3fg4sAg&pid=ImgRaw&r=0"
-                                    alt="jane avatar">
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="flex flex-col gap-6">
                     <div class="flex justify-between">
                         <h3 class="font-bold text-xl">Daily Deals</h3>

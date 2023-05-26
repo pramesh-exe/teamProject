@@ -109,7 +109,7 @@ $_SESSION['pid']=$id;
                                 <?php echo $number?>
                                 review(s)</div>
                         </div>
-                        <div class="font-sans mt-4">
+                        <div class="font-serif text-sm mt-4 text-justify font-light">
                             <?php    
                                     echo $desc;
                                 ?>
@@ -120,7 +120,7 @@ $_SESSION['pid']=$id;
                         echo $stock;
                         ?>
                     </div>
-                    <div class="text-sm font-medium mb-4">
+                    <div class="text-sm font-medium my-4">
                         <a href="./addToCart.php?id=<?php echo $id?>&action=add"
                             class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
                             to

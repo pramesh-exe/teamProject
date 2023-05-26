@@ -66,7 +66,9 @@ $_SESSION['pid']=$id;
     <!-- CONTENT -->
     <div class="bg-slate-200 flex flex-col lg:flex-row max-w-full md:ml-64 pl-4 py-4 gap-x-8 gap-y-4">
         <div>
-            <div class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 p-2 bg-white rounded-lg">
+            <div
+                class="max-w-6xl grid gap-8 md:grid-cols-1 lg:grid-cols-2 p-2 max-h-full bg-white rounded-lg bg-opacity-50">
+
                 <div class="p-2">
                     <?php          
                         echo'<img class="rounded" src="./images/'.$image.'"
@@ -103,18 +105,19 @@ $_SESSION['pid']=$id;
                                 <?php echo $number?>
                                 review(s)</div>
                         </div>
-                        <div class="font-sans mt-4">
-                            <?php    
-                                    echo $desc;
-                                ?>
-                        </div>
+
+                    </div>
+                    <div class="font-serif text-sm mt-4 text-justify font-light">
+                        <?php    
+                    echo $desc;
+                 ?>
                     </div>
                     <div class="text-3xl font-sans font-semibold mt-4">
                         In stock: <?php 
                         echo $stock;
                         ?>
                     </div>
-                    <div class="text-sm font-medium mb-4">
+                    <div class="text-sm font-medium my-4">
                         <a href="./addToCart.php?id=<?php echo $id?>&action=add"
                             class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
                             to
@@ -127,6 +130,7 @@ $_SESSION['pid']=$id;
                     </div>
                 </div>
             </div>
+
             <div class="mt-8 p-4 rounded-md">
                 <div class="mb-4">
                     <span class="pt-8 text-3xl font-sans font-semibold ">Add a review</span>
@@ -183,7 +187,7 @@ $_SESSION['pid']=$id;
                 </div>
             </div>
         </div>
-        <div class="bg-slate-100 p-6 rounded-md flex-col min-w-[256px]">
+        <div class="bg-slate-100 p-6 rounded-md flex-col min-w-[400px]">
             <div class="px-4 pb-4">
                 <span class="text-2xl font-sans font-semibold m-4">
                     More from the same seller

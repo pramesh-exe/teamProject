@@ -128,7 +128,8 @@ if(isset($_SESSION['message'])){
                 <td class='py-6 px-6'>&pound;".$total."</td>
                 </tr>";
             echo "</table>";
-            
+            $_SESSION['items'] = $items;
+            $_SESSION['total'] = $total;
         ?>
     </div>
     <?php
@@ -176,6 +177,7 @@ if(isset($_SESSION['message'])){
      </div>'; 
     }else {
         echo'<div class="my-6 mx-3 flex justify-end">
+        <a href="./checkout.php">
         <button type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 text-center inline-flex items-center mr-2 ">
             <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
@@ -186,6 +188,7 @@ if(isset($_SESSION['message'])){
             </svg>
             Proceed to payment
         </button>
+        </a>
     </div>';
     }
     ?>
@@ -197,4 +200,5 @@ if(isset($_SESSION['message'])){
 <?php
     include 'footer.php';
     ?>
+
 </html>
