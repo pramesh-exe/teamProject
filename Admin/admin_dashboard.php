@@ -28,13 +28,11 @@ if(!isset($_SESSION['ADMIN'])){
 
                 <a href="./admin_viewproducts.php"
                     class="flex flex-col items-cente border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 bg-gradient-to-r from-slate-200 ">
-                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2" src="../images/trader/product.png"
+                    <img class="object-cover h-48 w-48 rounded-none rounded-l-lg" src="../images/trader/product.png"
                         alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. A eos voluptate alias, quibusdam sed ratione, aliquid quam earum hic pariatur ut
-                            veritatis asperiores debitis illum. Cupiditate ratione rem iure eaque?</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View and remove products</p>
                     </div>
                 </a>
                 <a href="./admin_viewuser.php"
@@ -42,9 +40,7 @@ if(!isset($_SESSION['ADMIN'])){
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg" src="../images/admin/user.png" alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Customers</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Vitae ab neque consequuntur voluptatum nostrum. Autem accusamus nam alias, aperiam
-                            impedit natus distinctio doloremque, in enim possimus, nobis molestias omnis vero!</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View all the customers registered</p>
                     </div>
                 </a>
             </div>
@@ -55,10 +51,7 @@ if(!isset($_SESSION['ADMIN'])){
                         src="../images/admin/add-trader.png" alt="updateProduct.php">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">New Traders</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Delectus consectetur corporis dolorem tempore maiores numquam magni doloremque eveniet
-                            temporibus repellat. Debitis vitae maiores eveniet culpa, fugiat animi asperiores voluptas
-                            aut.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View pending trader requests.</p>
                     </div>
                 </a>
                 <a href="./admin_viewtrader.php"
@@ -67,9 +60,7 @@ if(!isset($_SESSION['ADMIN'])){
                         alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">View Traders</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Maiores unde, ad ut odio natus magni officia accusamus vel reprehenderit eos quas, quo
-                            architecto! Consectetur eaque at saepe repellat perferendis iste.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View all the traders registered.</p>
                     </div>
                 </a>
             </div>
@@ -80,9 +71,7 @@ if(!isset($_SESSION['ADMIN'])){
                         src="../images/trader/report-icon.png" alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Reports</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Quas qui, vitae, minus doloremque voluptate saepe quae atque, cumque voluptates odit
-                            exercitationem error id aliquam minima consequuntur? Tempore qui impedit neque.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View daily, weekly and monthly products.</p>
                     </div>
                 </a>
             </div>
