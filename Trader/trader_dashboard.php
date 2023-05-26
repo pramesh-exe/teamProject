@@ -62,10 +62,10 @@ $uid=$_SESSION['id'];
                             MUla</p>
                     </div>
                 </a>
-                <a href="http://localhost:8080/apex/f?p=100:2:2503532158557::NO:RIR::"
+                <a href="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::"
                     class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2"
-                        src="../images/trader/report-icon.png" alt="http://localhost:8080/apex/f?p=100:LOGIN_DESKTOP::::::">
+                        src="../images/trader/report-icon.png" alt="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Reports</h5>
                         <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
