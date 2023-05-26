@@ -86,15 +86,15 @@ if (isset($_POST['submit'])) {
                     Don't have an account yet? <a href="./Register.php"
                         class="font-medium text-blue-600 hover:underline ">Sign up</a>
                 </p>
-            </form>
-        </div>
-        <?php
+                <?php
                 // Output the error message if it exists
                 if (isset($_SESSION['error'])) {
                 echo "<br><strong>" . $_SESSION['error'] . "</strong>";
                 unset($_SESSION['error']); // Clear the error message from the session
                 }
                 ?>
+            </form>
+        </div>
     </div>
 
 </body>

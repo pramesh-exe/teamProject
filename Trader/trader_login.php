@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
               header('location:./trader_dashboard.php');
               exit();
           }else{
-            $message='Invalid login credentials!<br>Provide your valid email and password.';
+            $message='Invalid login credentials!<br>&emsp;&emsp;&emsp;Provide your valid email and password.';
           }
     }
   }
@@ -286,7 +286,7 @@ if(isset($_POST['submit'])){
                 <?php    
                 if(isset($_POST['submit'])){
                     if(!$user){
-                        echo "<strong>$message</strong>";  
+                        echo "&emsp;&emsp;&emsp;<strong>$message</strong>";  
                     }
 
                 }                   

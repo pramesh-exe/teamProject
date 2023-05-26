@@ -1,6 +1,13 @@
 <?php
 include 'connect.php';
-
+if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
+    header('location:../Login.php');
+}
+if(!empty($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($_SESSION['message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

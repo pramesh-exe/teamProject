@@ -180,15 +180,45 @@ SPLIT;
                             <?php timer(); ?>
                         </select>
                         <br />
-                        <button type="submit" name='checkout'
+                        <button type="submit" name='collectionslot'
                             class="text-white bg-gradient-to-r from-[#253B80] to-[#169BD7] hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                            <svg class="w-4 h-4 mr-2 -ml-1" aria-hidden="true" focusable="false" data-prefix="fab"
-                                data-icon="paypal" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                <path fill="currentColor"
-                                    d="M111.4 295.9c-3.5 19.2-17.4 108.7-21.5 134-.3 1.8-1 2.5-3 2.5H12.3c-7.6 0-13.1-6.6-12.1-13.9L58.8 46.6c1.5-9.6 10.1-16.9 20-16.9 152.3 0 165.1-3.7 204 11.4 60.1 23.3 65.6 79.5 44 140.3-21.5 62.6-72.5 89.5-140.1 90.3-43.4 .7-69.5-7-75.3 24.2zM357.1 152c-1.8-1.3-2.5-1.8-3 1.3-2 11.4-5.1 22.5-8.8 33.6-39.9 113.8-150.5 103.9-204.5 103.9-6.1 0-10.1 3.3-10.9 9.4-22.6 140.4-27.1 169.7-27.1 169.7-1 7.1 3.5 12.9 10.6 12.9h63.5c8.6 0 15.7-6.3 17.4-14.9 .7-5.4-1.1 6.1 14.4-91.3 4.6-22 14.3-19.7 29.3-19.7 71 0 126.4-28.8 142.9-112.3 6.5-34.8 4.6-71.4-23.8-92.6z">
-                                </path>
-                            </svg>
-                            <?php
+                            SUBMIT SLOT
+                            
+                        </button>
+                    </form>
+                    <?php
+                        if(isset($_POST['collectionslot'])){
+                            $ctime=$_POST['collection_time'];
+                            $cday=$_POST['collection_day'];
+                            $date=$ctime.$cday;
+                            // Generate a random slot number
+                            $slotNumber = mt_rand(1, 6);
+                            
+                            // Prepare and execute the SQL query
+                            $sql = "INSERT INTO SLOT (SLOT_NUMBER, TIME, FK1_ORDER_ID)
+                                    VALUES ( :slotNumber, :ctime, :orderId)";
+                            $stmt = oci_parse($conn, $sql);
+                            oci_bind_by_name($stmt, ":slotNumber", $slotNumber);
+                            oci_bind_by_name($stmt, ":ctime", $date);
+                            oci_bind_by_name($stmt, ":orderId", $orderId); // Replace with the actual order ID
+
+                            if (oci_execute($stmt)) {
+                                $message = "Slot data inserted successfully.";
+                                echo "<script>alert('TRIBUS=> {$message}');</script>";
+                            } else {
+                                $message = "Slot data inserted successfully.";
+                                echo "<script>alert('TRIBUS=> {$message}');</script>";
+                            }
+
+                        }else{
+                            $message="Please select your viable slot before proceeding to pay via paypal. Slot must be confirmed to collect your product from collections slots.";
+                            echo "<script>alert('TRIBUS=> {$message}');</script>";
+                        }
+                    echo "<br><br>";
+                    echo "<strong>Payment Option:</strong>";
+                    ?>
+                </div>
+                <?php
                                 if(isset($_SESSION['AMOUNT'])){
                                 $billAmount = $_SESSION['AMOUNT'];
                                 }else{
@@ -244,14 +274,10 @@ SPLIT;
                                 </script>
                                 </body>
                                 </html>
-                        </button>
-                    </form>
-                    
-
-                </div>
             </div>
-
+            
         </div>
+        
     </div>
 
 
