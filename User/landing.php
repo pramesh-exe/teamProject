@@ -112,7 +112,7 @@ include 'connect.php';
                                             <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row['PRODUCT_ID'].'">'.$row['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2">
                                                 <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>                                                
-                                                <a href="login.php">
+                                                <a href="./addToCart.php?id='.$row['PRODUCT_ID'].'&action=add">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</div>
@@ -148,7 +148,7 @@ include 'connect.php';
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2 bg-slate-100">
                                                 <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
-                                                <a href="login.php">
+                                                <a href="./addToCart.php?id='.$row2['PRODUCT_ID'].'&action=add">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</div>
@@ -163,7 +163,7 @@ include 'connect.php';
                     </div>
                 </div>
                 <div class="mb-8">
-                    <h3 class="text-2xl font-sans font-bold mb-2">FRESH OFF THE SHELF</h3>
+                    <h3 class="text-2xl font-sans font-bold mb-2">Fresh off the shelf</h3>
                     <div class="responsive-slider flex items-center">
                         <?php
                             $query2 = "SELECT * FROM (SELECT * FROM PRODUCT ORDER BY dbms_random.value) WHERE ROWNUM <= 10";
@@ -184,7 +184,7 @@ include 'connect.php';
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2 bg-slate-100">
                                                 <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
-                                                <a href="login.php">
+                                                <a href="./addToCart.php?id='.$row2['PRODUCT_ID'].'&action=add">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
                                                     to cart</div>
@@ -199,7 +199,7 @@ include 'connect.php';
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col p-8 min-w-[300px] w-full gap-8">
+            <!-- <div class="flex flex-col p-8 min-w-[300px] w-full gap-8">
                 <div class="flex flex-col gap-6">
                     <div class="flex justify-between">
                         <h3 class="font-bold text-xl">Daily Deals</h3>
@@ -342,7 +342,7 @@ include 'connect.php';
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
     </section>
 
 

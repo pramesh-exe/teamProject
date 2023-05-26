@@ -19,25 +19,9 @@ include_once 'connect.php';
 <body class="flex flex-col min-h-screen">
 
     <?php
-
-     include 'header.php';
-
+        include 'header.php';
     ?>
-    <?php
-       if(empty($_POST['search'])){
-            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID ASC";
-            echo "<div class='ml-72'>asdasdasd</div>";
-        }
-        if(isset($_POST['search'])){
-            $name=$_POST['search'];
-            $sql="SELECT * FROM PRODUCT WHERE NAME LIKE '%$name%'";
-            echo "<div class='ml-72'>".$name."</div>";
-        }else{
-            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID DESC";
-    }
-    $query=oci_parse($conn,$sql);
-    oci_execute($query);
-    ?>
+
     <!-- CONTENT -->
 
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
@@ -70,30 +54,45 @@ include_once 'connect.php';
         </div>
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
             <?php
-            $qry = "SELECT * FROM SHOP";
-            $stid = oci_parse($conn, $qry);
-            oci_execute($stid);
-            while($rows=oci_fetch_array($stid,OCI_ASSOC)){
-                $sid=$rows['SHOP_ID'];
-            }
-            if (isset($_GET['sid'])) {
-                if ($_GET['sid']==1) {
-                    $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
-                }elseif ($_GET['sid']==2) {
-                    $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
-                }elseif ($_GET['sid']==3){
-                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
-                }elseif ($_GET['sid']==4){
-                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                if(empty($_POST['search'])){
+                    if (isset($_GET['sid'])) {
+                        if ($_GET['sid']==1) {
+                            $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
+                        }elseif ($_GET['sid']==2) {
+                            $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
+                        }elseif ($_GET['sid']==3){
+                            $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+                        }elseif ($_GET['sid']==4){
+                            $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                        }
+                    }
+                    else {
+                        $query = "SELECT * FROM PRODUCT";
+                    }
                 }
+                if(isset($_POST['search'])){
+                    $name=$_POST['search'];
+                    $name=strtolower($name);
+                    if (isset($_GET['sid'])) {
+                        if ($_GET['sid']==1) {
+                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME ASC";
+                        }elseif ($_GET['sid']==2) {
+                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY NAME DESC";
+                        }elseif ($_GET['sid']==3){
+                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE ASC";
+                        }elseif ($_GET['sid']==4){
+                            $query = "SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%' ORDER BY PRICE DESC";
+                        }
+                    }
+                    else {
+                        $sql="SELECT * FROM PRODUCT WHERE LOWER(NAME) LIKE '%' || '$name' || '%'";
+                    }
+                }else{
+                    $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID DESC";
             }
-            else {
-                $query = "SELECT * FROM PRODUCT";
-            }         
-            $statement = oci_parse($conn, $query);
+            $statement=oci_parse($conn,$sql);
             oci_execute($statement);
-            
-
+                 
             echo'<table class=" w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -117,11 +116,11 @@ include_once 'connect.php';
                 while($row=oci_fetch_array($statement,OCI_ASSOC)){
                     $id=$row['PRODUCT_ID'];
                     echo"<tr class='bg-white border-b hover:bg-gray-50'>";
-                    echo'<td class="w-48 p-2"><img src="./images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
+                    echo'<td class="w-48 p-2"><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
                     echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">Add to cart</a> ';
                     
                 }
             echo "</table>";
