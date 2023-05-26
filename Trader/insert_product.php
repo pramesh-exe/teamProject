@@ -137,7 +137,6 @@ if(!isset($_SESSION['id']) OR !isset($_SESSION['email']) OR !isset($_SESSION['pa
                                     if(isset($_POST['Pname'])&&($_POST['description'])&&($_POST['price'])&& $_FILES["upload"]["name"])
                                     {
                                         echo "<script>alert('TRIBUS=> {$message}');</script>";
-
                                     }
                                 }
                                 ?>

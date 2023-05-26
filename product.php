@@ -1,23 +1,28 @@
 <?php
 include 'connect.php';
-$id=$_GET['id'];
 if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id'])) {
     header('location:./user/product.php?id='.$id);
 }
-// if($_SESSION['message']){
-//     $message=$_SESSION['message'];
-//     echo "<script>alert('TRIBUS=> {$message}');</script>";
-//     unset($message);
-// }
-$_SESSION['pid']=$id;
+if(isset($_GET['id'])){
+    $id=$_GET['id'];
+    $_SESSION['pid']=$id;
+}
+if(isset($_SESSION['pid'])){
+    $id=$_SESSION['pid'];
+}
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($_SESSION['message']);
+}
+if(!empty($_SESSION['pid']) || !empty($id)){
 
-    $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID=$id";
+    $query = "SELECT * FROM PRODUCT WHERE PRODUCT_ID='$id'";
                 
     $stid = oci_parse($conn, $query);
     oci_execute($stid);
                 
-    $row = oci_fetch_array($stid, OCI_ASSOC);
-                
+    $row = oci_fetch_array($stid, OCI_ASSOC);            
     $image=$row['PRODUCTIMAGE'];
     $pname=$row['NAME'];
     if(isset($row['DESCRIPTION'])){
@@ -45,6 +50,9 @@ $_SESSION['pid']=$id;
         # code...
         $rating = $rating/$number;
     }
+}else{
+   header('location:./landing.php'); 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +92,7 @@ $_SESSION['pid']=$id;
                         ?>
                         </span>
                         <p class="text-3xl font-sans font-semibold">
-                            $<?php 
+                            &pound;<?php 
                         echo $price;
                         ?>
                         </p>
@@ -136,7 +144,7 @@ $_SESSION['pid']=$id;
                     <span class="pt-8 text-3xl font-sans font-semibold ">Add a review</span>
                 </div>
                 <div class="border-b border-gray-400">
-                    <form>
+                    <form method="post" action="./review.php">
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 m-2">
                             <div class="px-4 py-2 bg-white rounded-t-lg ">
                                 <textarea disabled id="comment" rows="4"
@@ -144,7 +152,7 @@ $_SESSION['pid']=$id;
                                     placeholder="Login to leave a review..." required></textarea>
                             </div>
                             <div class="flex items-center px-3 py-2 border-t justify-end">
-                                <button disabled type="submit"
+                                <button type="submit" name='comment'
                                     class="inline-flex items-center cursor-not-allowed py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200">
                                     Post comment
                                 </button>
