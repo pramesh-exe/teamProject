@@ -20,7 +20,19 @@ include_once 'connect.php';
     <?php
     include 'header.php';
     ?>
-
+    <?php
+       if(empty($_POST['search'])){
+            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID ASC";
+        }
+        if(isset($_POST['search'])){
+            $name=$_POST['search'];
+            $sql="SELECT * FROM PRODUCT WHERE NAME LIKE '%$name%'";
+        }else{
+            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID DESC";
+    }
+    $query=oci_parse($conn,$sql);
+    oci_execute($query);
+    ?>
     <!-- CONTENT -->
 
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
@@ -37,10 +49,16 @@ include_once 'connect.php';
             <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                 <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
                     <li>
-                        <a href="./allproducts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name</a>
+                        <a href="./allproducts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name Ascending</a>
                     </li>
                     <li>
-                        <a href="./allproducts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Price</a>
+                        <a href="./allproducts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Name Descending</a>
+                    </li>
+                    <li>
+                        <a href="./allproducts.php?sid=3" class="block px-4 py-2 hover:bg-gray-100">Lowest Price</a>
+                    </li>
+                    <li>
+                        <a href="./allproducts.php?sid=4" class="block px-4 py-2 hover:bg-gray-100">Highest Price</a>
                     </li>
                 </ul>
             </div>
@@ -56,9 +74,12 @@ include_once 'connect.php';
             if (isset($_GET['sid'])) {
                 if ($_GET['sid']==1) {
                     $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
-                } 
-                elseif ($_GET['sid']==2){
+                }elseif ($_GET['sid']==2) {
+                    $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
+                }elseif ($_GET['sid']==3){
                     $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
+                }elseif ($_GET['sid']==4){
+                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
                 }
             }
             else {
