@@ -99,9 +99,55 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['password']))||e
         </div>
         <div>
             <Span class="text-4xl font-serif font-medium">Recent Orders</Span>
-            <div class="bg-gray-100 p-3 flex-auto w-11/12 border rounded overflow-x-auto shadow-md sm:rounded-lg">
+            <a href="./purchase_history.php">
+                <p class="text-blue-700 hover:underline inline">View full purchase history</p>
+            </a>
+            <div class="flex-auto w-11/12 border rounded overflow-x-auto shadow-md sm:rounded-lg mb-3">
                 <?php
+                    $query = "SELECT P.PRODUCTIMAGE, PO.Order_date, P.Name, POP.NUMBER_OF_ITEMS, P.PRICE
+                    FROM PRODUCT_ORDER PO
+                    JOIN USER_ONE U ON PO.fk2_user_id = U.User_id
+                    JOIN PRODUCT_ORDER_PRODUCT POP ON PO.Order_id = POP.fk1_Order_id
+                    JOIN PRODUCT P ON POP.fk2_Product_id = P.Product_id
+                    WHERE U.USER_ID = '$id' AND ROWNUM <= 5
+                    ORDER BY PO.Order_date DESC";
+                    $stid = oci_parse($conn, $query);
+                    oci_execute($stid);
+                    $sn=1;
+                    echo'<table class=" w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    SN
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    name
+                                <th scope="col" class="px-6 py-3">
+                                    order date
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Quantity
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Paid
+                                </th>
+                            </tr>
+                        </thead>';
 
+                    while ($rows = oci_fetch_array($stid)){
+                        echo'<tr class="border-b">';
+                        echo"<td class='px-6 text-gray-900'>".$sn."</td>";
+                        echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></td>';
+                        echo"<td class='px-6 text-gray-900'>".$rows['NAME']."</td>";
+                        echo"<td class='px-6 text-gray-900'>".$rows['ORDER_DATE']."</td>";
+                        echo"<td class='px-6 text-gray-900'>".$rows['NUMBER_OF_ITEMS']."</td>";
+                        echo"<td class='px-6 text-gray-900'>&pound".$rows['PRICE']*$rows['NUMBER_OF_ITEMS']."</td></tr>";
+                        $sn++;
+                    }
+                    echo "</table>"
                 ?>
             </div>
         </div>
