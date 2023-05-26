@@ -21,7 +21,7 @@
                         </path>
                     </svg>
                 </button>
-                <a class="flex gap-2 self-center mr-2" href="./admin_dashboard.php">
+                <a class="flex gap-2 self-center mr-2" href="./trader_dashboard.php">
 
                     <img src="../Logo/Tribus1.png" width="35">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap">TRIBUS</span>
@@ -70,7 +70,7 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                    href="#">
+                    href="./trader_dashboard.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,7 +83,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900 hover:text-gray-100"
-                    href="#">
+                    href="./trader_products.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -94,7 +94,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900 hover:text-gray-100"
-                    href="#">
+                    href="./trader_manageprodcts.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -105,7 +105,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900 hover:text-gray-100"
-                    href="#">
+                    href="./insert_product.php">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -116,7 +116,7 @@
             </li>
             <li>
                 <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg  hover:bg-gray-900   hover:text-gray-100"
-                    href="#">
+                    href="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866::::: target=" _blank"">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"

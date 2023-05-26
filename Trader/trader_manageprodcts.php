@@ -1,7 +1,19 @@
 <?php
 include_once 'connect.php';
-
-
+if(empty($_SESSION['email'])||empty($_SESSION['password']) ||empty($_SESSION['id'])) {
+    header('location:./trader_login.php');
+}
+$user=$_SESSION['email'];
+$pass=$_SESSION['password'];
+$uid=$_SESSION['id'];
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($message);
+}
+if(isset($SESSION['update'])){
+    echo $_SESSION['update'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,25 +31,9 @@ include_once 'connect.php';
 <body class="flex flex-col min-h-screen">
 
     <?php
-
-     include 'header.php';
-
+    include 'header.php';
     ?>
-    <?php
-       if(empty($_POST['search'])){
-            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID ASC";
-            echo "<div class='ml-72'>asdasdasd</div>";
-        }
-        if(isset($_POST['search'])){
-            $name=$_POST['search'];
-            $sql="SELECT * FROM PRODUCT WHERE NAME LIKE '%$name%'";
-            echo "<div class='ml-72'>".$name."</div>";
-        }else{
-            $sql="SELECT * FROM PRODUCT ORDER BY FK2_SHOP_ID DESC";
-    }
-    $query=oci_parse($conn,$sql);
-    oci_execute($query);
-    ?>
+
     <!-- CONTENT -->
 
     <span class="md:ml-64 mb-4 pl-6 pt-8 text-3xl font-sans font-bold">Products</span>
@@ -54,23 +50,17 @@ include_once 'connect.php';
             <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                 <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
                     <li>
-                        <a href="./allproducts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name Ascending</a>
+                        <a href="./trader_manageprodcts.php?sid=1" class="block px-4 py-2 hover:bg-gray-100">Name</a>
                     </li>
                     <li>
-                        <a href="./allproducts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Name Descending</a>
-                    </li>
-                    <li>
-                        <a href="./allproducts.php?sid=3" class="block px-4 py-2 hover:bg-gray-100">Lowest Price</a>
-                    </li>
-                    <li>
-                        <a href="./allproducts.php?sid=4" class="block px-4 py-2 hover:bg-gray-100">Highest Price</a>
+                        <a href="./trader_manageprodcts.php?sid=2" class="block px-4 py-2 hover:bg-gray-100">Price</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="overflow-x-auto shadow-md sm:rounded-lg mr-3 ">
             <?php
-            $qry = "SELECT * FROM SHOP";
+            $qry = "SELECT * FROM SHOP WHERE FK1_USER_ID = '$uid'";
             $stid = oci_parse($conn, $qry);
             oci_execute($stid);
             while($rows=oci_fetch_array($stid,OCI_ASSOC)){
@@ -78,17 +68,14 @@ include_once 'connect.php';
             }
             if (isset($_GET['sid'])) {
                 if ($_GET['sid']==1) {
-                    $query = "SELECT * FROM PRODUCT ORDER BY NAME ASC";
-                }elseif ($_GET['sid']==2) {
-                    $query = "SELECT * FROM PRODUCT ORDER BY NAME DESC";
-                }elseif ($_GET['sid']==3){
-                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE ASC";
-                }elseif ($_GET['sid']==4){
-                    $query = "SELECT * FROM PRODUCT ORDER BY PRICE DESC";
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid' ORDER BY NAME ASC";
+                } 
+                elseif ($_GET['sid']==2){
+                    $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid' ORDER BY PRICE ASC";
                 }
             }
             else {
-                $query = "SELECT * FROM PRODUCT";
+                $query = "SELECT * FROM PRODUCT WHERE FK2_SHOP_ID = '$sid'";
             }         
             $statement = oci_parse($conn, $query);
             oci_execute($statement);
@@ -116,12 +103,13 @@ include_once 'connect.php';
                 </thead>';
                 while($row=oci_fetch_array($statement,OCI_ASSOC)){
                     $id=$row['PRODUCT_ID'];
+                    $_SESSION['image']='<img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" ';
                     echo"<tr class='bg-white border-b hover:bg-gray-50'>";
-                    echo'<td class="w-48 p-2"><img src="./images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
+                    echo'<td class="w-48 p-2"><img src="../images/'.$row['PRODUCTIMAGE'].'"alt="product image" /></td>';
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
-                    echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                    echo"<td class='px-6 py-4 text-justify'>".$row['DESCRIPTION']."</td>";
+                    echo'<td class="pr-2"><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">EDIT</a>|<a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
                     
                 }
             echo "</table>";

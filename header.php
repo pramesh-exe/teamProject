@@ -50,13 +50,12 @@
             <form method="post" action="./allproducts.php">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                 <div class="relative">
-                    <input type="search" id="default-search"  name='search' value="<?php if(isset($_POST['search'])){
+                    <input type="search" id="default-search" name='search' value="<?php if(isset($_POST['search'])){
                         $search=$_POST['search'];
                         echo "$search";
                         }
-                    ?>"
-                        class="block w-64 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="Search Products" required>
+                    ?>" class="block w-64 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                        placeholder="Search Products">
                     <button type="submit"
                         class="text-white absolute right-1.5 bottom-0.5  font-medium rounded-lg text-sm px-4 py-2 "><svg
                             aria-hidden="true" class="w-5 h-5 text-gray-500 " fill="none" stroke="currentColor"
