@@ -41,6 +41,14 @@ if(isset($_SESSION['message'])){
             $price=[];
             $total = 0;
             $items = 0;
+            $query4 = "SELECT COUNT(*) AS Count
+                FROM cart c
+                JOIN cart_product cp ON c.cart_id = cp.fk1_cart_id
+                JOIN product p ON cp.fk2_product_id = p.product_id";
+            $stid4 = oci_parse($conn, $query4);
+            oci_execute($stid4);
+            $row = oci_fetch_assoc($stid4);
+            if ($row['COUNT'] > 0) {
             $query = "SELECT * FROM CART WHERE FK1_USER_ID= '$id'";
             $stid = oci_parse($conn, $query);
             oci_execute($stid);
@@ -60,6 +68,9 @@ if(isset($_SESSION['message'])){
             
 
             $count=0;
+            
+                
+            
             echo'<table class=" w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -88,6 +99,7 @@ if(isset($_SESSION['message'])){
                         if($rows['PRODUCT_ID']==$pid[$j]) {
                             $count=$quantity[$j];
                             $cart_id = $cid[$j];
+                            
                         }
                     }
                       
@@ -95,7 +107,7 @@ if(isset($_SESSION['message'])){
                         echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></td>';
                         echo"<td class='bg-slate-50 px-6 py-4  whitespace-nowrap'><a href='../product.php?id=".$rows['PRODUCT_ID']."' class='font-medium text-gray-900'>".$rows['NAME']."</a><br>
                             <p class ='text=gray-200'>In Stock: ".$rows['PRODUCT_SIZE']."</p></td>";
-                        echo'<td class="px-6 "><a href="./removefromwishlist.php"?id=$id&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo'<td class="px-6 "><a href="./removefromcart.php"?id='.$cart_id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
                         echo"<td class='px-6 bg-slate-50 text-gray-900'>&pound;".$rows['PRICE']."</td>";
                         echo"<td class=' px-6'>";
                         echo'<form id="myForm" method="post" action="./cart_items.php">';
@@ -131,9 +143,10 @@ if(isset($_SESSION['message'])){
             $_SESSION['items'] = $items;
             $_SESSION['total'] = $total;
             $_SESSION['AMOUNT'] = $total;
-        ?>
-    </div>
-    <?php
+        
+        
+    echo'</div>';
+    
     if ($items > 20) {
        echo'<div class="my-6 mx-3 flex justify-end">
        <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 text-center inline-flex items-center mr-2  " type="button">
@@ -192,6 +205,10 @@ if(isset($_SESSION['message'])){
         </a>
     </div>';
     }
+} else {
+    echo 'The cart is empty. </div>';
+
+}
     ?>
 
 

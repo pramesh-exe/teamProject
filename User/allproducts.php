@@ -40,10 +40,10 @@ include_once 'connect.php';
                         Descending</option>
                     <option value="3"
                         <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 3) {echo 'selected';}}?>>Price
-                        Highest</option>
+                        Lowest</option>
                     <option value="4"
                         <?php if (isset($_POST['submit'])) {if ($_POST['sort'] == 4) {echo 'selected';}}?>>Price
-                        lowest</option>
+                        Highest</option>
                 </select>
                 <label for="Sort">Shop:</label>
                 <select id="shop" name="shop"
