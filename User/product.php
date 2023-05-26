@@ -140,6 +140,11 @@ $_SESSION['pid']=$id;
 
                 <div class="border-b border-gray-400">
                     <form>
+                        <div class="mx-2">
+                            <label for="rating" class="inline mb-2 text-sm font-medium text-gray-900 ">Rating:</label>
+                            <input type="number" id="small-input"
+                                class="inline p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500">
+                        </div>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 m-2">
                             <div class=" bg-white rounded-t-lg ">
                                 <textarea id="comment" rows="4"
