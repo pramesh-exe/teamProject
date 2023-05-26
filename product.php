@@ -1,12 +1,13 @@
 <?php
 include 'connect.php';
-if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id'])) {
-    header('location:./user/product.php?id='.$id);
-}
 if(isset($_GET['id'])){
     $id=$_GET['id'];
     $_SESSION['pid']=$id;
 }
+if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id'])) {
+    header('location:./user/product.php?id='.$id);
+}
+
 if(isset($_SESSION['pid'])){
     $id=$_SESSION['pid'];
 }
