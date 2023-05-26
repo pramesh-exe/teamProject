@@ -3,11 +3,11 @@ include 'connect.php';
 if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
     header('location:../Login.php');
 }
-// if($_SESSION['message']){
-//     $message=$_SESSION['message'];
-//     echo "<script>alert('TRIBUS=> {$message}');</script>";
-//     unset($message);
-// }
+if(!empty($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($_SESSION['message']);
+}
 $user=$_SESSION['email'];
 $pass=$_SESSION['password'];
 $uid=$_SESSION['id'];
@@ -88,7 +88,7 @@ $_SESSION['pid']=$id;
                         ?>
                         </span>
                         <p class="text-3xl font-sans font-semibold">
-                            $<?php 
+                            &pound;<?php 
                         echo $price;
                         ?>
                         </p>
@@ -139,25 +139,66 @@ $_SESSION['pid']=$id;
                 </div>
 
                 <div class="border-b border-gray-400">
-                    <form>
+                    <form method='post'>
                         <div class="mx-2">
                             <label for="rating" class="inline mb-2 text-sm font-medium text-gray-900 ">Rating:</label>
-                            <input type="number" id="small-input"
+                            <input type="number" id="small-input" name='rate'
                                 class="inline p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 m-2">
                             <div class=" bg-white rounded-t-lg ">
-                                <textarea id="comment" rows="4"
+                                <textarea id="comment" rows="4" name='review'
                                     class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0 focus:border-transparent rounded-t-lg"
                                     placeholder=" Leave a review..." required></textarea>
                             </div>
                             <div class="flex items-center px-3 py-2 border-t justify-end">
-                                <button type="submit"
+                                <button type="submit" name='review'
                                     class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800">
                                     Post comment
                                 </button>
                             </div>
                         </div>
+                        <?php
+                            if(isset($_POST['review']) && isset($_SESSION['pid'])){
+                                $pid=$_SESSION['pid'];
+                               
+                                $productdata=oci_parse($conn,"SELECT COUNT(*) AS row_count
+                                    FROM PRODUCT_ORDER PO
+                                JOIN PRODUCT_ORDER_PRODUCT POP ON PO.Order_id = POP.fk1_Order_id WHERE fk2_product_id='$pid' AND fk2_user_id='$id'");
+                                oci_execute($productdata);
+                                $datat=oci_fetch_array($productdata,OCI_ASSOC);
+                               
+                                if ($datat['ROW_COUNT'] > 0) {
+                                    $number = floatval($_POST['rate']);
+                        
+                                    if ($number >= 1 && $number <= 5) {
+                                        if(isset($_POST['review'])){
+                                            $review=$_POST['review'];
+                                            $rev=oci_parse($conn,"INSERT INTO REVIEW(RATING,COMMENTS,FK1_USER_ID, FK2_PRODUCT_ID) VALUES(:rating,:comments,:fk1_user_id,fk2_product_id)");
+                                            oci_bind_by_name($rev,":rating",$number);
+                                            oci_bind_by_name($rev,":comments",$review);
+                                            oci_bind_by_name($rev,":fk1_user_id",$uid);
+                                            oci_bind_by_name($rev,":fk2_product_id",$pid);
+                                            oci_execute($rev);
+                                            echo '<strong>'.$message .'</strong>';
+                                        }else{
+                                            $rev=oci_parse($conn,"INSERT INTO REVIEW(RATING,FK1_USER_ID, FK2_PRODUCT_ID) VALUES(:rating,:fk1_user_id,fk2_product_id)");
+                                            oci_bind_by_name($rev,":rating",$number);
+                                            oci_bind_by_name($rev,":fk1_user_id",$uid);
+                                            oci_bind_by_name($rev,":fk2_product_id",$pid);
+                                            oci_execute($rev);
+                                            echo '<strong>'.$message .'</strong>';
+                                        }
+                                    } else {
+                                        $message= "Invalid rating. Please provide rating between 1 and 5.";
+                                        echo '<strong>'.$message .'</strong>';
+                                    }
+                                }else{
+                                    $message="Product must be bought for leaving a review.";
+                                    echo '<strong>'.$message .'</strong>';
+                                }
+                            }
+                        ?>
                     </form>
                 </div>
             </div>

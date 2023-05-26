@@ -42,7 +42,7 @@ while ($row = oci_fetch_array($stid)) {
     oci_execute($sql3);
 }
 
-$message='Payment was done successfull. Thank you for buying products from us.<br>';
+$message='Payment was done successfull. Thank you for buying products from us.<br> Please find more products as you want';
 $sql1 = oci_parse($conn, "INSERT INTO PAYMENT (AMOUNT, PAYMENT_DATE, FK1_USER_ID, FK2_ORDER_ID)
         VALUES (:amount, to_date(:payment_date, 'DD-MON-YYYY'), :user_id, :orderid)");
 oci_bind_by_name($sql1, ":amount", $amount);
@@ -63,9 +63,8 @@ foreach($cartids as $cartid){
 $sqldel1=oci_parse($conn,"DELETE FROM CART WHERE FK1_USER_ID='$id'");
 $exe1=oci_execute($sqldel1);
 
-$message=$message.'Search more products';
 if($exe&&$exe1){
     $_SESSION['message']=$message;
-    header('location:./landing.php');
+    header('location:./invoice.php');
 }
 ?>

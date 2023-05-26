@@ -115,7 +115,7 @@ if(isset($_SESSION['message'])){
                             <button type="submit" class="hover:underline text-blue-400">Update</button>
                             </form></td>';
                         
-                        echo"<td class='px-6 bg-slate-50 text-gray-900'>$".$rows['PRICE']*$count."</td>";
+                        echo"<td class='px-6 bg-slate-50 text-gray-900'>&pound;".$rows['PRICE']*$count."</td>";
                         echo"</tr>";
                         $total = $total + $rows['PRICE']*$count;
                         $items = $items + $count;                                    

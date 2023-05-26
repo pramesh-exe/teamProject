@@ -77,7 +77,7 @@ if(isset($_SESSION['message'])){
            
             echo"<tr class='bg-white border-b '>";
             echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></a></td>';
-            echo'<td class="bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><a href="../product.php?id='.$id.'">'.$rows["NAME"].'</a></td>';
+            echo'<td class="bg-slate-50 px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><a href="./product.php?id='.$id.'">'.$rows["NAME"].'</a></td>';
             echo"<td class='px-6 text-gray-900'>&pound;".$rows['PRICE']."</td>";
             echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";
             echo'<td class="px-6">
