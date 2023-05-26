@@ -58,7 +58,8 @@ $uid=$_SESSION['id'];
                         alt="updateProduct.php">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Manage Products</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">You can update and delete your product information.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">You can update and delete your product information.
+                        </p>
                     </div>
                 </a>
                 <a href="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::"
@@ -68,8 +69,7 @@ $uid=$_SESSION['id'];
                         alt="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Reports</h5>
-                        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise
-                            technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                        <p class="mb-3 font-normal text-gray-700 ">View your reports.</p>
                     </div>
                 </a>
             </div>
