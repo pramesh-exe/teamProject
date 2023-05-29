@@ -22,17 +22,17 @@
                 <div class="ml-2 flex-initial hidden lg:inline">
                     <div class="flex justify-end items-center relative">
                         <div class="flex mr-4 items-center text-sm">
-                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="./aboutus.php">
                                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                                     About Us
                                 </div>
                             </a>
-                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="./pricing.php">
                                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                                     Pricing
                                 </div>
                             </a>
-                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="#">
+                            <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="./community.php">
                                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">
                                     Community
                                 </div>

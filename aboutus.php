@@ -111,12 +111,44 @@
                     your reach, Tribus is here to support you every step of the way.
 
                 </p>
-                <p class="font-light font-sans text-right">Thank you for choosing Tribus. We look forward to serving you
+                <h2 class="mb-4 mt-14 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">Meet the team
+                </h2>
+                <div class="flex justify-between px-8 mb-14">
+                    <div class="blur-sm grayscale hover:grayscale-0 hover:blur-none">
+                        <img src="./images/team/IMG_E1628.jpeg" alt="" class="h-96 ">
+                        <p class="text-center text-xl mt-3 font-thin font-sans">Monark Yadav</p>
+
+                    </div>
+                    <div class="blur-sm grayscale hover:grayscale-0 hover:blur-none">
+                        <img src="./images/team/Screenshot_2023-05-26_at_10.28.31_PM.png" alt="" class="h-96">
+                        <p class="text-center text-xl mt-3 font-thin font-sans">Aayush Dahal</p>
+                    </div>
+                    <div class="blur-sm grayscale hover:grayscale-0 hover:blur-none">
+                        <img src="./images/team/dai.jpg" alt="" class="h-96">
+                        <p class="text-center text-xl mt-3 font-thin font-sans">Kapil Aryal</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <div></div>
+                    <div class="blur-sm grayscale hover:grayscale-0 hover:blur-none">
+                        <img src="./images/team/3BFE7797-50A4-4F73-A946-01C94428A171.jpg" alt="" class="h-96">
+                        <p class="text-center text-xl mt-3 font-thin font-sans">Sushan Dhakal</p>
+                    </div>
+                    <div class="blur-sm grayscale hover:grayscale-0 hover:blur-none">
+                        <img src="./images/team/20210325_133725.jpg" alt="" class="h-96">
+                        <p class="text-center text-xl mt-3 font-thin font-sans">Pramesh Shrestha</p>
+                    </div>
+                    <div></div>
+                </div>
+                <p class="mt-14 font-light font-sans text-right">Thank you for choosing Tribus. We look forward to
+                    serving
+                    you
                     and making
                     your shopping journey a
                     delightful one.
                     <br>
-                    Team Tribus
+                <p class="font-bold text-right">Team Tribus</p>
+
                 </p>
 
 
