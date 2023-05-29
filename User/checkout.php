@@ -188,21 +188,8 @@ SPLIT;
                     </form>
                     <?php
                         if(isset($_POST['collectionslot'])){
-                            $ctime=$_POST['collection_time'];
-                            $cday=$_POST['collection_day'];
-                            $date=$ctime.$cday;
-                            // Generate a random slot number
-                            $slotNumber = mt_rand(1, 6);
-                            
-                            // Prepare and execute the SQL query
-                            $sql = "INSERT INTO SLOT (SLOT_NUMBER, TIME, FK1_ORDER_ID)
-                                    VALUES ( :slotNumber, :ctime, :orderId)";
-                            $stmt = oci_parse($conn, $sql);
-                            oci_bind_by_name($stmt, ":slotNumber", $slotNumber);
-                            oci_bind_by_name($stmt, ":ctime", $date);
-                            oci_bind_by_name($stmt, ":orderId", $orderId); // Replace with the actual order ID
 
-                            if (oci_execute($stmt)) {
+                            if (isset($_POST['collectionslot'])) {
                                 $message = "Slot data inserted successfully.";
                                 echo "<script>alert('TRIBUS=> {$message}');</script>";
                             } else {
