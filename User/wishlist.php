@@ -42,6 +42,8 @@ if(isset($_SESSION['message'])){
         while($rows=oci_fetch_array($stid,OCI_ASSOC)){
             $wid[]=$rows['WISHLIST_ID'];
         }
+        $rows=oci_fetch_array($stid,OCI_ASSOC);
+        if(count($rows)>0){
         $query2 = 'SELECT * FROM PRODUCT_WISHLIST WHERE FK1_WISHLIST_ID IN (' . implode(',', $wid) . ')';
         $stid2 = oci_parse($conn, $query2);
         oci_execute($stid2);
@@ -51,6 +53,7 @@ if(isset($_SESSION['message'])){
         $query3 = 'SELECT * FROM PRODUCT WHERE PRODUCT_ID IN (' . implode(',', $pid) . ')';
         $stid3 = oci_parse($conn, $query3);
         oci_execute($stid3);
+        
 
         echo'<table class=" w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -87,9 +90,9 @@ if(isset($_SESSION['message'])){
             </tr>';
         }
         echo'</table>';
-    // }else{
-    //     echo "Wishlist is empty.";
-    // }
+    }else{
+        echo "Wishlist is empty.";
+    }
         ?>
     </div>
 </body>

@@ -4,8 +4,6 @@ if ((empty(strtolower($_SESSION['email']))) || (empty($_SESSION['id']))) {
   header('location:./Login.php');
 }
 if (isset($_GET['wishlistid']) && isset($_GET['action'])){
-  echo "Kapil";
-     
   $wishlistid = $_GET['wishlistid'];
     
   $sql="DELETE FROM WISHLIST WHERE WISHLIST_ID='$wishlistid'";
@@ -15,7 +13,5 @@ if (isset($_GET['wishlistid']) && isset($_GET['action'])){
   if($deletefromcart){
     header('location:./wishlist.php');
   }
-}else{
-  echo "not";
 }
 ?>

@@ -8,8 +8,8 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
         $pid = $_GET['pid'];
         $referpage=$_SERVER['HTTP_REFERER'];
         $quantity=1;
-        $sql = oci_parse($conn, "SELECT * FROM PRODUCT WHERE PRODUCT_ID = '$pid'");
-        oci_bind_by_name($sql, ":PRODUCT_ID", $pid);
+        $sql = oci_parse($conn, "SELECT * FROM PRODUCT WHERE PRODUCT_ID = :productid");
+        oci_bind_by_name($sql, ":productid", $pid);
         oci_execute($sql);
         if($product = oci_fetch_array($sql, OCI_ASSOC)){
             $uid=$_SESSION['id'];
