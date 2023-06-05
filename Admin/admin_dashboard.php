@@ -65,7 +65,7 @@ if(!isset($_SESSION['ADMIN'])){
                 </a>
             </div>
             <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2 lg:mt-8">
-                <a href="#"
+                <a href="http://localhost:8080/apex/f?p=102:LOGIN_DESKTOP:29759651161866:::::"
                     class="flex flex-col items-center bg-gradient-to-r from-slate-200  border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
                     <img class="object-cover h-48 w-48 rounded-none rounded-l-lg p-2"
                         src="../images/trader/report-icon.png" alt="">

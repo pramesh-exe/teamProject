@@ -95,6 +95,7 @@ if(isset($_SESSION['message'])){
                     </tr>
                 </thead>';
                 while($rows=oci_fetch_array($stid3,OCI_ASSOC)){
+                    $cartid=$rows['PRODUCT_ID'];
                     for ($j=0; $j < count($pid); $j++) { 
                         if($rows['PRODUCT_ID']==$pid[$j]) {
                             $count=$quantity[$j];
@@ -107,7 +108,7 @@ if(isset($_SESSION['message'])){
                         echo'<td class="w-48 p-2"><img src="../images/'.$rows['PRODUCTIMAGE'].'"alt="product image" class="" /></td>';
                         echo"<td class='bg-slate-50 px-6 py-4  whitespace-nowrap'><a href='./product.php?id=".$rows['PRODUCT_ID']."' class='font-medium text-gray-900'>".$rows['NAME']."</a><br>
                             <p class ='text=gray-200'>In Stock: ".$rows['PRODUCT_SIZE']."</p></td>";
-                        echo'<td class="px-6 "><a href="./removefromcart.php"?id='.$cart_id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                        echo'<td class="px-6 "><a href="./removefromcart.php?id='.$cartid.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
                         echo"<td class='px-6 bg-slate-50 text-gray-900'>&pound;".$rows['PRICE']."</td>";
                         echo"<td class=' px-6'>";
                         echo'<form id="myForm" method="post" action="./cart_items.php">';

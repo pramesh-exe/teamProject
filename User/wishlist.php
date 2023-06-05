@@ -36,6 +36,10 @@ if(isset($_SESSION['message'])){
         $wid=[];
         $pid=[];
         $query = "SELECT * FROM WISHLIST WHERE FK1_USER_ID= '$id'";
+        $que =oci_parse($conn,"SELECT COUNT(*) as count from wishlist");
+        oci_execute($que);
+        $row=oci_fetch_array($que,OCI_ASSOC);
+        $count=$row['COUNT'];
         $stid = oci_parse($conn, $query);
         oci_execute($stid);
         // if(oci_fetch_array($stid,OCI_ASSOC)>=0){
@@ -43,7 +47,7 @@ if(isset($_SESSION['message'])){
             $wid[]=$rows['WISHLIST_ID'];
         }
         $rows=oci_fetch_array($stid,OCI_ASSOC);
-        if(count($rows)>0){
+        if($count>0){
         $query2 = 'SELECT * FROM PRODUCT_WISHLIST WHERE FK1_WISHLIST_ID IN (' . implode(',', $wid) . ')';
         $stid2 = oci_parse($conn, $query2);
         oci_execute($stid2);
@@ -85,7 +89,7 @@ if(isset($_SESSION['message'])){
             echo"<td class='bg-slate-50 px-6'>".$rows['DESCRIPTION']."</td>";
             echo'<td class="px-6">
                 <a href="./addToCart.php?id='.$id.'&action=add" class="mr-2 text-blue-500 hover:underline">Add To Cart</a> |
-                <a href="./removefromwishlist.php"?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a>
+                <a href="./removefromwishlist.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a>
                 </td>
             </tr>';
         }

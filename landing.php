@@ -112,7 +112,7 @@ if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id
                                         <div class="p-4 flex flex-col gap-2">
                                             <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row['PRODUCT_ID'].'">'.$row['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$'.$row['PRICE'].'</div>                                                
+                                                <div class="font-bold text-2xl">&pound;'.$row['PRICE'].'</div>                                                
                                                 <a href="login.php">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
@@ -148,7 +148,7 @@ if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id
                                         <div class="p-4 flex flex-col gap-2">
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
+                                                <div class="font-bold text-2xl">&pound;'.$row2['PRICE'].'</div>
                                                 <a href="login.php">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
@@ -184,7 +184,7 @@ if(isset($_SESSION['email'])||isset($_SESSION['password']) ||isset($_SESSION['id
                                         <div class="p-4 flex flex-col gap-2">
                                         <div class="font-medium whitespace-nowrap"><a href="./product.php?id='.$row2['PRODUCT_ID'].'">'.$row2['NAME'].'</a></div>
                                             <div class="flex justify-between flex-col gap-2">
-                                                <div class="font-bold text-2xl">$'.$row2['PRICE'].'</div>
+                                                <div class="font-bold text-2xl">&pound;'.$row2['PRICE'].'</div>
                                                 <a href="login.php">
                                                 <div
                                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3.5 py-2 text-center">Add
