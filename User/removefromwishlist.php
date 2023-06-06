@@ -16,7 +16,7 @@ if (isset($_GET['id']) && isset($_GET['action'])){
   $delfromWP=oci_execute($sqld);
 
   $sql="DELETE FROM WISHLIST WHERE WISHLIST_ID='$wid'";
-  $del=oci_parse($connection,$sql);
+  $del=oci_parse($conn,$sql);
   $delfromwishlist = oci_execute($del);
 
   if($delfromwishlist && $delfromWP){
