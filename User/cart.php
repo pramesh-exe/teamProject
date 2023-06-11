@@ -48,6 +48,7 @@ if(isset($_SESSION['message'])){
             $stid4 = oci_parse($conn, $query4);
             oci_execute($stid4);
             $row = oci_fetch_assoc($stid4);
+            // ONLY DISPLAYS TABLE OR DATA WHEN THE PRODUCT IN CART EXISTS
             if ($row['COUNT'] > 0) {
             $query = "SELECT * FROM CART WHERE FK1_USER_ID= '$id'";
             $stid = oci_parse($conn, $query);
@@ -148,6 +149,7 @@ if(isset($_SESSION['message'])){
         
     echo'</div>';
     
+    // CHECKOUT CAN'T ONLY IF THE ITEMS ARE GREATER THAN 20)
     if ($items > 20) {
        echo'<div class="my-6 mx-3 flex justify-end">
        <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 text-center inline-flex items-center mr-2  " type="button">

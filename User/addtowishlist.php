@@ -36,24 +36,24 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['email'])) {
                 oci_bind_by_name($sql3,":wishlist_id",$wid);
                 oci_bind_by_name($sql3,":product_id",$pid);
                 $execute3=oci_execute($sql3);
-                // if($execute3){
-                //     $_SESSION['pid']=$pid;
-                //     $_SESSION['quan']=1;
-                //     $_SESSION['message'] = "Product successfully added to your wishlist.";
-                //     header("location: $referpage");
-                //     exit();
-                // }else{
-                //     $_SESSION['pid']=$pid;
-                //     $_SESSION['quan']=1;
-                //     $_SESSION['message'] = "Couldn't add the product to your wishlist.";
-                //     header("location: $referpage");
-                //     exit();
-                // }
+                if($execute3){
+                    $_SESSION['pid']=$pid;
+                    $_SESSION['quan']=1;
+                    $_SESSION['message'] = "Product successfully added to your wishlist.";
+                    header("location: $referpage");
+                    exit();
+                }else{
+                    $_SESSION['pid']=$pid;
+                    $_SESSION['quan']=1;
+                    $_SESSION['message'] = "Couldn't add the product to your wishlist.";
+                    header("location: $referpage");
+                    exit();
+                }
             }
         }  
     }
 }
-//     header("location: $referpage");
-//     exit();
+    header("location: $referpage");
+    exit();
 }
 ?>

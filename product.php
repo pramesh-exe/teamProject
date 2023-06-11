@@ -127,11 +127,11 @@ if(!empty($_SESSION['pid']) || !empty($id)){
                         ?>
                     </div>
                     <div class="text-sm font-medium my-4">
-                        <a href="./addToCart.php?id=<?php echo $id?>&action=add"
+                        <a href="./User/addToCart.php?id=<?php echo $id?>&action=add"
                             class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
                             to
                             cart</a>
-                        <a href="./addtowishlist.php"
+                        <a href="./User/addtowishlist.php"
                             class="bg-blue-600 py-2 px-4 rounded-lg text-white hover:bg-blue-900">Add
                             to
                             wishlist</a>

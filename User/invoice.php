@@ -10,7 +10,6 @@ if ((empty(strtolower($_SESSION['items']))) || (empty($_SESSION['total']))) {
 }
     $items=$_SESSION['items'];
     $total=$_SESSION['total'];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,6 +100,7 @@ if ((empty(strtolower($_SESSION['items']))) || (empty($_SESSION['total']))) {
 
 <!-- Footer -->
 <?php
+include_once('../try.php');
 $id=$_SESSION['id'];
 date_default_timezone_set("Asia/Kathmandu");
 $date = date('d-M-Y'); // Format the date as per Oracle's default format
@@ -156,7 +156,7 @@ foreach($cartids as $cartid){
 $sqldel1=oci_parse($conn,"DELETE FROM CART WHERE FK1_USER_ID='$id'");
 $exe1=oci_execute($sqldel1);
 
-if($exe&&$exe1){  
+if($exe1){  
     $messag='Payment was done successfull. Thank you for buying products from us.';
     $message="Please collect your invoice.".$messag;
     echo "<script>alert('TRIBUS=> {$message}');</script>";

@@ -1,7 +1,10 @@
 <?php
 include_once 'connect.php';
-
-
+if(isset($_SESSION['message'])){
+    $message=$_SESSION['message'];
+    echo "<script>alert('TRIBUS=> {$message}');</script>";
+    unset($_SESSION['message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

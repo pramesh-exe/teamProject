@@ -112,7 +112,7 @@ if(!isset($_SESSION['ADMIN'])){
                     echo"<td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>".$row['NAME']."</td>";
                     echo"<td class='px-6 py-4'>$".$row['PRICE']."</td>";
                     echo"<td class='px-6 py-4'>".$row['DESCRIPTION']."</td>";
-                    echo'<td><a href="./updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
+                    echo'<td><a href="../Trader/updateProduct.php?id='.$id.'&action=update" class="mr-2 text-blue-500 hover:underline">VIEW</a> | <a href="./delete_product.php?id='.$id.'&action=delete" class="ml-2 text-red-500 hover:underline">DELETE</a></td>';
                     
                 }
             echo "</table>";
